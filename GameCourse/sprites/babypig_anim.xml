@@ -1,0 +1,15 @@
+<!DOCTYPE SpriteDecomposer>
+<sprites image="babypig.png" transparentColor="">
+ <animation title="walk" delay="150">
+  <cut w="32" x="2" y="44" h="20" row="1" col="1"/>
+  <cut w="31" x="35" y="44" h="20" row="1" col="1"/>
+  <cut w="30" x="66" y="43" h="21" row="1" col="1"/>
+  <cut w="31" x="97" y="44" h="20" row="1" col="1"/>
+ </animation>
+ <animation title="stay" delay="150">
+  <cut w="30" x="2" y="43" h="21" row="1" col="1"/>
+ </animation>
+ <animation title="jump" delay="150">
+  <cut w="21" x="70" y="73" h="23" row="1" col="1"/>
+ </animation>
+</sprites>

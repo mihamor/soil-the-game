@@ -1,0 +1,36 @@
+<!DOCTYPE SpriteDecomposer>
+<sprites image="willy.png" transparentColor="">
+ <animation title="walk" delay="150">
+  <cut w="12" x="22" y="207" h="30" row="1" col="1"/>
+  <cut w="12" x="54" y="207" h="30" row="1" col="1"/>
+  <cut w="15" x="37" y="208" h="29" row="1" col="1"/>
+  <cut w="14" x="69" y="208" h="29" row="1" col="1"/>
+ </animation>
+ <animation title="stay" delay="150">
+  <cut w="12" x="22" y="207" h="30" row="1" col="1"/>
+ </animation>
+ <animation title="jump" delay="150">
+  <cut w="15" x="37" y="208" h="29" row="1" col="1"/>
+ </animation>
+ <animation title="duck" delay="150">
+  <cut w="14" x="55" y="372" h="25" row="1" col="1"/>
+ </animation>
+ <animation title="shoot" delay="150">
+  <cut w="12" x="22" y="207" h="30" row="1" col="1"/>
+ </animation>
+ <animation title="shootAndWalk" delay="150">
+  <cut w="12" x="22" y="207" h="30" row="1" col="1"/>
+  <cut w="12" x="54" y="207" h="30" row="1" col="1"/>
+  <cut w="15" x="37" y="208" h="29" row="1" col="1"/>
+  <cut w="14" x="69" y="208" h="29" row="1" col="1"/>
+ </animation>
+ <animation title="explode" delay="150">
+  <cut w="7" x="73" y="352" h="6" row="1" col="1"/>
+ </animation>
+ <animation title="move" delay="150">
+  <cut w="7" x="25" y="352" h="6" row="1" col="1"/>
+  <cut w="7" x="41" y="352" h="6" row="1" col="1"/>
+  <cut w="7" x="57" y="352" h="6" row="1" col="1"/>
+  <cut w="7" x="73" y="352" h="6" row="1" col="1"/>
+ </animation>
+</sprites>
