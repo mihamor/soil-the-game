@@ -38,4 +38,7 @@ public:
 	void tick(float time);
 	void pause();
 	void play();
+	const Texture * getTexture() {
+		return animList["stay"].sprite.getTexture();
+	}
 };

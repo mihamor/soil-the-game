@@ -11,6 +11,7 @@ private:
 	std::list<Slot* > slots;
 	int added;
 	int maxSlots;
+
 public:
 	
 	std::list<Slot* > * getList();

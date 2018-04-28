@@ -8,6 +8,8 @@
 const int H = 18;
 const int W = 39;
 
+
+
 namespace TMap {
 	void saveTileMap(const char * FileName, sf::String TileMap[]);
 	void loadTileMap(const char * FileName, sf::String TileMap[]);
