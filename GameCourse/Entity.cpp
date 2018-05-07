@@ -86,11 +86,11 @@ void Entity::entitiesInteraction(std::list<Entity*>  *entities, Entity * player)
 			}
 	}
 }
-void Entity::updateAllEntities(std::list<Entity*>  *entities, float time, String * TileMap)
+void Entity::updateAllEntities(std::list<Entity*>  *entities, float time, String * TileMap, std::list<AbstractBlock *> blocks)
 {
 	for (std::list<Entity*>::iterator it = entities->begin(); it != entities->end(); it++)
 	{
-		(*it)->update(time, TileMap);
+		(*it)->update(time, TileMap, blocks);
 	}
 }
 void Entity::drawAllEntities(std::list<Entity*>  *entities, double offsetX, double offsetY, RenderWindow &window)

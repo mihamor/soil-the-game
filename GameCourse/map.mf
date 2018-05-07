@@ -8,9 +8,9 @@ B   RR   RR                           B
 B  RR     RR                          B
 B   R     R                           B
 B   R     R                           B
-B                                     B
-B                                     B
-BGGGGGGGGGGG                   G      B
+B   D     D                           B
+B   D     D                           B
+BGGGRRRRRRRG                   G      B
 BSSSSSSSSSGGG                  G      B
 BSSSRRRSSSSSGGGGGGGGGGGGGGGGGGGGGGGGGGB
 BSSRRRRRSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSB

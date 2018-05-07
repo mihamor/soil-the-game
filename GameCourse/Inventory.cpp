@@ -21,7 +21,7 @@ Inventory::Inventory(int maxSlots)
 	this->maxSlots = maxSlots;
 }
 
-void Inventory::addSlot(Block * pb)
+void Inventory::addSlot(AbstractBlock * pb)
 {
 	bool added = false;
 	if (pb == NULL) return;

@@ -44,18 +44,18 @@ void TMap::loadTileMap(const char * FileName, String TileMap[])
 	}
 }
 
-void TMap::setBlock(Player * p, int x, int y, float offsetX, float offsetY, std::list<Block*> blocks, sf::String * TileMap, sf::String * TileMapBg, Inventory& inv) {
+void TMap::setBlock(Player * p, int x, int y, float offsetX, float offsetY, std::list<AbstractBlock*> blocks, sf::String * TileMap, sf::String * TileMapBg, Inventory& inv) {
 	if (p->isInRange(x, y, offsetX, offsetY) && p->getHand() != NULL) // поставить блок
 	{
 		int posx = (x + (int)offsetX) / 32;
 		int posy = (y + (int)offsetY) / 32;
-		Block *check = Block::getBlock(blocks, TileMap, posy, posx);
+		AbstractBlock *check = AbstractBlock::getBlock(blocks, TileMap, posy, posx);
 		if (check->singnature == DEFAULT_BG_SINGNATURE)
 		{ // проверка если блок, на место которого нужно поставить - бэкграундный блокв
 			Slot * h = p->getHand();
 			if(h->block->type == Solid) TileMap[posy][posx] = h->block->singnature;
 			else if(h->block->type == Background){
-				check = Block::getBlock(blocks, TileMapBg, posy, posx);
+				check = AbstractBlock::getBlock(blocks, TileMapBg, posy, posx);
 				if (check->singnature == DEFAULT_BG_SINGNATURE) TileMapBg[posy][posx] = h->block->singnature;
 				else return;
 			}
@@ -64,13 +64,13 @@ void TMap::setBlock(Player * p, int x, int y, float offsetX, float offsetY, std:
 	}
 }
 
-void TMap::removeBlock(Player * p, int x, int y, float offsetX, float offsetY, std::list<Block*> blocks, sf::String * TileMap, sf::String * TileMapBg, Inventory& inv) {
+void TMap::removeBlock(Player * p, int x, int y, float offsetX, float offsetY, std::list<AbstractBlock*> blocks, sf::String * TileMap, sf::String * TileMapBg, Inventory& inv) {
 	if (p->isInRange(x, y, offsetX, offsetY)) // поставить блок
 	{
 		int posx = (x + (int)offsetX) / 32;
 		int posy = (y + (int)offsetY) / 32;
-		Block *check = Block::getBlock(blocks, TileMap, posy, posx);
-		if(check->singnature == DEFAULT_BG_SINGNATURE) check = Block::getBlock(blocks, TileMapBg, posy, posx);
+		AbstractBlock *check = AbstractBlock::getBlock(blocks, TileMap, posy, posx);
+		if(check->singnature == DEFAULT_BG_SINGNATURE) check = AbstractBlock::getBlock(blocks, TileMapBg, posy, posx);
 		if (check->getPermision())
 		{
 			if(check->type == Solid) TileMap[posy][posx] = DEFAULT_BG_SINGNATURE;

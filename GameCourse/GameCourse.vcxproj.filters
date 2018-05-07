@@ -27,9 +27,6 @@
     <ClInclude Include="anim.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Block.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Bullet.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -61,6 +58,15 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="AbstractBlock.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockLoader.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="DoorBlock.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
@@ -108,6 +114,12 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="AbstractBlock.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockLoader.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="DoorBlock.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

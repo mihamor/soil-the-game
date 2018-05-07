@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<block_list>
+    <block type="Solid" signature="66" texture="blocks/bedrock.png" />
+    <block type="Background" signature="32" texture="blocks/bg.png" />
+    <block type="Solid" signature="82" texture="blocks/rock.png" />
+    <block type="Background" signature="45" texture="blocks/bgrock.png" />
+    <block type="Solid" signature="71" texture="blocks/ground.png" />
+    <block type="Solid" signature="83" texture="blocks/soil.png" />
+    <block type="Door" signature="68" texture="blocks/door.png" />
+</block_list>

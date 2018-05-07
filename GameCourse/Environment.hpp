@@ -1,10 +1,11 @@
 #pragma once
-#include "Block.hpp"
 #include "Enemy.hpp"
 #include "PLAYER.hpp"
 #include <list>
 #include "Bullet.hpp"
+#include "BlockLoader.h"
 #include "Inventory.hpp"
+#include <iostream>
 #include "Cursor.hpp"
 #include "tilemap.h"
 const int INV_SIZE = 10;
@@ -14,7 +15,7 @@ class Environment
 {
 
 	Player * p;
-	std::list<Block *> * blocks;
+	std::list<AbstractBlock *> * blocks;
 	std::list<Entity *>  * entities;
 	Inventory * inv;
 	float offsetX = 0, offsetY = 0;
@@ -77,8 +78,10 @@ public:
 		Texture * playerT = new Texture();
 		Texture *  enemyT = new Texture();
 		playerT->loadFromFile("sprites/willy.png");
+		//playerT->loadFromFile("sprites/megaman.png");
 		enemyT->loadFromFile("sprites/babypig.png");
 		anim.loadFromXML("sprites/willy_anim.xml", playerT);
+		//anim.loadFromXML("sprites/anim_megaman.xml", playerT);
 		enemyAnim.loadFromXML("sprites/babypig_anim.xml", enemyT);
 		this->p = new Player(anim, 64, 64);
 		const int MAX_SIZE = 10;
@@ -89,42 +92,7 @@ public:
 		this->entities->push_back(new Enemy(enemyAnim, 32 * (W - 1), 32 * 12, false));
 		this->entities->push_back(new Enemy(enemyAnim, 32 * (W - W / 2), 32 * 12, true));
 
-
-		this->blocks = new std::list<Block *>();
-		Texture * rockT = new Texture();
-		rockT->loadFromFile("blocks/rock.png");
-		Block * rock = new Block(rockT, 'R', Solid);
-
-		Texture * bgrockT = new Texture();
-		bgrockT->loadFromFile("blocks/bgrock.png");
-		Block * bgrock = new Block(bgrockT, '-', Background);
-
-
-		Texture *  bgT = new Texture();
-		bgT->loadFromFile("blocks/bg.png");
-		Block * bg = new Block(bgT, ' ', Background);
-
-		Texture * bedrockT  = new Texture();
-		bedrockT->loadFromFile("blocks/bedrock.png");
-		Block *  bedrock = new Block(bedrockT, 'B', Solid);
-
-
-		Texture *groundT = new Texture();
-		groundT->loadFromFile("blocks/ground.png");
-		Block * ground = new Block(groundT, 'G', Solid);
-
-		Texture *soilT = new Texture();
-		soilT->loadFromFile("blocks/soil.png");
-		Block * soil = new Block(soilT, 'S', Solid);
-
-		this->blocks->clear();
-
-		this->blocks->push_back(bedrock);
-		this->blocks->push_back(bg);
-		this->blocks->push_back(rock);
-		this->blocks->push_back(bgrock);
-		this->blocks->push_back(ground);
-		this->blocks->push_back(soil);
+		this->blocks = BlockLoader::loadBlocksFromXml("blocks.xml");
 
 	};
 
@@ -150,7 +118,15 @@ public:
 		TMap::setBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
 	}
 	void removeBlock(Vector2i a) {
-		TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
+		int posx = (a.x + (int)offsetX) / 32;
+		int posy = (a.y + (int)offsetY) / 32;
+		AbstractBlock * bl = AbstractBlock::getBlock(*blocks, TileMap, posy, posx);
+		if(bl->interact() == removeType)
+			TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
+		else if (bl->interact() == doorType) {
+			DoorBlock * db = (DoorBlock *)bl;
+			std::cout << "Now type is " <<  (db->doorUse() == Solid ? "SOLID" : "BACKGROUND") << std::endl;
+		}
 	}
 	bool isInvGui() {
 		return isGui;
@@ -158,7 +134,7 @@ public:
 	void addBlock(Vector2i a) {
 		int posx = (a.x + (int)offsetX) / 32;
 		int posy = (a.y + (int)offsetY) / 32;
-		Block * check = Block::getBlock(*blocks, TileMap, posy, posx);
+		AbstractBlock * check = AbstractBlock::getBlock(*blocks, TileMap, posy, posx);
 		if (check == NULL || check->singnature == DEFAULT_BG_SINGNATURE) p->setHand(NULL);
 		else inv->addSlot(check);
 	}
@@ -179,7 +155,7 @@ public:
 		Entity::entitiesInteraction(entities, p);
 		// апдейт динамических обьектов
 		if (!isGui)
-			Entity::updateAllEntities(entities, time, TileMap);
+			Entity::updateAllEntities(entities, time, TileMap, *blocks);
 
 		// сдвиг карты при движение view.setCenter(p->x, p->y); window.setView(view)
 
@@ -190,7 +166,7 @@ public:
 		//window.draw(surface);
 		// отрисовка блоков
 		window.clear(Color(255, 255, 255));
-		Block::drawViewField(blocks, TileMap, TileMapBg, offsetX, offsetY, H, W, window);
+		AbstractBlock::drawViewField(blocks, TileMap, TileMapBg, offsetX, offsetY, H, W, window);
 		// отрисовка сущностей
 		Entity::drawAllEntities(entities, offsetX, offsetY, window);
 		// отрисовка курсора
@@ -210,7 +186,7 @@ public:
 
 		while (!this->blocks->empty()) {
 			auto it = blocks->begin();
-			Block * b = *it;
+			AbstractBlock * b = *it;
 			it = blocks->erase(it);
 			delete b->rectangle.getTexture();
 			delete b;

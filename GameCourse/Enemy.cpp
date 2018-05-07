@@ -22,26 +22,29 @@ Enemy::Enemy(AnimationManager a, int X, int Y, bool dir)
 
 Enemy::~Enemy() {}
 
-void Enemy::update(float time, String TileMap[])
+void Enemy::update(float time, String TileMap[], std::list<AbstractBlock *> blocks)
 {
 	x += dx * time;
-	Collision(0, TileMap);
+	Collision(0, TileMap, blocks);
 	if (!onGround) dy = dy + 0.0005*time;
 	y += dy * time;
 	onGround = false;
-	Collision(1, TileMap);
+	Collision(1, TileMap, blocks);
 
 
 	if (life)anim.tick(time);
 }
 
-void Enemy::Collision(int num, String TileMap[])
+void Enemy::Collision(int num, String TileMap[], std::list<AbstractBlock *> & blocks)
 {
 
 	for (int i = (y) / BLOCK_SIZE; i < (y + h) / BLOCK_SIZE; i++)
 		for (int j = (x) / BLOCK_SIZE; j < (x + w) / BLOCK_SIZE; j++) {
-			Block  b(TileMap, i, j);
-			if (b.getCollision()) {
+			//Block  b(TileMap, i, j);
+		
+			char s = TileMap[i][j];
+			AbstractBlock * b = AbstractBlock::getBlockFromList(s, blocks);
+			if (b->getCollision()) {
 				if (dx > 0 && num == 0) {
 					x = j * BLOCK_SIZE - w;
 					dx = -dx; ///

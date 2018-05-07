@@ -1,15 +1,9 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "Enemy.hpp"
-#include <list>
 #include "Windows.h"
 #include <Math.h>
-#include "PLAYER.hpp"
 #include "tilemap.h"
 #include <assert.h>
-#include "Bullet.hpp"
-#include "Inventory.hpp"
-#include "Block.hpp"
 #include "Environment.hpp"
 #include "Cursor.hpp"
 #define SFML_DYNAMIC
@@ -80,12 +74,13 @@ int main(){
 		if (Keyboard::isKeyPressed(Keyboard::I))
 			e.setGui(true);
 
-		// контроль нажатия крестика на панели окна
 		Event event;
 		while (window.pollEvent(event))
 		{
 			if (event.type == Event::Closed)
 			{
+				auto list = e.blocksList();
+				BlockLoader::saveBlocksToXml(*list);
 				window.close();
 				return EXIT_SUCCESS;
 			}
@@ -108,18 +103,17 @@ int main(){
 			if(event.type == Event::MouseButtonPressed && !e.isInvGui())
 				switch (event.key.code)
 				{
-				case Mouse::Right: { // поставить блок
+				case Mouse::Right: { // place block
 					e.setBlock(a);
 					break;
 				}
-				case Mouse::Left: { // удалить блок
+				case Mouse::Left: { // remove block
 					e.removeBlock(a);
 					break;
 				}
 				default:
 					break;
 				}
-				
 		}
 
 		e.update(time, window, a);
@@ -129,6 +123,8 @@ int main(){
 		{
 
 			// пока что просто выход (реализовать окно смерти и перезагрузки)
+			auto list = e.blocksList();
+			BlockLoader::saveBlocksToXml(*list);
 			window.close();
 			return EXIT_SUCCESS;
 		}

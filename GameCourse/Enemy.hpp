@@ -12,7 +12,7 @@ public:
 
 	Enemy(AnimationManager a, int X, int Y, bool dir);
 	~Enemy();
-	void update(float time, String TileMap[]);
-	void Collision(int num, String TileMap[]);
+	void update(float time, String TileMap[], std::list<AbstractBlock *> blocks);
+	void Collision(int num, String TileMap[], std::list<AbstractBlock *> & blocks);
 };
 

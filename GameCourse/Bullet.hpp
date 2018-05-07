@@ -9,5 +9,5 @@ class Bullet:public Entity
 public:
 	Bullet(AnimationManager a, int X, int Y, bool side);
 	~Bullet();
-	void update(float time, String TileMap[]);
+	void update(float time, String TileMap[], std::list<AbstractBlock *> blocks);
 };

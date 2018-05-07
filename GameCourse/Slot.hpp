@@ -9,10 +9,10 @@ using namespace sf;
 class Slot
 {
 public:
-	Block * block;
+	AbstractBlock * block;
 	int amount;
 
-	Slot(Block *pb, int amount)
+	Slot(AbstractBlock *pb, int amount)
 	{
 		this->amount = amount;
 		block = pb;

@@ -31,7 +31,7 @@ void Player::reduceAmount(std::list<Slot* >  * slots)
 	for (std::list<Slot* >::iterator it = slots->begin(); it != slots->end(); it++)
 	{
 		Slot * s = *(it);
-		if (Block::compare(s->block, hand->block))
+		if (AbstractBlock::compare(s->block, hand->block))
 		{
 			if (--hand->amount == 0)
 			{
@@ -95,7 +95,7 @@ void Player::KeyCheck()
 }
 
 
-void Player::update(float time, String TileMap[])
+void Player::update(float time, String TileMap[], std::list<AbstractBlock *> blocks)
 {
 
 	KeyCheck();
@@ -118,23 +118,24 @@ void Player::update(float time, String TileMap[])
 	anim.flip(dir);
 
 	x += dx * time;
-	Collision(0, TileMap);
+	Collision(0, TileMap, blocks);
 	if (!onGround) dy = dy + 0.0005*time;
 	y += dy * time;
 	onGround = false;
-	Collision(1, TileMap);
+	Collision(1, TileMap, blocks);
 
 	anim.tick(time);
 	key["R"] = key["L"] = key["Up"] = key["Down"] = key["Space"] = false;
 }
 
-void Player::Collision(int dir, String TileMap[])
+void Player::Collision(int dir, String TileMap[], std::list<AbstractBlock *> blocks)
 {
 	for (int i = y / 32; i < (y + h) / 32; i++)
 		for (int j = x / 32; j < (x + w) / 32; j++)
 		{
-			Block b(TileMap, i, j);
-			if (b.getCollisionBySignature())
+			char s = TileMap[i][j];
+			AbstractBlock * b = AbstractBlock::getBlockFromList(s, blocks);
+			if (b->getCollision())
 			{
 				if (dx > 0 && dir == 0) x = j * 32 - w;
 				if (dx < 0 && dir == 0) x = j * 32 + 32;
