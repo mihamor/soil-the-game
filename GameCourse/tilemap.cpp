@@ -83,7 +83,7 @@ void TMap::removeBlock(Player * p, int x, int y, float offsetX, float offsetY, s
 void TMap::copyFrom(String * from, String * to) {
 	for (int i = 0; i < H; i++)
 	{
-		for (int j = 0; j < W + 1; j++)
+		for (int j = 0; j < W; j++)
 		{
 			to[i][j] = from[i][j];
 			to[H - 1][W] = '/0';

@@ -22,7 +22,7 @@ class Environment
 	float offsetX = 0, offsetY = 0;
 	Cursor cursor;
 	bool isGui = false;
-	String TileMap[H] =
+	/*String TileMap[H] =
 	{
 		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
 		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
@@ -63,17 +63,31 @@ class Environment
 		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
 		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
 		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
-	};
+	};*/
+	String TileMap[H];
+	String TileMapBg[H];
 
 	int vmodex, vmodey;
 	AnimationManager anim;
 	AnimationManager enemyAnim;
 
+	void initMap() {
+		for(int y = 0; y < H; y++)
+			for (int x = 0; x < W; x++) {
+				TileMap[y].insert(0, " ");
+				TileMapBg[y].insert(0, " ");
+			}
+	}
+
 public:
+
+
 	Environment(int vmodex, int vmodey, int choice) {
 		this->vmodex = vmodex;
 		this->vmodey = vmodey;
 		this->menuChoice = choice;
+
+		initMap();
 		if (choice == 1) {
 			TMap::loadTileMap("map.mf", TileMap);
 			TMap::loadTileMap("mapbg.mf", TileMapBg);
@@ -101,8 +115,8 @@ public:
 
 		this->entities = new std::list<Entity *>();
 		this->entities->push_back(p);
-		this->entities->push_back(new Enemy(enemyAnim, 32 * (W - 1), 32 * 12, false));
-		this->entities->push_back(new Enemy(enemyAnim, 32 * (W - W / 2), 32 * 12, true));
+		//this->entities->push_back(new Enemy(enemyAnim, 32 * (W - 1), 32 * 12, false));
+		//this->entities->push_back(new Enemy(enemyAnim, 32 * (W - W / 2), 32 * 12, true));
 
 		this->blocks = BlockLoader::loadBlocksFromXml("blocks.xml");
 
@@ -176,8 +190,8 @@ public:
 
 		// сдвиг карты при движение view.setCenter(p->x, p->y); window.setView(view)
 
-		if (p->x > vmodex / 2 && p->x< (vmodex + 32 * W) / 2) offsetX = p->x - vmodex / 2;
-		if (p->y > vmodey / 2 && p->y + offsetY < 32 * H) offsetY = p->y - vmodey / 2;
+		if (p->x > vmodex / 2 /*&& p->x< (vmodex + 32 * W) / 2*/) offsetX = p->x - vmodex / 2;
+		if (p->y > vmodey / 2 /*&& p->y + offsetY < 32 * H*/) offsetY = p->y - vmodey / 2;
 
 		// отрисовка общего задника
 		//window.draw(surface);

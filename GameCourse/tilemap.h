@@ -7,7 +7,8 @@
 
 const int H = 18;
 const int W = 39;
-
+//const int H = 40;
+//const int W = 120;
 
 
 namespace TMap {
