@@ -18,6 +18,7 @@ class Environment
 	std::list<AbstractBlock *> * blocks;
 	std::list<Entity *>  * entities;
 	Inventory * inv;
+	int menuChoice;
 	float offsetX = 0, offsetY = 0;
 	Cursor cursor;
 	bool isGui = false;
@@ -72,6 +73,7 @@ public:
 	Environment(int vmodex, int vmodey, int choice) {
 		this->vmodex = vmodex;
 		this->vmodey = vmodey;
+		this->menuChoice = choice;
 		if (choice == 1) {
 			TMap::loadTileMap("map.mf", TileMap);
 			TMap::loadTileMap("mapbg.mf", TileMapBg);
@@ -137,6 +139,7 @@ public:
 			DoorBlock * db = (DoorBlock *)bl;
 			std::cout << "Now type is " <<  (db->doorUse(posx, posy, this->TileMap) != Solid ? "SOLID" : "BACKGROUND") << std::endl;
 		}
+		std::cout << "Interaction " << bl->interact() << std::endl;
 	}
 	bool isInvGui() {
 		return isGui;
@@ -145,7 +148,11 @@ public:
 		int posx = (a.x + (int)offsetX) / 32;
 		int posy = (a.y + (int)offsetY) / 32;
 		AbstractBlock * check = AbstractBlock::getBlock(*blocks, TileMap, posy, posx);
-		if (check == NULL || check->singnature == DEFAULT_BG_SINGNATURE) p->setHand(NULL);
+		if (check == NULL || check->singnature == DEFAULT_BG_SINGNATURE) {
+			check = AbstractBlock::getBlock(*blocks, TileMapBg, posy, posx);
+			if (check == NULL || check->singnature == DEFAULT_BG_SINGNATURE) p->setHand(NULL);
+			else inv->addSlot(check);
+		}
 		else inv->addSlot(check);
 	}
 	auto inventory() {
@@ -203,8 +210,10 @@ public:
 		}
 		delete blocks;
 
-		//TMap::saveTileMap("map.mf", TileMap);
-		//TMap::saveTileMap("mapbg.mf", TileMapBg);
+		if (this->menuChoice == 1) {
+			TMap::saveTileMap("map.mf", TileMap);
+			TMap::saveTileMap("mapbg.mf", TileMapBg);
+		}
 		inv->saveInventory();
 
 		delete anim.getTexture();

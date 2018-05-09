@@ -41,7 +41,7 @@ private:
 		String * newMap = new String[H];
 		for (int y = 0; y < H; y++) {
 			for (int x = 0; x < W + 1; x++) {
-				 if (y > H - 5 && y != H - 1) newMap[y].insert(x, "-");
+				 if (y > H - 5 && y != H - 1) newMap[y].insert(x, "s");
 				else newMap[y].insert(x, " ");
 			}
 		}

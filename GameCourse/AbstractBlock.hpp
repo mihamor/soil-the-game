@@ -85,7 +85,7 @@ public:
 		case ' ': return false;
 		case '-': return true;
 			//....
-		default: return false;
+		default: return true;
 		}
 	}
 	bool getCollision()

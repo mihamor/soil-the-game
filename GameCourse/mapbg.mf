@@ -3,15 +3,15 @@
                                        
                                        
                                        
-       -                               
-      ---                              
-     -----                             
-     -----                             
-     -----                             
-    -------                            
-    -------                            
-                                       
-                                       
+       w                               
+      cwc                              
+     cwcwc                             
+     wcccw                             
+     ccccc                             
+    -wcccw-                     ccccc  
+    -wcccw-                     cwwwcw 
+                               ccwwwcw 
+                               cwwwwcw 
                                        
                                        
                                        

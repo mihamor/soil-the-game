@@ -4,8 +4,13 @@
     <block type="Background" signature="32" texture="blocks/bg.png" />
     <block type="Solid" signature="82" texture="blocks/rock.png" />
     <block type="Background" signature="45" texture="blocks/bgrock.png" />
+    <block type="Solid" signature="87" texture="blocks/wood.png" />
+    <block type="Background" signature="119" texture="blocks/bgwood.png" />
     <block type="Solid" signature="71" texture="blocks/ground.png" />
     <block type="Solid" signature="83" texture="blocks/soil.png" />
+    <block type="Background" signature="115" texture="blocks/bgsoil.png" />
+    <block type="Solid" signature="67" texture="blocks/couble.png" />
+    <block type="Background" signature="99" texture="blocks/bgcouble.png" />
     <block type="DoorClosed" signature="68" texture="blocks/doorClosed.png" />
     <block type="DoorOpened" signature="100" texture="blocks/doorClosed.png" />
 </block_list>
