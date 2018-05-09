@@ -19,7 +19,11 @@ public:
 
 		for (AbstractBlock * b : vec) {
 			TiXmlElement * element = new TiXmlElement("block");
-			if(b->interact() == doorType) element->SetAttribute("type", "Door");
+			if (b->interact() == doorType) {
+				if(b->singnature == doorOpenSign)
+					element->SetAttribute("type", "DoorOpened");
+				else  element->SetAttribute("type", "DoorClosed");
+			}
 			else element->SetAttribute("type", b->getCollision() ? "Solid" : "Background");
 			element->SetAttribute("signature", b->singnature);
 			element->SetAttribute("texture", b->getFileName().c_str());
@@ -47,8 +51,12 @@ public:
 			BlockType type = !strcmp(block->Attribute("type"), "Solid") ? Solid : Background;
 
 			AbstractBlock * b;
-			if (!strcmp(block->Attribute("type"), "Door"))
-				b = new DoorBlock(bFileName, signature, Solid); 
+			if (!strcmp(block->Attribute("type"), "DoorClosed"))
+				b = new DoorBlock(bFileName, signature, Solid);
+			else if (!strcmp(block->Attribute("type"), "DoorOpened")) {
+				b = new DoorBlock(bFileName, signature, Background);
+				b->rectangle.setFillColor(Color(105, 105, 105));
+			}
 			else if ((type == Solid || type == Background ))
 				 b = new Block(bFileName, signature, type);
 			result->push_back(b);

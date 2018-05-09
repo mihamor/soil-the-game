@@ -155,6 +155,7 @@
     <ClInclude Include="tilemap.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
+    <ClInclude Include="WorldGenerator.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AbstractBlock.cpp" />
@@ -174,6 +175,7 @@
     <ClCompile Include="tinyxml.cpp" />
     <ClCompile Include="tinyxmlerror.cpp" />
     <ClCompile Include="tinyxmlparser.cpp" />
+    <ClCompile Include="WorldGenerator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

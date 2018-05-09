@@ -6,5 +6,6 @@
     <block type="Background" signature="45" texture="blocks/bgrock.png" />
     <block type="Solid" signature="71" texture="blocks/ground.png" />
     <block type="Solid" signature="83" texture="blocks/soil.png" />
-    <block type="Door" signature="68" texture="blocks/door.png" />
+    <block type="DoorClosed" signature="68" texture="blocks/doorClosed.png" />
+    <block type="DoorOpened" signature="100" texture="blocks/doorClosed.png" />
 </block_list>

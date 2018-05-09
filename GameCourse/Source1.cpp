@@ -6,6 +6,7 @@
 #include <assert.h>
 #include "Environment.hpp"
 #include "Cursor.hpp"
+#include "menu.hpp"
 #define SFML_DYNAMIC
 
 #pragma comment(lib, "sfml-graphics-s-d.lib")
@@ -33,17 +34,22 @@ int main(){
 
 
 	RenderWindow window(VideoMode(vmodex, vmodey), "Miha game");
+	MenuChoiceCustom menuChoice = menu(window);
+	if (menuChoice == NONE) return EXIT_SUCCESS;
+	window.clear();
 	bool gameOver = false;
 	bool Resized = false;
 
 	Clock clock;
 	View view;
 
-	Environment e(vmodex, vmodey);
+	Environment e(vmodex, vmodey, menuChoice);
 
 	RectangleShape rectangle;
 	sf::Vector2i a(0, 0);
+	
 	while (window.isOpen() && e.player()->life) {
+		
 		float time = clock.getElapsedTime().asMicroseconds(); // тик рейт
 		clock.restart();
 		time = time / 400; // делитель ~  задержка милисекунды
@@ -93,7 +99,7 @@ int main(){
 			if (event.type == Event::KeyPressed && !e.isInvGui())
 				switch (event.key.code)
 				{
-				case Keyboard::Space :{
+				case Keyboard::Space: {
 					e.addBullet();
 					break;
 				}
@@ -119,7 +125,7 @@ int main(){
 		e.update(time, window, a);
 
 		window.display();
-		if (e.player()->life == false)
+		if (e.player()->life == false || menuChoice == EXIT)
 		{
 
 			// пока что просто выход (реализовать окно смерти и перезагрузки)

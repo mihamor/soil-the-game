@@ -4,10 +4,10 @@
 #include <list>
 #include "Bullet.hpp"
 #include "BlockLoader.h"
+#include "WorldGenerator.hpp"
 #include "Inventory.hpp"
 #include <iostream>
 #include "Cursor.hpp"
-#include "tilemap.h"
 const int INV_SIZE = 10;
 
 using namespace sf;
@@ -69,11 +69,21 @@ class Environment
 	AnimationManager enemyAnim;
 
 public:
-	Environment(int vmodex, int vmodey) {
+	Environment(int vmodex, int vmodey, int choice) {
 		this->vmodex = vmodex;
 		this->vmodey = vmodey;
-		TMap::loadTileMap("map.mf", TileMap);
-		TMap::loadTileMap("mapbg.mf", TileMapBg);
+		if (choice == 1) {
+			TMap::loadTileMap("map.mf", TileMap);
+			TMap::loadTileMap("mapbg.mf", TileMapBg);
+		}
+		else {
+			WorldGenerator gen;
+			String * generatedBg = gen.getBg();
+			String * generated = gen.getMap();
+			TMap::copyFrom(generated, TileMap);
+			TMap::copyFrom(generatedBg, TileMapBg);
+		}
+		
 
 		Texture * playerT = new Texture();
 		Texture *  enemyT = new Texture();
@@ -125,7 +135,7 @@ public:
 			TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
 		else if (bl->interact() == doorType) {
 			DoorBlock * db = (DoorBlock *)bl;
-			std::cout << "Now type is " <<  (db->doorUse() == Solid ? "SOLID" : "BACKGROUND") << std::endl;
+			std::cout << "Now type is " <<  (db->doorUse(posx, posy, this->TileMap) != Solid ? "SOLID" : "BACKGROUND") << std::endl;
 		}
 	}
 	bool isInvGui() {
@@ -193,8 +203,8 @@ public:
 		}
 		delete blocks;
 
-		TMap::saveTileMap("map.mf", TileMap);
-		TMap::saveTileMap("mapbg.mf", TileMapBg);
+		//TMap::saveTileMap("map.mf", TileMap);
+		//TMap::saveTileMap("mapbg.mf", TileMapBg);
 		inv->saveInventory();
 
 		delete anim.getTexture();

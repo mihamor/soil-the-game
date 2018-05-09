@@ -135,7 +135,7 @@ void Player::Collision(int dir, String TileMap[], std::list<AbstractBlock *> blo
 		{
 			char s = TileMap[i][j];
 			AbstractBlock * b = AbstractBlock::getBlockFromList(s, blocks);
-			if (b->getCollision())
+			if (b && b->getCollision())
 			{
 				if (dx > 0 && dir == 0) x = j * 32 - w;
 				if (dx < 0 && dir == 0) x = j * 32 + 32;

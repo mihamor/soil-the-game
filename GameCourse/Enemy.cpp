@@ -44,7 +44,7 @@ void Enemy::Collision(int num, String TileMap[], std::list<AbstractBlock *> & bl
 		
 			char s = TileMap[i][j];
 			AbstractBlock * b = AbstractBlock::getBlockFromList(s, blocks);
-			if (b->getCollision()) {
+			if (b && b->getCollision()) {
 				if (dx > 0 && num == 0) {
 					x = j * BLOCK_SIZE - w;
 					dx = -dx; ///
