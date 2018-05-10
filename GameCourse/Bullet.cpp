@@ -13,6 +13,7 @@ Bullet::Bullet(AnimationManager a, int X, int Y, bool side)
 	w = h = 6;
 	life = true;
 	name = "Bullet";
+	hit = false;
 }
 Bullet::~Bullet() {}
 

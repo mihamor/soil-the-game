@@ -16,11 +16,12 @@ Player::Player(AnimationManager &a, int X, int Y)
 	x = X;
 	y = Y;
 	anim = a;
-	life = true;
+	life = 3;
 	STATE = stay;
 	name = "Player";
 	range = 5;
 	this->hand = NULL;
+	hit = false;
 }
 
 void Player::setHand(Slot * bl) { hand = bl; }
@@ -98,7 +99,7 @@ void Player::KeyCheck()
 void Player::update(float time, String TileMap[], std::list<AbstractBlock *> blocks)
 {
 
-	KeyCheck();
+	if(!this->hit)KeyCheck();
 	if (STATE == stay) anim.set("stay");
 	if (STATE == walk) anim.set("walk");
 	if (STATE == jump) anim.set("jump");
@@ -138,18 +139,27 @@ void Player::Collision(int dir, String TileMap[], std::list<AbstractBlock *> blo
 			if (b && b->getCollision())
 			{
 				if (dx > 0 && dir == 0) x = j * 32 - w;
-				if (dx < 0 && dir == 0) x = j * 32 + 32;
+				else if (dx < 0 && dir == 0) x = j * 32 + 32;
 				if (dy > 0 && dir == 1)
 				{
 					y = i * 32 - h;
 					dy = 0;
 					onGround = true;
 					STATE = stay;
+
+					if (hit) {
+						hit = false;
+						dx = 0;
+					}
 				}
-				if (dy < 0 && dir == 1)
+				else if (dy < 0 && dir == 1)
 				{
 					y = i * 32 + 32;
 					dy = 0;
+					if (hit) {
+						hit = false;
+						dx = 0;
+					}
 				}
 			}
 		}
@@ -177,7 +187,17 @@ void Player::drawHUD(RenderWindow & window, int vmodex, int vmodey)
 		amountShow.setCharacterSize(32);
 		amountShow.setPosition(48 + 32, vmodey - 48);
 		inHand.setPosition(48 + 32, vmodey - 48);
+
+
+		
+
 		window.draw(inHand);
 		window.draw(amountShow);
+	}
+	for (int i = 0; i < this->life; i++) {
+			CircleShape heart(10);
+			heart.setFillColor(Color::Red);
+			heart.setPosition(0 + 30 * i, 0);
+			window.draw(heart);
 	}
 }

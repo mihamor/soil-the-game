@@ -2,6 +2,7 @@
 #include "tilemap.h"
 #include "DoorBlock.h"
 #include "Block.hpp"
+#include "TreeBlock.hpp"
 #include <time.h>
 
 using namespace sf;
@@ -92,14 +93,18 @@ private:
 	static void fillTrees(String * newMap) {
 		int treesCount = W / 10;
 		int j = 0;
-		while (j < treesCount && j < 100000) {
-			for (int y = groundLevel - jumpDist - 1; y < groundLevel + jumpDist + 1; y++) {
+		int i = 0;
+		while (j < treesCount && i < 100000) {
+			for (int y = groundLevel - jumpDist; y < groundLevel + jumpDist; y++) {
+				//int y = (rand() % (2 * jumpDist) + groundLevel);
 				int x = (rand() % (W - 1)) + 1;
 				if (newMap[y][x] == ' ' && hasBlockNeigh(y, x, newMap, 'G')) {
-					newMap[y][x] = 'C';
+					//newMap[y][x] = 'C';
+					TreeBlock::placeTree(y, x, newMap);
 					j++;
 				}
 			}
+			i++;
 		}
 	}
 

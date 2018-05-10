@@ -8,7 +8,7 @@ using namespace sf;
 class Player :public Entity
 {
 private:
-	bool onGround, onLadder, shoot, hit;
+	bool onGround, onLadder, shoot;
 	enum { stay, walk, duck, jump, climb, swim } STATE;
 	int range;
 	Slot * hand;

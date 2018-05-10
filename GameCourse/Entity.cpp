@@ -9,8 +9,18 @@ Entity::Entity(AnimationManager &a, int X, int Y)
 	x = X;
 	y = Y;
 	anim = a;
-	life = true;
+	life = 3;
 	dir = 0;
+	hit = false;
+}
+
+void Entity::hitted(bool dir) {
+	bool dirSplash = dir;
+	this->dy = -0.2;
+	if (dirSplash) this->dx = -0.2;
+	else  this->dx = 0.2;
+	this->hit = true;
+	this->life = this->life - 1;
 }
 
 void Entity::draw(RenderWindow &window, float offsetX, float offsetY)
@@ -48,14 +58,18 @@ void Entity::entitiesInteraction(std::list<Entity*>  *entities, Entity * player)
 
 			if ((player->getRect().intersects(e->getRect()) && player->dy > 0))
 			{
-				e->dx = 0;
-				e->life = false;
-				it = entities->erase(it);
-				delete e;
+				//e->dx = 0;
+				e->life = e->life - 1;
+				if (!e->life) {
+					it = entities->erase(it);
+					delete e;
+				}
 
 				player->dy = -0.2;
 			}
-			else if (player->getRect().intersects(e->getRect())) { player->life = false; }
+			else if (player->getRect().intersects(e->getRect())  && !player->dy) {
+				player->hitted(e->dir);
+			}
 
 			for (std::list<Entity*>::iterator it2 = entities->begin(); it2 != entities->end(); it2++)
 			{
@@ -64,12 +78,16 @@ void Entity::entitiesInteraction(std::list<Entity*>  *entities, Entity * player)
 				{
 					if (b->getRect().intersects(e->getRect()))
 					{
+						bool dirSplash = b->dir;
 						it2 = entities->erase(it2);
-						b->life = false;
-						it = entities->erase(it);
-						e->life = false;
+						b->life = 0;
 						delete b;
-						delete e;
+						e->hitted(dirSplash);
+						//std::cout << e->hit << std::endl;
+						if (!e->life) { 
+							it = entities->erase(it);
+							delete e;
+						}
 					}
 
 				}

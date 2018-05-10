@@ -6,7 +6,7 @@
 using namespace sf;
 class Enemy:public Entity
 {
-	bool onGround, shoot, hit;
+	bool onGround, shoot;
 	enum { stay, walk, playerDetected} STATE;
 public:
 

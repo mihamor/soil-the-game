@@ -8,8 +8,8 @@ B   WW   WW                       W   B
 B  WW     WW                     WWW  B
 B   C     C                     WWWWW B
 B   C     C                    WWWWWWWB
-B   D     D                   WW     WB
-B   D     D                    W     WB
+B   d     d                   WW     WB
+B   d     d                    W     WB
 BGGGCCCCCCCG                         WB
 BSSSSSSSSSGGG                        WB
 BSSSRRRSSSSSGGGGGGGGGGGGGGGGGGGGGGGGGGB

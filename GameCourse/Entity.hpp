@@ -8,11 +8,14 @@ class Entity
 {
 public:
 	float x, y, dx, dy, w, h;
-	bool life, dir;
+	int life;
+	bool hit;
+	bool dir;
 	AnimationManager anim;
 	std::string name;
 
 	Entity();
+	void hitted(bool dir);
 	Entity(AnimationManager &a, int X, int Y);
 	virtual void update(float time, String TileMap[], std::list<AbstractBlock *> blocks ) = 0;
 	void draw(RenderWindow &window, float offsetX, float offsetY);
