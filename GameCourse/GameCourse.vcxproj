@@ -151,11 +151,13 @@
     <ClInclude Include="Inventory.hpp" />
     <ClInclude Include="menu.hpp" />
     <ClInclude Include="PLAYER.hpp" />
+    <ClInclude Include="Recipe.hpp" />
     <ClInclude Include="Slot.hpp" />
     <ClInclude Include="tilemap.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
     <ClInclude Include="TreeBlock.hpp" />
+    <ClInclude Include="Workbench.hpp" />
     <ClInclude Include="WorldGenerator.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +172,7 @@
     <ClCompile Include="Environment.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Recipe.cpp" />
     <ClCompile Include="Source1.cpp" />
     <ClCompile Include="tilemap.cpp" />
     <ClCompile Include="tinystr.cpp" />
@@ -177,6 +180,7 @@
     <ClCompile Include="tinyxmlerror.cpp" />
     <ClCompile Include="tinyxmlparser.cpp" />
     <ClCompile Include="TreeBlock.cpp" />
+    <ClCompile Include="Workbench.cpp" />
     <ClCompile Include="WorldGenerator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

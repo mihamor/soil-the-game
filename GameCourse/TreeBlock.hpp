@@ -4,8 +4,8 @@
 
 const int maxTreeHeight = 5;
 const int maxTreeRadius = 3;
-const char DEFAULT_TREE_SIGN = 'C';
-const char DEFAULT_LEAVES_SIGN = 'W';
+const char DEFAULT_TREE_SIGN = 't';
+const char DEFAULT_LEAVES_SIGN = 'l';
 
 class TreeBlock : public AbstractBlock
 {
@@ -33,9 +33,12 @@ public:
 		}
 		for (int j = i - radius; j <= i + radius; j++) {
 			for (int k = x - radius; k <= x + radius; k++) {
+				if ((j == i - radius && k == x - radius)
+					|| (j == i - radius && k == x + radius)
+					|| (j == i + radius && k == x - radius)
+					|| (j == i + radius && k == x + radius)) continue;
 				if (j < H && k < W && j > 0 && k > 0
 					&& TileMap[j][k] == DEFAULT_BG_SINGNATURE) TileMap[j][k] = DEFAULT_LEAVES_SIGN;
-				else continue;
 			}
 		}
 		return true;

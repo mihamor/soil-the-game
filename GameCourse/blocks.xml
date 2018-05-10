@@ -13,4 +13,6 @@
     <block type="Background" signature="99" texture="blocks/bgcouble.png" />
     <block type="DoorClosed" signature="68" texture="blocks/doorClosed.png" />
     <block type="DoorOpened" signature="100" texture="blocks/doorClosed.png" />
+    <block type="Tree" signature="116" texture="blocks/tree.png" />
+    <block type="Tree" signature="108" texture="blocks/leaves.png" />
 </block_list>

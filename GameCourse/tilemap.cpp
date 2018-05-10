@@ -10,6 +10,7 @@ void TMap::saveTileMap(const char * FileName, String TileMap[])
 		{
 			map[i][j] = TileMap[i][j];
 		}
+		map[i][W] = '\0';
 	}
 
 	FILE *fp;
@@ -37,11 +38,13 @@ void TMap::loadTileMap(const char * FileName, String TileMap[])
 
 	for (int i = 0; i < H; i++)
 	{
-		for (int j = 0; j < W + 1; j++)
+		for (int j = 0; j < W ; j++)
 		{
 			TileMap[i][j] = map[i][j];
 		}
+		TileMap[i][W] = '\0';
 	}
+	
 }
 
 void TMap::setBlock(Player * p, int x, int y, float offsetX, float offsetY, std::list<AbstractBlock*> blocks, sf::String * TileMap, sf::String * TileMapBg, Inventory& inv) {
@@ -65,16 +68,23 @@ void TMap::setBlock(Player * p, int x, int y, float offsetX, float offsetY, std:
 }
 
 void TMap::removeBlock(Player * p, int x, int y, float offsetX, float offsetY, std::list<AbstractBlock*> blocks, sf::String * TileMap, sf::String * TileMapBg, Inventory& inv) {
-	if (p->isInRange(x, y, offsetX, offsetY)) // поставить блок
+	if (p->isInRange(x, y, offsetX, offsetY))
 	{
 		int posx = (x + (int)offsetX) / 32;
 		int posy = (y + (int)offsetY) / 32;
+		bool isBg = false;
 		AbstractBlock *check = AbstractBlock::getBlock(blocks, TileMap, posy, posx);
-		if(check->singnature == DEFAULT_BG_SINGNATURE) check = AbstractBlock::getBlock(blocks, TileMapBg, posy, posx);
+		if (check->singnature == DEFAULT_BG_SINGNATURE)
+		{
+			check = AbstractBlock::getBlock(blocks, TileMapBg, posy, posx);
+			isBg = true;
+		}
 		if (check->getPermision())
 		{
-			if(check->type == Solid) TileMap[posy][posx] = DEFAULT_BG_SINGNATURE;
-			else TileMapBg[posy][posx] = DEFAULT_BG_SINGNATURE;
+			if (isBg) TileMapBg[posy][posx] = DEFAULT_BG_SINGNATURE;
+			else TileMap[posy][posx] = DEFAULT_BG_SINGNATURE;
+			//if(check->type == Solid) TileMap[posy][posx] = DEFAULT_BG_SINGNATURE;
+			//else TileMapBg[posy][posx] = DEFAULT_BG_SINGNATURE;
 			inv.addSlot(check);
 		}
 	}

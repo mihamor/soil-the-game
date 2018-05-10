@@ -7,6 +7,7 @@
 #include "WorldGenerator.hpp"
 #include "Inventory.hpp"
 #include <iostream>
+#include "Workbench.hpp"
 #include "Cursor.hpp"
 const int INV_SIZE = 10;
 
@@ -18,10 +19,12 @@ class Environment
 	std::list<AbstractBlock *> * blocks;
 	std::list<Entity *>  * entities;
 	Inventory * inv;
+	Workbench * wb;
 	int menuChoice;
 	float offsetX = 0, offsetY = 0;
 	Cursor cursor;
-	bool isGui = false;
+	bool isGuiInv = false;
+	bool isGuiWorkbench = false;
 	/*String TileMap[H] =
 	{
 		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
@@ -115,10 +118,13 @@ public:
 
 		this->entities = new std::list<Entity *>();
 		this->entities->push_back(p);
-		//this->entities->push_back(new Enemy(enemyAnim, 32 * (W - 1), 32 * 12, false));
-		//this->entities->push_back(new Enemy(enemyAnim, 32 * (W - W / 2), 32 * 12, true));
+		this->entities->push_back(new Enemy(enemyAnim, 32 * (W - 1), 32 * 12, false));
+		this->entities->push_back(new Enemy(enemyAnim, 32 * (W - W / 2), 32 * 12, true));
 
 		this->blocks = BlockLoader::loadBlocksFromXml("blocks.xml");
+
+
+		this->wb = new Workbench(inv, *blocks);
 
 	};
 
@@ -137,8 +143,12 @@ public:
 		entities->push_back(new Bullet(anim, p->x + p->w / 2, p->y + p->h / 4, p->dir));
 	}
 
-	void setGui(bool state) {
-		isGui = state;
+	void setGuiInv(bool state) {
+		isGuiInv = state;
+	}
+
+	void setGuiWorkbench(bool state) {
+		isGuiWorkbench = state;
 	}
 	void setBlock(Vector2i a) {
 		TMap::setBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
@@ -153,10 +163,17 @@ public:
 			DoorBlock * db = (DoorBlock *)bl;
 			std::cout << "Now type is " <<  (db->doorUse(posx, posy, this->TileMap) != Solid ? "SOLID" : "BACKGROUND") << std::endl;
 		}
+		else if (bl->interact() == treeType) {
+			TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
+		}
 		std::cout << "Interaction " << bl->interact() << std::endl;
 	}
 	bool isInvGui() {
-		return isGui;
+		return isGuiInv;
+	}
+
+	bool isWorkbenchGui() {
+		return isGuiWorkbench;
 	}
 	void addBlock(Vector2i a) {
 		int posx = (a.x + (int)offsetX) / 32;
@@ -185,7 +202,7 @@ public:
 		// взаемодействие динамических обьектов
 		Entity::entitiesInteraction(entities, p);
 		// апдейт динамических обьектов
-		if (!isGui)
+		if (!isGuiInv && !isGuiWorkbench)
 			Entity::updateAllEntities(entities, time, TileMap, *blocks);
 
 		// сдвиг карты при движение view.setCenter(p->x, p->y); window.setView(view)
@@ -205,8 +222,11 @@ public:
 		//Отрисовка HUD
 		p->drawHUD(window, vmodex, vmodey);
 		//отрисовка инвентаря(ставить последним)
-		if (isGui)
-			this->inv->draw(vmodex, vmodey, window, &isGui, &a, p);
+		if (isGuiInv)
+			this->inv->draw(vmodex, vmodey, window, &isGuiInv, &a, p);
+		else if (isGuiWorkbench)
+			this->wb->draw(window, &isGuiWorkbench);
+		
 		cursor.draw(window);
 	}
 
@@ -227,6 +247,10 @@ public:
 		if (this->menuChoice == 1) {
 			TMap::saveTileMap("map.mf", TileMap);
 			TMap::saveTileMap("mapbg.mf", TileMapBg);
+		}
+		else {
+			TMap::saveTileMap("mapNew.mf", TileMap);
+			TMap::saveTileMap("mapbgNew.mf", TileMapBg);
 		}
 		inv->saveInventory();
 

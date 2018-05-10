@@ -2,6 +2,7 @@
 
 #include "DoorBlock.h"
 #include "Block.hpp"
+#include "TreeBlock.hpp" 
 
 
 
@@ -23,6 +24,9 @@ public:
 				if(b->singnature == doorOpenSign)
 					element->SetAttribute("type", "DoorOpened");
 				else  element->SetAttribute("type", "DoorClosed");
+			}
+			else if (b->interact() == treeType) {
+				element->SetAttribute("type", "Tree");;
 			}
 			else element->SetAttribute("type", b->getCollision() ? "Solid" : "Background");
 			element->SetAttribute("signature", b->singnature);
@@ -56,6 +60,9 @@ public:
 			else if (!strcmp(block->Attribute("type"), "DoorOpened")) {
 				b = new DoorBlock(bFileName, signature, Background);
 				b->rectangle.setFillColor(Color(105, 105, 105));
+			}
+			else if (!strcmp(block->Attribute("type"), "Tree")) {
+				b = new TreeBlock(bFileName, signature, Background);
 			}
 			else if ((type == Solid || type == Background ))
 				 b = new Block(bFileName, signature, type);

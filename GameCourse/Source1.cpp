@@ -78,7 +78,10 @@ int main(){
 		}
 		// call inventory
 		if (Keyboard::isKeyPressed(Keyboard::I))
-			e.setGui(true);
+			e.setGuiInv(true);
+		if (Keyboard::isKeyPressed(Keyboard::C))
+			e.setGuiWorkbench(true);
+
 
 		Event event;
 		while (window.pollEvent(event))

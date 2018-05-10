@@ -75,6 +75,12 @@
     <ClInclude Include="TreeBlock.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="Recipe.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Workbench.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source1.cpp">
@@ -132,6 +138,12 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="TreeBlock.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Recipe.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Workbench.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

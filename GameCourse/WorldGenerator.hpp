@@ -45,8 +45,8 @@ private:
 		for (int y1 = y - 1; y1 < y + 2; y1++) {
 			for (int x1 = x - 1; x1 < x + 2; x1++) {
 				if ((y1 == y - 1 && x1 == x - 1)
-					|| (y1 == y - 1 && x1 == x + 1)
-					|| (y1 == y + 1 && x1 == x - 1)
+					//|| (y1 == y - 1 && x1 == x + 1)
+					//|| (y1 == y + 1 && x1 == x - 1)
 					|| (y1 == y + 1 && x1 == x + 1)) continue;
 				if (y1 < H && x1 < W && map[y1][x1] == sign) return true;
 			}
@@ -96,10 +96,8 @@ private:
 		int i = 0;
 		while (j < treesCount && i < 100000) {
 			for (int y = groundLevel - jumpDist; y < groundLevel + jumpDist; y++) {
-				//int y = (rand() % (2 * jumpDist) + groundLevel);
 				int x = (rand() % (W - 1)) + 1;
 				if (newMap[y][x] == ' ' && hasBlockNeigh(y, x, newMap, 'G')) {
-					//newMap[y][x] = 'C';
 					TreeBlock::placeTree(y, x, newMap);
 					j++;
 				}
