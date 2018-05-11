@@ -21,6 +21,7 @@ public:
 	void reduceAmount(std::list<Slot* >  * slots);
 	bool isInRange(int x, int y, double offsetX, double offsetY);
 	void KeyCheck();
+	bool isMoving();
 	void update(float time, String TileMap[], std::list<AbstractBlock *> blocks);
 	void Collision(int dir, String TileMap[], std::list<AbstractBlock *> blocks);
 	void drawHUD(RenderWindow & window, int vmodex, int vmodey);

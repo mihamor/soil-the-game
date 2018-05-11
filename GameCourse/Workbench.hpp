@@ -34,10 +34,10 @@ public:
 			delete r.getResult();
 		}
 	};
-	void draw(RenderWindow & window, bool * isGui) {
+	void draw(RenderWindow & window, int vmodey, int vmodex, bool * isGui) {
 
 
-		RectangleShape background(Vector2f(window.getSize().x - window.getSize().x / 2, window.getSize().y - window.getSize().y / 2));
+		RectangleShape background(Vector2f(vmodex - vmodex / 2, vmodey - vmodey / 2));
 		background.setFillColor(Color::White);
 		background.setPosition(64, 64);
 
@@ -70,7 +70,7 @@ public:
 			if (r.ifMatchesInv(*inv)) {
 				for (Slot * s : r.getRequired()) {
 					RectangleShape slotToDraw = s->block->rectangle; // background of slot
-					posx = posx + 64;
+					posx = posx + BLOCK_SIZE;
 					slotToDraw.setPosition(posx, posy);
 					amountShow.setString(intToStr(s->amount));
 					amountShow.setPosition(posx, posy);
@@ -78,14 +78,14 @@ public:
 					window.draw(amountShow);
 					
 				}
-				posx = posx + 64;
+				posx = posx + BLOCK_SIZE;
 				arrow.setPosition(posx, posy);
 				window.draw(arrow);
 
 				Slot * result = r.getResult();
 				RectangleShape resultSlot = result->block->rectangle; // background of slot
 				results.push_back(resultSlot);
-				posx = posx + 64;
+				posx = posx + BLOCK_SIZE;
 				
 				resultSlot.setPosition(posx, posy);
 				amountShow.setString(intToStr(result->amount));
@@ -93,7 +93,7 @@ public:
 				window.draw(resultSlot);
 				window.draw(amountShow);
 				
-				posy = posy + 64;
+				posy = posy + BLOCK_SIZE;
 
 				if (isRectClicked(resultSlot, window))
 				{

@@ -80,7 +80,7 @@ void AnimationManager::draw(RenderWindow &window, int x, int y)
 	if (x >= 0 && y >= 0 && x <= a.x && y <= a.y)
 		window.draw(animList[currentAnim].sprite);
 }
-void AnimationManager::set(String name) { currentAnim = name; }
+void AnimationManager::set(String name) { if(currentAnim != name) currentAnim = name; }
 void AnimationManager::flip(bool b) { animList[currentAnim].flip = b; }
 void AnimationManager::tick(float time) { animList[currentAnim].tick(time); }
 void AnimationManager::pause() { animList[currentAnim].isPlaying = false; }

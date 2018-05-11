@@ -1,4 +1,5 @@
 #include "tilemap.h"
+#include "DoorBlock.h"
 
 void TMap::saveTileMap(const char * FileName, String TileMap[])
 {
@@ -47,7 +48,7 @@ void TMap::loadTileMap(const char * FileName, String TileMap[])
 	
 }
 
-void TMap::setBlock(Player * p, int x, int y, float offsetX, float offsetY, std::list<AbstractBlock*> blocks, sf::String * TileMap, sf::String * TileMapBg, Inventory& inv) {
+bool TMap::setBlock(Player * p, int x, int y, float offsetX, float offsetY, std::list<AbstractBlock*> blocks, sf::String * TileMap, sf::String * TileMapBg, Inventory& inv) {
 	if (p->isInRange(x, y, offsetX, offsetY) && p->getHand() != NULL) // поставить блок
 	{
 		int posx = (x + (int)offsetX) / 32;
@@ -60,11 +61,14 @@ void TMap::setBlock(Player * p, int x, int y, float offsetX, float offsetY, std:
 			else if(h->block->type == Background){
 				check = AbstractBlock::getBlock(blocks, TileMapBg, posy, posx);
 				if (check->singnature == DEFAULT_BG_SINGNATURE) TileMapBg[posy][posx] = h->block->singnature;
-				else return;
+				else return false;
 			}
 			p->reduceAmount(inv.getList());
+			return true;
 		}
+		return false;
 	}
+	return false;
 }
 
 void TMap::removeBlock(Player * p, int x, int y, float offsetX, float offsetY, std::list<AbstractBlock*> blocks, sf::String * TileMap, sf::String * TileMapBg, Inventory& inv) {
@@ -82,10 +86,13 @@ void TMap::removeBlock(Player * p, int x, int y, float offsetX, float offsetY, s
 		if (check->getPermision())
 		{
 			if (isBg) TileMapBg[posy][posx] = DEFAULT_BG_SINGNATURE;
-			else TileMap[posy][posx] = DEFAULT_BG_SINGNATURE;
+			else {
+				TileMap[posy][posx] = DEFAULT_BG_SINGNATURE;
+			}
 			//if(check->type == Solid) TileMap[posy][posx] = DEFAULT_BG_SINGNATURE;
 			//else TileMapBg[posy][posx] = DEFAULT_BG_SINGNATURE;
-			inv.addSlot(check);
+			if (check->interact() == doorType) inv.addSlot(AbstractBlock::getBlockFromList(doorClosedSign, blocks));
+			else inv.addSlot(check);
 		}
 	}
 }

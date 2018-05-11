@@ -24,6 +24,9 @@ Player::Player(AnimationManager &a, int X, int Y)
 	hit = false;
 }
 
+bool Player::isMoving() {
+	return dx || dy;
+}
 void Player::setHand(Slot * bl) { hand = bl; }
 Slot * Player::getHand() { return hand; }
 void Player::reduceAmount(std::list<Slot* >  * slots)

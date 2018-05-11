@@ -50,6 +50,7 @@ int main(){
 	
 	while (window.isOpen() && e.player()->life) {
 		
+		//sleep(milliseconds(200));
 		float time = clock.getElapsedTime().asMicroseconds(); // тик рейт
 		clock.restart();
 		time = time / 400; // делитель ~  задержка милисекунды

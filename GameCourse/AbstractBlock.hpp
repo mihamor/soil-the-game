@@ -136,6 +136,12 @@ public:
 		for (int i = 0; i < H; i++)
 			for (int j = 0; j < W; j++)
 			{
+				float posx = j * 32 - offsetX;
+				float posy = i * 32 - offsetY;
+				float reserve = BLOCK_SIZE * 2;
+				if (posy > window.getSize().y || posx > window.getSize().x || posx < 0 - reserve  || posy < 0 - reserve) continue;
+
+
 				AbstractBlock *b = AbstractBlock::getBlock(*blocks, TileMap, i, j);
 				if (b->type == Background && b->interact() == removeType) b = AbstractBlock::getBlock(*blocks, TileMapBg, i, j);
 				if (b != NULL)
@@ -146,7 +152,8 @@ public:
 					std::cout << (char)TileMap[i][j] << std::endl;
 					abort();
 				}
-				rectangle.setPosition(j * 32 - offsetX, i * 32 - offsetY);
+				
+				rectangle.setPosition(posx, posy);
 				window.draw(rectangle);
 			}
 	}

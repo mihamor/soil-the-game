@@ -10,7 +10,7 @@
 #include "Workbench.hpp"
 #include "Cursor.hpp"
 const int INV_SIZE = 10;
-
+const Vector2i startPlayerPos(16*W,64);
 using namespace sf;
 class Environment
 {
@@ -25,48 +25,6 @@ class Environment
 	Cursor cursor;
 	bool isGuiInv = false;
 	bool isGuiWorkbench = false;
-	/*String TileMap[H] =
-	{
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
-	};
-	String TileMapBg[H] =
-	{
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
-	};*/
 	String TileMap[H];
 	String TileMapBg[H];
 
@@ -112,7 +70,7 @@ public:
 		anim.loadFromXML("sprites/willy_anim.xml", playerT);
 		//anim.loadFromXML("sprites/anim_megaman.xml", playerT);
 		enemyAnim.loadFromXML("sprites/babypig_anim.xml", enemyT);
-		this->p = new Player(anim, 64, 64);
+		this->p = new Player(anim, startPlayerPos.x, startPlayerPos.y);
 		const int MAX_SIZE = 10;
 		inv = new Inventory(MAX_SIZE);
 
@@ -151,7 +109,15 @@ public:
 		isGuiWorkbench = state;
 	}
 	void setBlock(Vector2i a) {
-		TMap::setBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
+		int posx = (a.x + (int)offsetX) / 32;
+		int posy = (a.y + (int)offsetY) / 32;
+		AbstractBlock * bl = AbstractBlock::getBlock(*blocks, TileMap, posy, posx);
+		if (!TMap::setBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv)) {
+			if (bl->interact() == doorType) {
+				DoorBlock * db = (DoorBlock *)bl;
+				std::cout << "Now type is " << (db->doorUse(posx, posy, this->TileMap) != Solid ? "SOLID" : "BACKGROUND") << std::endl;
+			}
+		}
 	}
 	void removeBlock(Vector2i a) {
 		int posx = (a.x + (int)offsetX) / 32;
@@ -160,8 +126,7 @@ public:
 		if(bl->interact() == removeType)
 			TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
 		else if (bl->interact() == doorType) {
-			DoorBlock * db = (DoorBlock *)bl;
-			std::cout << "Now type is " <<  (db->doorUse(posx, posy, this->TileMap) != Solid ? "SOLID" : "BACKGROUND") << std::endl;
+			TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
 		}
 		else if (bl->interact() == treeType) {
 			TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
@@ -209,15 +174,21 @@ public:
 		if (!isGui())
 			Entity::updateAllEntities(entities, time, TileMap, *blocks);
 
-		// сдвиг карты при движение view.setCenter(p->x, p->y); window.setView(view)
+		// сдвиг карты при движение 
+		/*
+		View view;
+		view.setCenter(p->x, p->y);
+		view.setSize(Vector2f(vmodex, vmodey));
+		window.setView(view);*/
 
-		if (p->x > vmodex / 2 /*&& p->x< (vmodex + 32 * W) / 2*/) offsetX = p->x - vmodex / 2;
-		if (p->y > vmodey / 2 /*&& p->y + offsetY < 32 * H*/) offsetY = p->y - vmodey / 2;
+		if (p->x > vmodex / 2 && p->x  <  W*(32) - vmodex / 2) offsetX = p->x - vmodex / 2;
+		if (p->y > vmodey / 2 && p->y  < H*(32) - vmodey / 2) offsetY = p->y - vmodey / 2;
 
 		// отрисовка общего задника
 		//window.draw(surface);
 		// отрисовка блоков
-		window.clear(Color(255, 255, 255));
+		//if(p->isMoving())window.clear(Color(255, 255, 255));
+
 		AbstractBlock::drawViewField(blocks, TileMap, TileMapBg, offsetX, offsetY, H, W, window);
 		// отрисовка сущностей
 		Entity::drawAllEntities(entities, offsetX, offsetY, window);
@@ -229,7 +200,7 @@ public:
 		if (isGuiInv)
 			this->inv->draw(vmodex, vmodey, window, &isGuiInv, &a, p);
 		else if (isGuiWorkbench)
-			this->wb->draw(window, &isGuiWorkbench);
+			this->wb->draw(window, vmodey, vmodex, &isGuiWorkbench);
 		
 		cursor.draw(window);
 	}
