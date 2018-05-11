@@ -175,6 +175,10 @@ public:
 	bool isWorkbenchGui() {
 		return isGuiWorkbench;
 	}
+
+	bool isGui(){
+	 return isGuiInv || isGuiWorkbench;
+	}
 	void addBlock(Vector2i a) {
 		int posx = (a.x + (int)offsetX) / 32;
 		int posy = (a.y + (int)offsetY) / 32;
@@ -202,7 +206,7 @@ public:
 		// взаемодействие динамических обьектов
 		Entity::entitiesInteraction(entities, p);
 		// апдейт динамических обьектов
-		if (!isGuiInv && !isGuiWorkbench)
+		if (!isGui())
 			Entity::updateAllEntities(entities, time, TileMap, *blocks);
 
 		// сдвиг карты при движение view.setCenter(p->x, p->y); window.setView(view)
@@ -253,10 +257,11 @@ public:
 			TMap::saveTileMap("mapbgNew.mf", TileMapBg);
 		}
 		inv->saveInventory();
+		//wb->workbenchSave();
 
 		delete anim.getTexture();
 		delete enemyAnim.getTexture();
-
+		delete wb;
 	}
 
 

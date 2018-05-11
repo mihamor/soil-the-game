@@ -60,7 +60,7 @@ int main(){
 		else
 			a = Mouse::getPosition();
 		// контроль нажатия клавиш
-		if (!e.isInvGui()) {
+		if (!e.isGui()) {
 			if (Keyboard::isKeyPressed(Keyboard::A))
 				e.player()->key["L"] = true;
 			if (Keyboard::isKeyPressed(Keyboard::D))
@@ -99,7 +99,7 @@ int main(){
 				//vmodey = event.size.height;
 				//window.create(sf::VideoMode(vmodex, vmodey, 32), "SFML Window");
 			}
-			if (event.type == Event::KeyPressed && !e.isInvGui())
+			if (event.type == Event::KeyPressed && !e.isGui())
 				switch (event.key.code)
 				{
 				case Keyboard::Space: {
@@ -109,7 +109,7 @@ int main(){
 				default:
 					break;
 				}
-			if(event.type == Event::MouseButtonPressed && !e.isInvGui())
+			if(event.type == Event::MouseButtonPressed && !e.isGui())
 				switch (event.key.code)
 				{
 				case Mouse::Right: { // place block

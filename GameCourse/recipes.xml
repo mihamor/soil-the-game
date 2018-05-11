@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<recipes_list>
+    <recipe>
+        <required>
+            <slot signature="116" amount="1" />
+        </required>
+        <result signature="87" amount="2" />
+    </recipe>
+    <recipe>
+        <required>
+            <slot signature="82" amount="1" />
+        </required>
+        <result signature="45" amount="1" />
+    </recipe>
+    <recipe>
+        <required>
+            <slot signature="82" amount="4" />
+        </required>
+        <result signature="67" amount="1" />
+    </recipe>
+</recipes_list>

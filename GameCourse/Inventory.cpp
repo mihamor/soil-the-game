@@ -5,8 +5,7 @@
 using namespace std;
 static String intToStr(int value) {
 	std::string str = std::to_string(value);
-	std::locale locale;
-	String result(str, locale);
+	String result(str);
 	return result;
 }
 
@@ -39,6 +38,18 @@ void Inventory::addSlot(AbstractBlock * pb)
 	Slot * newSlot = new Slot(pb, 1);
 	this->added++;
 	slots.push_back(newSlot);
+}
+
+void Inventory::reduceAmount(AbstractBlock & toReduce) {
+	for (Slot * s : slots) {
+		if (Block::compare(s->block, &toReduce)) {
+			if (--s->amount == 0) {
+				slots.remove(s);
+				delete s;
+			};
+			break;
+		}
+	}
 }
 
 void Inventory::draw(float vmodex, float vmodey, RenderWindow &window, bool *isGui, Vector2i * posMouse, Player * p)

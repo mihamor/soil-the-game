@@ -28,7 +28,7 @@ public:
 		for (Slot * reqS : required) {
 			bool wasFound = false;
 			for (Slot * s : *(inv.getList())) {
-				if (s->block->singnature = reqS->block->singnature
+				if (s->block->singnature == reqS->block->singnature
 					&& s->amount >= reqS->amount) wasFound = true;
 			}
 			if (!wasFound) return false;
