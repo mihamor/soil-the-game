@@ -7,6 +7,7 @@
 #include "Environment.hpp"
 #include "Cursor.hpp"
 #include "menu.hpp"
+#include "saveMenu.hpp"
 #define SFML_DYNAMIC
 
 #pragma comment(lib, "sfml-graphics-s-d.lib")
@@ -30,12 +31,13 @@ void GetDesktopResolution(int& horizontal, int& vertical)
 int vmodex = 600;
 int vmodey = 32 * 12;
 
-int main(){
+int main() {
 
 
 	RenderWindow window(VideoMode(vmodex, vmodey), "Miha game");
 	MenuChoiceCustom menuChoice = menu(window);
-	if (menuChoice == NONE) return EXIT_SUCCESS;
+	if (menuChoice == NONE || menuChoice == EXIT) return EXIT_SUCCESS;
+	int slot = saveMenu(window, menuChoice == CONTINUE ? true : false);
 	window.clear();
 	bool gameOver = false;
 	bool Resized = false;
@@ -43,14 +45,13 @@ int main(){
 	Clock clock;
 	View view;
 
-	Environment e(vmodex, vmodey, menuChoice);
+	Environment e(vmodex, vmodey, menuChoice, slot);
 
 	RectangleShape rectangle;
 	sf::Vector2i a(0, 0);
 	
 	while (window.isOpen() && e.player()->life) {
 		
-		//sleep(milliseconds(200));
 		float time = clock.getElapsedTime().asMicroseconds(); // тик рейт
 		clock.restart();
 		time = time / 400; // делитель ~  задержка милисекунды

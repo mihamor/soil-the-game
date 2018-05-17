@@ -41,18 +41,11 @@ public:
 		background.setFillColor(Color::White);
 		background.setPosition(64, 64);
 
-
-
 		std::vector<RectangleShape> results;
 		Text  amountShow;   //amount of slot
 		Font font;
-		if (!font.loadFromFile("fonts/arial.ttf"))
-		{
-			assert(0);
-		}
-		//String ss = intToStr(s->amount);
+		if (!font.loadFromFile("fonts/arial.ttf")) assert(0);
 		amountShow.setFont(font);
-		//amountShow.setString(ss);
 		amountShow.setFillColor(Color::Black);
 		amountShow.setCharacterSize(32);
 		//amountShow.setPosition(posx, posy);
@@ -65,7 +58,7 @@ public:
 		window.draw(background);
 		int posy = 70;
 		for (Recipe r : recepies) {
-			
+
 			int posx = 70;
 			if (r.ifMatchesInv(*inv)) {
 				for (Slot * s : r.getRequired()) {
@@ -76,7 +69,7 @@ public:
 					amountShow.setPosition(posx, posy);
 					window.draw(slotToDraw);
 					window.draw(amountShow);
-					
+
 				}
 				posx = posx + BLOCK_SIZE;
 				arrow.setPosition(posx, posy);
@@ -86,30 +79,34 @@ public:
 				RectangleShape resultSlot = result->block->rectangle; // background of slot
 				results.push_back(resultSlot);
 				posx = posx + BLOCK_SIZE;
-				
+
 				resultSlot.setPosition(posx, posy);
 				amountShow.setString(intToStr(result->amount));
 				amountShow.setPosition(posx, posy);
-				window.draw(resultSlot);
-				window.draw(amountShow);
-				
-				posy = posy + BLOCK_SIZE;
 
-				if (isRectClicked(resultSlot, window))
+
+				posy = posy + BLOCK_SIZE;
+				bool added = false;
+				if (isRectClicked(resultSlot, window) && !inv->isFull(result->block))
 				{
+					added = true;
 					std::cout << result->amount << std::endl;
 					int amount = result->amount;
 					for (int i = 0; i < amount; i++) inv->addSlot(result->block);
-					for (Slot * req : r.getRequired()) {
-						for (int j = 0; j < req->amount; j++) inv->reduceAmount(*req->block);
-					}
-					sleep(milliseconds(200));
+					for (Slot * req : r.getRequired()) for (int j = 0; j < req->amount; j++) inv->reduceAmount(*req->block);
+					resultSlot.setFillColor(Color::Green);
 				}
+				else if (isRectClicked(resultSlot, window)) resultSlot.setFillColor(Color::Red);
+
+				
+				window.draw(resultSlot);
+				window.draw(amountShow);
+				if(added) sleep(milliseconds(200));
+				
+				
 			}
+			if (Keyboard::isKeyPressed(Keyboard::Escape))*isGui = false;
 		}
-		if (Keyboard::isKeyPressed(Keyboard::Escape)) *isGui = false;
-
-
 
 	}
 	void load(std::list<AbstractBlock*> &blocks, std::string fileName) {

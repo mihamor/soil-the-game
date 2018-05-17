@@ -20,6 +20,22 @@ Inventory::Inventory(int maxSlots)
 	this->maxSlots = maxSlots;
 }
 
+bool Inventory::isFull(AbstractBlock * pb) {
+	if (this->added < this->maxSlots) {
+		std::cout << "OOPS" << std::endl;
+		return false;
+	}
+	else {
+		for (std::list<Slot* >::iterator it = slots.begin(); it != slots.end(); it++)
+		{
+			if ((*it)->block->singnature == pb->singnature && !(*it)->isStacked())
+				return false;
+		}
+			
+	}
+	return true;
+}
+
 void Inventory::addSlot(AbstractBlock * pb)
 {
 	bool added = false;
@@ -44,6 +60,7 @@ void Inventory::reduceAmount(AbstractBlock & toReduce) {
 	for (Slot * s : slots) {
 		if (Block::compare(s->block, &toReduce)) {
 			if (--s->amount == 0) {
+				this->added--;
 				slots.remove(s);
 				delete s;
 			};
@@ -55,7 +72,7 @@ void Inventory::reduceAmount(AbstractBlock & toReduce) {
 void Inventory::draw(float vmodex, float vmodey, RenderWindow &window, bool *isGui, Vector2i * posMouse, Player * p)
 {
 	// отрисовка задника ивентаря
-	RectangleShape background(Vector2f(vmodex - vmodex / 2, vmodey - vmodey / 2));
+	RectangleShape background(Vector2f( BLOCK_SIZE * this->maxSlots, vmodey / 2));
 	background.setFillColor(Color::White);
 	background.setPosition(64, 64);
 
@@ -98,6 +115,12 @@ void Inventory::draw(float vmodex, float vmodey, RenderWindow &window, bool *isG
 			p->setHand(*it);
 			break;
 		}
+		else if (isRectClickedToDel(slotToDraw, window)) {
+			if (p->getHand() == *(it)) p->setHand(nullptr);
+			it = slots.erase(it);
+			this->added--;
+			break;
+		}
 	}
 }
 
@@ -109,7 +132,19 @@ bool Inventory::isRectClicked(sf::RectangleShape &rectToClick, sf::RenderWindow 
 	sf::IntRect rect(rectToClick.getPosition().x, rectToClick.getPosition().y, rectToClick.getGlobalBounds().width,
 		rectToClick.getGlobalBounds().height);
 	if (rect.contains(sf::Mouse::getPosition(window)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left))) {
+		sleep(milliseconds(100));
 		return true;
+		
+	}
+	return false;
+}
+bool Inventory::isRectClickedToDel(sf::RectangleShape &rectToClick, sf::RenderWindow &window) {
+	sf::IntRect rect(rectToClick.getPosition().x, rectToClick.getPosition().y, rectToClick.getGlobalBounds().width,
+		rectToClick.getGlobalBounds().height);
+	if (rect.contains(sf::Mouse::getPosition(window)) && (sf::Keyboard::isKeyPressed(Keyboard::D))) {
+		sleep(milliseconds(100));
+		return true;
+		
 	}
 	return false;
 }

@@ -1,5 +1,82 @@
 #include "tilemap.h"
 #include "DoorBlock.h"
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <assert.h>
+
+
+bool TMap::isEmptySlot(unsigned int slot) {
+	
+	std::string FileName;
+	switch (slot)
+	{
+	case 1:
+		FileName = "saves/map1.mf";
+		break;
+	case 2:
+		FileName = "saves/map2.mf";
+		break;
+	case 3:
+		FileName = "saves/map3.mf";
+		break;
+	default:
+		assert(0 && "Unknown slot");
+		break;
+	}
+
+	std::ifstream is;
+	is.open(FileName.c_str(), std::ios::binary);
+	if (!is.is_open()) return true;
+	is.seekg(0, std::ios::end);
+	int length = is.tellg();
+	std::cout << length << std::endl;
+	is.close();
+	return length <= 0;
+}
+bool TMap::loadTileMapFromSlot(int slot, String* TileMap, String* TileMapBg) {
+	switch (slot)
+	{
+	case 1:
+		TMap::loadTileMap("saves/map1.mf", TileMap);
+		TMap::loadTileMap("saves/mapbg1.mf", TileMapBg);
+		break;
+	case 2:
+		TMap::loadTileMap("saves/map2.mf", TileMap);
+		TMap::loadTileMap("saves/mapbg2.mf", TileMapBg);
+		break;
+	case 3:
+		TMap::loadTileMap("saves/map3.mf", TileMap);
+		TMap::loadTileMap("saves/mapbg3.mf", TileMapBg);
+		break;
+	default:
+		return false;
+		break;
+	}
+	return true;
+}
+
+bool TMap::saveTileMapToSlot(int slot, String* TileMap, String* TileMapBg) {
+	switch (slot)
+	{
+	case 1:
+		TMap::saveTileMap("saves/map1.mf", TileMap);
+		TMap::saveTileMap("saves/mapbg1.mf", TileMapBg);
+		break;
+	case 2:
+		TMap::saveTileMap("saves/map2.mf", TileMap);
+		TMap::saveTileMap("saves/mapbg2.mf", TileMapBg);
+		break;
+	case 3:
+		TMap::saveTileMap("saves/map3.mf", TileMap);
+		TMap::saveTileMap("saves/mapbg3.mf", TileMapBg);
+		break;
+	default:
+		return false;
+		break;
+	}
+	return true;
+}
 
 void TMap::saveTileMap(const char * FileName, String TileMap[])
 {
@@ -46,6 +123,8 @@ void TMap::loadTileMap(const char * FileName, String TileMap[])
 		TileMap[i][W] = '\0';
 	}
 	
+}
+bool isEmptySlot(unsigned int slot) {
 }
 
 bool TMap::setBlock(Player * p, int x, int y, float offsetX, float offsetY, std::list<AbstractBlock*> blocks, sf::String * TileMap, sf::String * TileMapBg, Inventory& inv) {

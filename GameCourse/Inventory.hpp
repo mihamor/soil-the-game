@@ -20,6 +20,8 @@ public:
 	void draw(float vmodex, float vmodey, RenderWindow &window, bool *isGui, Vector2i * posMouse, Player * p);
 	void saveInventory();
 	bool isRectClicked(sf::RectangleShape &rectToClick, sf::RenderWindow &window);
+	bool isRectClickedToDel(sf::RectangleShape &rectToClick, sf::RenderWindow &window);
 	void reduceAmount(AbstractBlock & toReduce);
+	bool isFull(AbstractBlock * pb);
 };
 

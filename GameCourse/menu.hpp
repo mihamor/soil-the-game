@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "Windows.h"
 
 using namespace sf;
 
@@ -33,7 +32,7 @@ MenuChoiceCustom menu(RenderWindow & window)
 	menu3.setPosition( (res.x - buttonSize.x) / 2, res.y / 2 + 120);
 	menuBg.setPosition(0,0);
 
-	//////////////////////////////лемч///////////////////
+
 	while (isMenu)
 	{
 		Event event;
@@ -46,10 +45,8 @@ MenuChoiceCustom menu(RenderWindow & window)
 			}
 			if (event.type == Event::Resized)
 			{
-				//vmodex = event.size.width;
-				//vmodey = event.size.height;
-				//window.create(sf::VideoMode(vmodex, vmodey, 32), "SFML Window");
-			}
+
+			}if (event.type == Event::MouseButtonPressed && event.key.code == Mouse::Left && menuNum != NONE) isMenu = false;
 		}
 
 		menu1.setColor(Color::White);
@@ -62,7 +59,7 @@ MenuChoiceCustom menu(RenderWindow & window)
 		else if (IntRect((res.x - buttonSize.x) / 2, res.y / 2 + 60, buttonSize.x, buttonSize.y).contains(Mouse::getPosition(window))) { menu2.setColor(Color::Blue); menuNum = NEWGAME; }
 		else if (IntRect((res.x - buttonSize.x) / 2, res.y / 2 + 120, buttonSize.x, buttonSize.y).contains(Mouse::getPosition(window))) { menu3.setColor(Color::Blue); menuNum = EXIT; }
 		else menuNum = NONE;
-		if (Mouse::isButtonPressed(Mouse::Left) && menuNum != NONE) isMenu = false;
+		
 
 		window.draw(menuBg);
 		window.draw(menu1);
@@ -74,5 +71,4 @@ MenuChoiceCustom menu(RenderWindow & window)
 	window.clear();
 
 	return menuNum;
-	////////////////////////////////////////////////////
 }

@@ -152,6 +152,7 @@
     <ClInclude Include="menu.hpp" />
     <ClInclude Include="PLAYER.hpp" />
     <ClInclude Include="Recipe.hpp" />
+    <ClInclude Include="saveMenu.hpp" />
     <ClInclude Include="Slot.hpp" />
     <ClInclude Include="tilemap.h" />
     <ClInclude Include="tinystr.h" />

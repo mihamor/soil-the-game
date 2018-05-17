@@ -29,6 +29,7 @@ class Environment
 	String TileMapBg[H];
 
 	int vmodex, vmodey;
+	int slot;
 	AnimationManager anim;
 	AnimationManager enemyAnim;
 
@@ -43,15 +44,15 @@ class Environment
 public:
 
 
-	Environment(int vmodex, int vmodey, int choice) {
+	Environment(int vmodex, int vmodey, int choice, int slot) {
 		this->vmodex = vmodex;
 		this->vmodey = vmodey;
 		this->menuChoice = choice;
+		this->slot = slot;
 
 		initMap();
 		if (choice == 1) {
-			TMap::loadTileMap("map.mf", TileMap);
-			TMap::loadTileMap("mapbg.mf", TileMapBg);
+			if (!TMap::loadTileMapFromSlot(slot, TileMap, TileMapBg)) assert(0 && "Invalid slot");
 		}
 		else {
 			WorldGenerator gen;
@@ -219,14 +220,16 @@ public:
 		}
 		delete blocks;
 
-		if (this->menuChoice == 1) {
-			TMap::saveTileMap("map.mf", TileMap);
-			TMap::saveTileMap("mapbg.mf", TileMapBg);
+		/*if (this->menuChoice == 1) {
+			TMap::saveTileMap("saves/map.mf", TileMap);
+			TMap::saveTileMap("saves/mapbg.mf", TileMapBg);
 		}
 		else {
-			TMap::saveTileMap("mapNew.mf", TileMap);
-			TMap::saveTileMap("mapbgNew.mf", TileMapBg);
-		}
+			TMap::saveTileMap("saves/mapNew.mf", TileMap);
+			TMap::saveTileMap("saves/mapbgNew.mf", TileMapBg);
+		}*/
+
+		TMap::saveTileMapToSlot(slot, TileMap, TileMapBg);
 		inv->saveInventory();
 		//wb->workbenchSave();
 
