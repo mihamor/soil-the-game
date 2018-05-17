@@ -179,9 +179,13 @@ public:
 private:
 
 	bool isRectClicked(sf::RectangleShape &rectToClick, sf::RenderWindow &window) {
+		Vector2i mpos_i = Mouse::getPosition(window);
+		Vector2f mpos_f = window.mapPixelToCoords(mpos_i);
+		Vector2i a = Vector2i(mpos_f.x, mpos_f.y);
+
 		sf::IntRect rect(rectToClick.getPosition().x, rectToClick.getPosition().y, rectToClick.getGlobalBounds().width,
 			rectToClick.getGlobalBounds().height);
-		if (rect.contains(sf::Mouse::getPosition(window)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left))) {
+		if (rect.contains(a) && (sf::Mouse::isButtonPressed(sf::Mouse::Left))) {
 			return true;
 		}
 		return false;

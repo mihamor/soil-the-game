@@ -129,9 +129,14 @@ void Inventory::saveInventory()
 	// @TODO saves inventory to XML format file (include TinyXML library)
 }
 bool Inventory::isRectClicked(sf::RectangleShape &rectToClick, sf::RenderWindow &window) {
+
+	Vector2i mpos_i = Mouse::getPosition(window);
+	Vector2f mpos_f = window.mapPixelToCoords(mpos_i);
+	Vector2i a = Vector2i(mpos_f.x, mpos_f.y);
+
 	sf::IntRect rect(rectToClick.getPosition().x, rectToClick.getPosition().y, rectToClick.getGlobalBounds().width,
 		rectToClick.getGlobalBounds().height);
-	if (rect.contains(sf::Mouse::getPosition(window)) && (sf::Mouse::isButtonPressed(sf::Mouse::Left))) {
+	if (rect.contains(a) && (sf::Mouse::isButtonPressed(sf::Mouse::Left))) {
 		sleep(milliseconds(100));
 		return true;
 		
@@ -139,9 +144,13 @@ bool Inventory::isRectClicked(sf::RectangleShape &rectToClick, sf::RenderWindow 
 	return false;
 }
 bool Inventory::isRectClickedToDel(sf::RectangleShape &rectToClick, sf::RenderWindow &window) {
+	Vector2i mpos_i = Mouse::getPosition(window);
+	Vector2f mpos_f = window.mapPixelToCoords(mpos_i);
+	Vector2i a = Vector2i(mpos_f.x, mpos_f.y);
+
 	sf::IntRect rect(rectToClick.getPosition().x, rectToClick.getPosition().y, rectToClick.getGlobalBounds().width,
 		rectToClick.getGlobalBounds().height);
-	if (rect.contains(sf::Mouse::getPosition(window)) && (sf::Keyboard::isKeyPressed(Keyboard::D))) {
+	if (rect.contains(a) && (sf::Keyboard::isKeyPressed(Keyboard::D))) {
 		sleep(milliseconds(100));
 		return true;
 		

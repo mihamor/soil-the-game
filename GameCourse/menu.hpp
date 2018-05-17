@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "Cursor.hpp"
 
 using namespace sf;
 
@@ -12,9 +13,11 @@ enum MenuChoiceCustom {
 	NONE
 };
 
-MenuChoiceCustom menu(RenderWindow & window)
+MenuChoiceCustom menu(RenderWindow & window, int vmodex, int vmodey)
 {
-	Vector2u res = window.getSize();
+	Cursor c;
+	bool resized = false;
+	Vector2u res = Vector2u(vmodex, vmodey);
 	
 	Texture menuTexture1, menuTexture2, menuTexture3, aboutTexture, menuBackground;
 	menuTexture1.loadFromFile("menu/continue.png");
@@ -35,6 +38,9 @@ MenuChoiceCustom menu(RenderWindow & window)
 
 	while (isMenu)
 	{
+		Vector2i mpos_i = Mouse::getPosition(window);
+		Vector2f mpos_f = window.mapPixelToCoords(mpos_i);
+		Vector2i a = Vector2i(mpos_f.x, mpos_f.y);
 		Event event;
 		while (window.pollEvent(event))
 		{
@@ -45,6 +51,7 @@ MenuChoiceCustom menu(RenderWindow & window)
 			}
 			if (event.type == Event::Resized)
 			{
+				resized = true;
 
 			}if (event.type == Event::MouseButtonPressed && event.key.code == Mouse::Left && menuNum != NONE) isMenu = false;
 		}
@@ -55,17 +62,21 @@ MenuChoiceCustom menu(RenderWindow & window)
 		menuNum = NONE;
 		window.clear(Color(129, 181, 221));
 
-		if (IntRect((res.x - buttonSize.x) / 2, res.y / 2, buttonSize.x, buttonSize.y).contains(Mouse::getPosition(window))) { menu1.setColor(Color::Blue); menuNum = CONTINUE; }
-		else if (IntRect((res.x - buttonSize.x) / 2, res.y / 2 + 60, buttonSize.x, buttonSize.y).contains(Mouse::getPosition(window))) { menu2.setColor(Color::Blue); menuNum = NEWGAME; }
-		else if (IntRect((res.x - buttonSize.x) / 2, res.y / 2 + 120, buttonSize.x, buttonSize.y).contains(Mouse::getPosition(window))) { menu3.setColor(Color::Blue); menuNum = EXIT; }
+
+
+		if (IntRect((res.x - buttonSize.x) / 2, res.y / 2, buttonSize.x, buttonSize.y).contains(a)) { menu1.setColor(Color::Blue); menuNum = CONTINUE; }
+		else if (IntRect((res.x - buttonSize.x) / 2, res.y / 2 + 60, buttonSize.x, buttonSize.y).contains(a)) { menu2.setColor(Color::Blue); menuNum = NEWGAME; }
+		else if (IntRect((res.x - buttonSize.x) / 2, res.y / 2 + 120, buttonSize.x, buttonSize.y).contains(a)) { menu3.setColor(Color::Blue); menuNum = EXIT; }
 		else menuNum = NONE;
 		
+		
+		c.update(true, a, 100);
 
 		window.draw(menuBg);
 		window.draw(menu1);
 		window.draw(menu2);
 		window.draw(menu3);
-
+		c.draw(window);
 		window.display();
 	}
 	window.clear();

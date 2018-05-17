@@ -2,18 +2,20 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "Cursor.hpp"
 
 using namespace sf;
 
 typedef unsigned int saveSlotNumber;
 
-static bool isPointed(IntRect button, RenderWindow & window) {
-	return button.contains(Mouse::getPosition(window));
+static bool isPointed(IntRect button, RenderWindow & window, Vector2i a) {
+	return button.contains(a);
 }
 
-saveSlotNumber saveMenu(RenderWindow & window, bool mode)
+saveSlotNumber saveMenu(RenderWindow & window, bool mode, int vmodex, int vmodey)
 {
-	Vector2u res = window.getSize();
+	Cursor c;
+	Vector2u res = Vector2u(vmodex, vmodey);
 	window.clear();
 	bool availableSlots[3];
 	for (int i = 0; i < 3; i++) availableSlots[i] = !TMap::isEmptySlot(i+1);
@@ -35,6 +37,9 @@ saveSlotNumber saveMenu(RenderWindow & window, bool mode)
 
 	while (isMenu)
 	{
+		Vector2i mpos_i = Mouse::getPosition(window);
+		Vector2f mpos_f = window.mapPixelToCoords(mpos_i);
+		Vector2i a = Vector2i(mpos_f.x, mpos_f.y);
 		Event event;
 		while (window.pollEvent(event))
 		{
@@ -56,15 +61,18 @@ saveSlotNumber saveMenu(RenderWindow & window, bool mode)
 		menuNum = 0;
 		window.clear(Color(129, 181, 221));
 
-		if (isPointed(IntRect((res.x - buttonSize.x) / 2, res.y / 2, buttonSize.x, buttonSize.y), window)) { menu1.setColor(availableSlots[0] ? Color::Blue : Color::Red); menuNum = 1; }
-		else if (isPointed(IntRect((res.x - buttonSize.x) / 2, res.y / 2 + 60, buttonSize.x, buttonSize.y), window)) { menu2.setColor(availableSlots[1] ? Color::Blue : Color::Red); menuNum = 2; }
-		else if (isPointed(IntRect((res.x - buttonSize.x) / 2, res.y / 2 + 120, buttonSize.x, buttonSize.y), window)) { menu3.setColor(availableSlots[2] ? Color::Blue : Color::Red); menuNum = 3; }
+		if (isPointed(IntRect((res.x - buttonSize.x) / 2, res.y / 2, buttonSize.x, buttonSize.y), window, a)) { menu1.setColor(availableSlots[0] ? Color::Blue : Color::Red); menuNum = 1; }
+		else if (isPointed(IntRect((res.x - buttonSize.x) / 2, res.y / 2 + 60, buttonSize.x, buttonSize.y), window, a)) { menu2.setColor(availableSlots[1] ? Color::Blue : Color::Red); menuNum = 2; }
+		else if (isPointed(IntRect((res.x - buttonSize.x) / 2, res.y / 2 + 120, buttonSize.x, buttonSize.y), window, a)) { menu3.setColor(availableSlots[2] ? Color::Blue : Color::Red); menuNum = 3; }
 		else menuNum = 0;
+
+		c.update(true, a, 100);
 
 		window.draw(menuBg);
 		window.draw(menu1);
 		window.draw(menu2);
 		window.draw(menu3);
+		c.draw(window);
 
 		window.display();
 	}

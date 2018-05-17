@@ -1,0 +1,9 @@
+<!DOCTYPE SpriteDecomposer>
+<sprites image="cursor.png" transparentColor="">
+ <animation title="in" delay="0">
+  <cut w="19" x="7" y="12" h="17" row="1" col="1"/>
+ </animation>
+ <animation title="out" delay="0">
+  <cut w="18" x="7" y="41" h="17" row="1" col="1"/>
+ </animation>
+</sprites>

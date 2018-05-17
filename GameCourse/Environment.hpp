@@ -168,7 +168,7 @@ public:
 	}
 
 	void update(float time, RenderWindow &window, sf::Vector2i a) {
-		this->cursor.update(isRange(a), a);
+		this->cursor.update(isRange(a), a, time);
 		// взаемодействие динамических обьектов
 		Entity::entitiesInteraction(entities, p);
 		// апдейт динамических обьектов
@@ -190,7 +190,7 @@ public:
 		// отрисовка блоков
 		//if(p->isMoving())window.clear(Color(255, 255, 255));
 
-		AbstractBlock::drawViewField(blocks, TileMap, TileMapBg, offsetX, offsetY, H, W, window);
+		AbstractBlock::drawViewField(blocks, TileMap, TileMapBg, offsetX, offsetY, H, W, window, vmodex, vmodey);
 		// отрисовка сущностей
 		Entity::drawAllEntities(entities, offsetX, offsetY, window);
 		// отрисовка курсора
@@ -220,14 +220,6 @@ public:
 		}
 		delete blocks;
 
-		/*if (this->menuChoice == 1) {
-			TMap::saveTileMap("saves/map.mf", TileMap);
-			TMap::saveTileMap("saves/mapbg.mf", TileMapBg);
-		}
-		else {
-			TMap::saveTileMap("saves/mapNew.mf", TileMap);
-			TMap::saveTileMap("saves/mapbgNew.mf", TileMapBg);
-		}*/
 
 		TMap::saveTileMapToSlot(slot, TileMap, TileMapBg);
 		inv->saveInventory();

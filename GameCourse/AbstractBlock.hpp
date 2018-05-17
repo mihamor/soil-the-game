@@ -130,7 +130,7 @@ public:
 	}
 
 
-	static void drawViewField(std::list<AbstractBlock*> * blocks, String * TileMap, String * TileMapBg, double offsetX, double offsetY, int H, int W, RenderWindow & window)
+	static void drawViewField(std::list<AbstractBlock*> * blocks, String * TileMap, String * TileMapBg, double offsetX, double offsetY, int H, int W, RenderWindow & window, int vmodex, int vmodey)
 	{
 		RectangleShape rectangle;
 		for (int i = 0; i < H; i++)
@@ -139,7 +139,7 @@ public:
 				float posx = j * 32 - offsetX;
 				float posy = i * 32 - offsetY;
 				float reserve = BLOCK_SIZE * 2;
-				if (posy > window.getSize().y || posx > window.getSize().x || posx < 0 - reserve  || posy < 0 - reserve) continue;
+				if (posy > vmodey || posx > vmodex  || posx < 0 - reserve  || posy < 0 - reserve) continue;
 
 
 				AbstractBlock *b = AbstractBlock::getBlock(*blocks, TileMap, i, j);

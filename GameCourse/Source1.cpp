@@ -35,9 +35,10 @@ int main() {
 
 
 	RenderWindow window(VideoMode(vmodex, vmodey), "Miha game");
-	MenuChoiceCustom menuChoice = menu(window);
+	window.setMouseCursorVisible(false);
+	MenuChoiceCustom menuChoice = menu(window, vmodex, vmodey);
 	if (menuChoice == NONE || menuChoice == EXIT) return EXIT_SUCCESS;
-	int slot = saveMenu(window, menuChoice == CONTINUE ? true : false);
+	int slot = saveMenu(window, menuChoice == CONTINUE ? true : false, vmodex, vmodey);
 	window.clear();
 	bool gameOver = false;
 	bool Resized = false;
@@ -54,13 +55,10 @@ int main() {
 		
 		float time = clock.getElapsedTime().asMicroseconds(); // тик рейт
 		clock.restart();
-		time = time / 400; // делитель ~  задержка милисекунды
-		if (!Resized)
-		{
-			a = Mouse::getPosition(window);
-		}
-		else
-			a = Mouse::getPosition();
+		time = time / 400; // делитель ~  задержка милисекунды	
+		Vector2i mpos_i = Mouse::getPosition(window);
+		Vector2f mpos_f = window.mapPixelToCoords(mpos_i);
+		a = Vector2i(mpos_f.x, mpos_f.y);
 		// контроль нажатия клавиш
 		if (!e.isGui()) {
 			if (Keyboard::isKeyPressed(Keyboard::A))

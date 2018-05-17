@@ -67,7 +67,7 @@ void AnimationManager::loadFromXML(std::string fileName, Texture *t)
 
 		anim.sprite.setOrigin(0, anim.frames[0].height);
 		animList.insert(std::pair<String, Animation>(currentAnim, anim));
-		//animList[currentAnim] = anim;
+		animList[currentAnim] = anim;
 		std::cout << "\n";
 		animElement = animElement->NextSiblingElement("animation");
 	}
