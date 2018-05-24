@@ -2,7 +2,7 @@
 #include <SFML\Graphics.hpp>
 #include "anim.hpp"
 using namespace sf;
-class Cursor
+class GameCursor
 {
 	bool viewCursor;
 	//Texture * c;
@@ -10,7 +10,7 @@ class Cursor
 	AnimationManager anim;
 	int x, y;
 public:
-	Cursor() {		
+	GameCursor() {
 		viewCursor = true;
 		Texture * c = new Texture();
 		if (!c->loadFromFile("sprites/cursor.png")) {
@@ -34,7 +34,7 @@ public:
 		anim.play();
 		anim.draw(window, x, y);
 	};
-	~Cursor() {
+	~GameCursor() {
 		delete anim.getTexture();
 	}
 };

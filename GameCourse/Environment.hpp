@@ -14,7 +14,6 @@ const Vector2i startPlayerPos(16*W,64);
 using namespace sf;
 class Environment
 {
-
 	Player * p;
 	std::list<AbstractBlock *> * blocks;
 	std::list<Entity *>  * entities;
@@ -22,7 +21,7 @@ class Environment
 	Workbench * wb;
 	int menuChoice;
 	float offsetX = 0, offsetY = 0;
-	Cursor cursor;
+	GameCursor cursor;
 	bool isGuiInv = false;
 	bool isGuiWorkbench = false;
 	String TileMap[H];

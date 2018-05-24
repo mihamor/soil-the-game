@@ -124,8 +124,6 @@ void TMap::loadTileMap(const char * FileName, String TileMap[])
 	}
 	
 }
-bool isEmptySlot(unsigned int slot) {
-}
 
 bool TMap::setBlock(Player * p, int x, int y, float offsetX, float offsetY, std::list<AbstractBlock*> blocks, sf::String * TileMap, sf::String * TileMapBg, Inventory& inv) {
 	if (p->isInRange(x, y, offsetX, offsetY) && p->getHand() != NULL) // поставить блок
