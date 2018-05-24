@@ -22,6 +22,7 @@ public:
 	bool isRectClicked(sf::RectangleShape &rectToClick, sf::RenderWindow &window);
 	bool isRectClickedToDel(sf::RectangleShape &rectToClick, sf::RenderWindow &window);
 	void reduceAmount(AbstractBlock & toReduce);
+	void reduceAmount(Slot * toReduce);
 	bool isFull(AbstractBlock * pb);
 };
 

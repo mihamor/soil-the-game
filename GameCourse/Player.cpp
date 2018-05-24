@@ -137,6 +137,7 @@ void Player::Collision(int dir, String TileMap[], std::list<AbstractBlock *> blo
 	for (int i = y / 32; i < (y + h) / 32; i++)
 		for (int j = x / 32; j < (x + w) / 32; j++)
 		{
+			if (i >= H || j >= W || i < 0 || j < 0) continue;
 			char s = TileMap[i][j];
 			AbstractBlock * b = AbstractBlock::getBlockFromList(s, blocks);
 			if (b && b->getCollision())
@@ -174,15 +175,21 @@ void Player::drawHUD(RenderWindow & window, int vmodex, int vmodey)
 	bg.setFillColor(Color::White);
 	bg.setPosition(64, vmodey - 64);
 	window.draw(bg);
-	if (hand != NULL)
-	{
+	
+	
+	for (int i = 0; i < this->life; i++) {
+			CircleShape heart(10);
+			heart.setFillColor(Color::Red);
+			heart.setPosition(0 + 30 * i, 0);
+			window.draw(heart);
+	}
+	if (!hand) return;
+	if (!this->getHand()->amount) this->setHand(nullptr);
+	else {
 		RectangleShape inHand = hand->block->rectangle;
 		Text  amountShow;   //amount of slot
 		Font font;
-		if (!font.loadFromFile("fonts/arial.ttf"))
-		{
-			assert(0);
-		}
+		if (!font.loadFromFile("fonts/arial.ttf")) assert(0 && "Problem loading fonts");
 		String ss = intToStr(hand->amount);
 		amountShow.setFont(font);
 		amountShow.setString(ss);
@@ -191,16 +198,7 @@ void Player::drawHUD(RenderWindow & window, int vmodex, int vmodey)
 		amountShow.setPosition(48 + 32, vmodey - 48);
 		inHand.setPosition(48 + 32, vmodey - 48);
 
-
-		
-
 		window.draw(inHand);
 		window.draw(amountShow);
-	}
-	for (int i = 0; i < this->life; i++) {
-			CircleShape heart(10);
-			heart.setFillColor(Color::Red);
-			heart.setPosition(0 + 30 * i, 0);
-			window.draw(heart);
 	}
 }

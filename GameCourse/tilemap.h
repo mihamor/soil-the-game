@@ -4,11 +4,7 @@
 #include <list>
 #include "PLAYER.hpp"
 #include "Inventory.hpp"
-
-//const int H = 18;
-//const int W = 39;
-const int H = 120;
-const int W = 360;
+#include "WorldDef.h"
 
 
 namespace TMap {

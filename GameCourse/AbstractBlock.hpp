@@ -17,7 +17,8 @@ enum BlockType {
 enum interactionType {
 	removeType,
 	doorType,
-	treeType
+	treeType,
+	craftType
 };
 
 class AbstractBlock

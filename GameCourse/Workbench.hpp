@@ -14,17 +14,9 @@ class Workbench
 		return result;
 	}
 public:
-	Workbench(Inventory * inv, std::list<AbstractBlock*> &list) {
+	Workbench(Inventory * inv, std::list<AbstractBlock*> &list, std::string fileName) {
 		this->inv = inv;
-		/*std::vector<Slot *> vec;
-		AbstractBlock * tree = AbstractBlock::getBlockFromList('t', list);
-		AbstractBlock * wood = AbstractBlock::getBlockFromList('W', list);
-		Slot * requ = new Slot(tree, 1);
-		Slot * res = new Slot(wood, 2);
-		vec.push_back(requ);
-		Recipe r(vec, res);
-		recepies.push_back(r);*/
-		load(list, "recipes.xml");
+		load(list, fileName);
 	};
 	~Workbench() {
 		for (Recipe r : recepies) {
@@ -143,7 +135,7 @@ public:
 			recipe = recipe->NextSiblingElement("recipe");
 		}
 	}
-	void workbenchSave() {
+	void workbenchSave(std::string fileName) {
 		TiXmlDocument doc;
 		TiXmlDeclaration * decl = new TiXmlDeclaration("1.0", "", "");
 		doc.LinkEndChild(decl);
@@ -172,7 +164,7 @@ public:
 			list->LinkEndChild(element);
 		}
 
-		doc.SaveFile("recipes.xml");
+		doc.SaveFile(fileName.c_str());
 }
 
 

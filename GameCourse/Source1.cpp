@@ -80,7 +80,7 @@ int main() {
 		if (Keyboard::isKeyPressed(Keyboard::I))
 			e.setGuiInv(true);
 		if (Keyboard::isKeyPressed(Keyboard::C))
-			e.setGuiWorkbench(true);
+			e.setGuiWorkbench(true, "player");
 
 
 		Event event;

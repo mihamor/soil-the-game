@@ -3,7 +3,7 @@
 #include "DoorBlock.h"
 #include "Block.hpp"
 #include "TreeBlock.hpp" 
-
+#include "WorkbenchBlock.hpp"
 
 
 class BlockLoader
@@ -27,6 +27,10 @@ public:
 			}
 			else if (b->interact() == treeType) {
 				element->SetAttribute("type", "Tree");;
+			}
+			else if (b->interact() == craftType) {
+				if(b->singnature == DEFAULT_BENCH_SIGN) element->SetAttribute("type", "Workbench");
+				else element->SetAttribute("type", "Furnace");	
 			}
 			else element->SetAttribute("type", b->getCollision() ? "Solid" : "Background");
 			element->SetAttribute("signature", b->singnature);
@@ -63,6 +67,12 @@ public:
 			}
 			else if (!strcmp(block->Attribute("type"), "Tree")) {
 				b = new TreeBlock(bFileName, signature, Background);
+			}
+			else if (!strcmp(block->Attribute("type"), "Furnace")) {
+				b = new WorkbenchBlock(bFileName, signature, Solid, "furnace");
+			}
+			else if (!strcmp(block->Attribute("type"), "Workbench")) {
+				b = new WorkbenchBlock(bFileName, signature, Solid, "workbench");
 			}
 			else if ((type == Solid || type == Background ))
 				 b = new Block(bFileName, signature, type);

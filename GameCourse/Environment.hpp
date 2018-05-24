@@ -8,6 +8,7 @@
 #include "Inventory.hpp"
 #include <iostream>
 #include "Workbench.hpp"
+#include <map>
 #include "Cursor.hpp"
 const int INV_SIZE = 10;
 const Vector2i startPlayerPos(16*W,64);
@@ -18,7 +19,6 @@ class Environment
 	std::list<AbstractBlock *> * blocks;
 	std::list<Entity *>  * entities;
 	Inventory * inv;
-	Workbench * wb;
 	int menuChoice;
 	float offsetX = 0, offsetY = 0;
 	GameCursor cursor;
@@ -26,6 +26,9 @@ class Environment
 	bool isGuiWorkbench = false;
 	String TileMap[H];
 	String TileMapBg[H];
+	
+	std::map<std::string, Workbench *> wbenches;
+	std::string wbTrigger;
 
 	int vmodex, vmodey;
 	int slot;
@@ -71,7 +74,7 @@ public:
 		//anim.loadFromXML("sprites/anim_megaman.xml", playerT);
 		enemyAnim.loadFromXML("sprites/babypig_anim.xml", enemyT);
 		this->p = new Player(anim, startPlayerPos.x, startPlayerPos.y);
-		const int MAX_SIZE = 10;
+		const int MAX_SIZE = 15;
 		inv = new Inventory(MAX_SIZE);
 
 		this->entities = new std::list<Entity *>();
@@ -82,8 +85,9 @@ public:
 		this->blocks = BlockLoader::loadBlocksFromXml("blocks.xml");
 
 
-		this->wb = new Workbench(inv, *blocks);
-
+		wbenches["player"] = new Workbench(inv, *blocks, "recipes/player.xml");
+		wbenches["workbench"] = new Workbench(inv, *blocks, "recipes/workbench.xml");
+		wbenches["furnace"] = new Workbench(inv, *blocks, "recipes/furnace.xml");
 	};
 
 	Player * player() {
@@ -105,8 +109,9 @@ public:
 		isGuiInv = state;
 	}
 
-	void setGuiWorkbench(bool state) {
+	void setGuiWorkbench(bool state, std::string trigger = 0) {
 		isGuiWorkbench = state;
+		this->wbTrigger = trigger;
 	}
 	void setBlock(Vector2i a) {
 		int posx = (a.x + (int)offsetX) / 32;
@@ -116,6 +121,11 @@ public:
 			if (bl->interact() == doorType) {
 				DoorBlock * db = (DoorBlock *)bl;
 				std::cout << "Now type is " << (db->doorUse(posx, posy, this->TileMap) != Solid ? "SOLID" : "BACKGROUND") << std::endl;
+			}
+			if (bl->interact() == craftType) {
+				WorkbenchBlock * wb = (WorkbenchBlock *)bl;
+				std::cout << "Craft opening " << wb->getId() << std::endl;
+				setGuiWorkbench(true, wb->getId());
 			}
 		}
 	}
@@ -130,7 +140,7 @@ public:
 		}
 		else if (bl->interact() == treeType) {
 			TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
-		}
+		}else TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
 		std::cout << "Interaction " << bl->interact() << std::endl;
 	}
 	bool isInvGui() {
@@ -200,7 +210,7 @@ public:
 		if (isGuiInv)
 			this->inv->draw(vmodex, vmodey, window, &isGuiInv, &a, p);
 		else if (isGuiWorkbench)
-			this->wb->draw(window, vmodey, vmodex, &isGuiWorkbench);
+			this->wbenches[wbTrigger]->draw(window, vmodey, vmodex, &isGuiWorkbench);
 		
 		cursor.draw(window);
 	}
@@ -222,11 +232,13 @@ public:
 
 		TMap::saveTileMapToSlot(slot, TileMap, TileMapBg);
 		inv->saveInventory();
-		//wb->workbenchSave();
+		//wb->workbenchSave("");
 
 		delete anim.getTexture();
 		delete enemyAnim.getTexture();
-		delete wb;
+		delete wbenches["player"];
+		delete wbenches["workbench"];
+		delete wbenches["furnace"];
 	}
 
 

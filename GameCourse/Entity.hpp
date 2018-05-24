@@ -3,7 +3,7 @@
 #include"anim.hpp"
 #include "Block.hpp"
 #include <list>
-
+#include "WorldDef.h"
 class Entity
 {
 public:

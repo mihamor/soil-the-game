@@ -12,23 +12,11 @@
         </required>
         <result signature="45" amount="1" />
     </recipe>
-    <recipe>
-        <required>
-            <slot signature="82" amount="4" />
-        </required>
-        <result signature="67" amount="1" />
-    </recipe>
-	<recipe>
-        <required>
-            <slot signature="67" amount="1" />
-        </required>
-        <result signature="99" amount="1" />
-    </recipe>
 	<recipe>
         <required>
             <slot signature="87" amount="4" />
         </required>
-        <result signature="68" amount="1" />
+        <result signature="75" amount="1" />
     </recipe>
 	<recipe>
         <required>

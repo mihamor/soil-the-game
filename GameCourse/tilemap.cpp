@@ -140,7 +140,9 @@ bool TMap::setBlock(Player * p, int x, int y, float offsetX, float offsetY, std:
 				if (check->singnature == DEFAULT_BG_SINGNATURE) TileMapBg[posy][posx] = h->block->singnature;
 				else return false;
 			}
-			p->reduceAmount(inv.getList());
+			//AbstractBlock * bHand = p->getHand()->block;
+			//p->reduceAmount(inv.getList());
+			inv.reduceAmount(p->getHand());
 			return true;
 		}
 		return false;
