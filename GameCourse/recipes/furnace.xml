@@ -18,4 +18,16 @@
         </required>
         <result signature="105" amount="1" />
     </recipe>
+	<recipe>
+        <required>
+            <slot signature="88" amount="1" />
+        </required>
+        <result signature="120" amount="1" />
+    </recipe>
+	<recipe>
+        <required>
+            <slot signature="89" amount="1" />
+        </required>
+        <result signature="121" amount="1" />
+    </recipe>
 </recipes_list>

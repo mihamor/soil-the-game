@@ -21,4 +21,6 @@
     <block type="Solid" signature="88" texture="blocks/gold.png" />
     <block type="Solid" signature="89" texture="blocks/wolfram.png" />
     <block type="Item" signature="105" texture="blocks/ironIngot.png" />
+    <block type="Item" signature="120" texture="blocks/goldIngot.png" />
+    <block type="Item" signature="121" texture="blocks/wolframIngot.png" />
 </block_list>
