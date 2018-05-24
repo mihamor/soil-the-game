@@ -22,6 +22,13 @@ Player::Player(AnimationManager &a, int X, int Y)
 	range = 5;
 	this->hand = NULL;
 	hit = false;
+
+	// @implement normal hud items connections
+
+	if (!this->font.loadFromFile("fonts/arial.ttf")) assert(0 && "font not loaded");
+	amountShow.setFont(font);
+	amountShow.setFillColor(Color::White);
+	amountShow.setCharacterSize(16);
 }
 
 bool Player::isMoving() {
@@ -169,10 +176,10 @@ void Player::Collision(int dir, String TileMap[], std::list<AbstractBlock *> blo
 		}
 }
 
-void Player::drawHUD(RenderWindow & window, int vmodex, int vmodey)
+void Player::drawHUD(RenderWindow & window, int vmodex, int vmodey, HudItems & items)
 {
-	RectangleShape bg(Vector2f(64, 64));
-	bg.setFillColor(Color::White);
+	RectangleShape bg = items.playerHud;
+	//bg.setFillColor(Color::White);
 	bg.setPosition(64, vmodey - 64);
 	window.draw(bg);
 	
@@ -187,17 +194,10 @@ void Player::drawHUD(RenderWindow & window, int vmodex, int vmodey)
 	if (!this->getHand()->amount) this->setHand(nullptr);
 	else {
 		RectangleShape inHand = hand->block->rectangle;
-		Text  amountShow;   //amount of slot
-		Font font;
-		if (!font.loadFromFile("fonts/arial.ttf")) assert(0 && "Problem loading fonts");
 		String ss = intToStr(hand->amount);
-		amountShow.setFont(font);
 		amountShow.setString(ss);
-		amountShow.setFillColor(Color::Black);
-		amountShow.setCharacterSize(32);
 		amountShow.setPosition(48 + 32, vmodey - 48);
 		inHand.setPosition(48 + 32, vmodey - 48);
-
 		window.draw(inHand);
 		window.draw(amountShow);
 	}

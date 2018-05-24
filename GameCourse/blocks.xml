@@ -17,4 +17,8 @@
     <block type="Tree" signature="108" texture="blocks/leaves.png" />
     <block type="Workbench" signature="75" texture="blocks/workbench.png" />
     <block type="Furnace" signature="70" texture="blocks/furnace.png" />
+    <block type="Solid" signature="73" texture="blocks/iron.png" />
+    <block type="Solid" signature="88" texture="blocks/gold.png" />
+    <block type="Solid" signature="89" texture="blocks/wolfram.png" />
+    <block type="Item" signature="105" texture="blocks/ironIngot.png" />
 </block_list>

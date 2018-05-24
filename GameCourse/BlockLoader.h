@@ -4,6 +4,7 @@
 #include "Block.hpp"
 #include "TreeBlock.hpp" 
 #include "WorkbenchBlock.hpp"
+#include "Item.hpp"
 
 
 class BlockLoader
@@ -31,6 +32,9 @@ public:
 			else if (b->interact() == craftType) {
 				if(b->singnature == DEFAULT_BENCH_SIGN) element->SetAttribute("type", "Workbench");
 				else element->SetAttribute("type", "Furnace");	
+			}
+			else if (b->interact() == itemType) {
+				element->SetAttribute("type", "Item");
 			}
 			else element->SetAttribute("type", b->getCollision() ? "Solid" : "Background");
 			element->SetAttribute("signature", b->singnature);
@@ -73,6 +77,9 @@ public:
 			}
 			else if (!strcmp(block->Attribute("type"), "Workbench")) {
 				b = new WorkbenchBlock(bFileName, signature, Solid, "workbench");
+			}
+			else if (!strcmp(block->Attribute("type"), "Item")) {
+				b = new Item(bFileName, signature, Solid);
 			}
 			else if ((type == Solid || type == Background ))
 				 b = new Block(bFileName, signature, type);

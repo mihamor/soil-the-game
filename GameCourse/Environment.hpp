@@ -26,6 +26,8 @@ class Environment
 	bool isGuiWorkbench = false;
 	String TileMap[H];
 	String TileMapBg[H];
+
+	HudItems hItems;
 	
 	std::map<std::string, Workbench *> wbenches;
 	std::string wbTrigger;
@@ -67,6 +69,8 @@ public:
 
 		Texture * playerT = new Texture();
 		Texture *  enemyT = new Texture();
+		this->hItems = HUD::loadHudItems("menu/invBg.png", "menu/playerHud.png", "menu/playerHud.png");
+		//this->hItems.craftBg->loadFromFile("menu/craftBg.png");
 		playerT->loadFromFile("sprites/willy.png");
 		//playerT->loadFromFile("sprites/megaman.png");
 		enemyT->loadFromFile("sprites/babypig.png");
@@ -76,6 +80,7 @@ public:
 		this->p = new Player(anim, startPlayerPos.x, startPlayerPos.y);
 		const int MAX_SIZE = 15;
 		inv = new Inventory(MAX_SIZE);
+		
 
 		this->entities = new std::list<Entity *>();
 		this->entities->push_back(p);
@@ -83,7 +88,7 @@ public:
 		this->entities->push_back(new Enemy(enemyAnim, 32 * (W - W / 2), 32 * 12, true));
 
 		this->blocks = BlockLoader::loadBlocksFromXml("blocks.xml");
-
+		inv->loadInventory(slot, *this->blocks);
 
 		wbenches["player"] = new Workbench(inv, *blocks, "recipes/player.xml");
 		wbenches["workbench"] = new Workbench(inv, *blocks, "recipes/workbench.xml");
@@ -205,10 +210,10 @@ public:
 		// отрисовка курсора
 
 		//Отрисовка HUD
-		p->drawHUD(window, vmodex, vmodey);
+		p->drawHUD(window, vmodex, vmodey, this->hItems);
 		//отрисовка инвентаря(ставить последним)
 		if (isGuiInv)
-			this->inv->draw(vmodex, vmodey, window, &isGuiInv, &a, p);
+			this->inv->draw(vmodex, vmodey, window, &isGuiInv, &a, p, this->hItems);
 		else if (isGuiWorkbench)
 			this->wbenches[wbTrigger]->draw(window, vmodey, vmodex, &isGuiWorkbench);
 		
@@ -231,7 +236,7 @@ public:
 
 
 		TMap::saveTileMapToSlot(slot, TileMap, TileMapBg);
-		inv->saveInventory();
+		inv->saveInventory(this->slot);
 		//wb->workbenchSave("");
 
 		delete anim.getTexture();

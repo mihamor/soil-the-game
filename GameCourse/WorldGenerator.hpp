@@ -29,6 +29,10 @@ public:
 	~WorldGenerator() {
 	}
 private:
+
+	static bool randomBoolean(unsigned int percetnage) {
+		return ((rand() % 100) + 1) <= percetnage;
+	}
 	static String * generate() {
 		String * newMap = new String[H];
 		fillGroundLevel(newMap);
@@ -87,7 +91,16 @@ private:
 	static void fillRocks(String * newMap) {
 		for (int x = 1; x < W - 1; x++) {
 			int h = (rand() % groundLevel / 4 + groundLevel / 2);
-			for (int y = 0; y < h; y++) newMap[H - 2 - y][x] = 'R';
+			for (int y = 0; y < h; y++)
+			{
+				bool placeIron = randomBoolean(10);
+				bool placeGold = randomBoolean(5);
+				bool placeWolfram = randomBoolean(1);
+				if (placeIron) newMap[H - 2 - y][x] = 'I';
+				else if (placeGold) newMap[H - 2 - y][x] = 'X';
+				else if (placeWolfram) newMap[H - 2 - y][x] = 'Y';
+				else newMap[H - 2 - y][x] = 'R';
+			}
 		}
 	}
 	static void fillTrees(String * newMap) {

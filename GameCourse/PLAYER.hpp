@@ -13,6 +13,11 @@ private:
 	int range;
 	Slot * hand;
 
+
+	//hud items
+	Text amountShow;
+	Font font;
+
 public:
 	std::map<std::string, bool> key;
 	Player(AnimationManager &a, int X, int Y);
@@ -24,5 +29,5 @@ public:
 	bool isMoving();
 	void update(float time, String TileMap[], std::list<AbstractBlock *> blocks);
 	void Collision(int dir, String TileMap[], std::list<AbstractBlock *> blocks);
-	void drawHUD(RenderWindow & window, int vmodex, int vmodey);
+	void drawHUD(RenderWindow & window, int vmodex, int vmodey, HudItems & items);
 };

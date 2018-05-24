@@ -12,4 +12,10 @@
         </required>
         <result signature="99" amount="1" />
     </recipe>
+	<recipe>
+        <required>
+            <slot signature="73" amount="1" />
+        </required>
+        <result signature="105" amount="1" />
+    </recipe>
 </recipes_list>

@@ -12,13 +12,18 @@ private:
 	int added;
 	int maxSlots;
 
+
+	// hud items
+	Text  amountShow;
+	Font font;
 public:
 	
 	std::list<Slot* > * getList();
 	Inventory(int maxSlots);
 	void addSlot(AbstractBlock * pb);
-	void draw(float vmodex, float vmodey, RenderWindow &window, bool *isGui, Vector2i * posMouse, Player * p);
-	void saveInventory();
+	void draw(float vmodex, float vmodey, RenderWindow &window, bool *isGui, Vector2i * posMouse, Player * p, HudItems & items);
+	void saveInventory(int slot);
+	bool loadInventory(int slot, std::list <AbstractBlock *> &blocks);
 	bool isRectClicked(sf::RectangleShape &rectToClick, sf::RenderWindow &window);
 	bool isRectClickedToDel(sf::RectangleShape &rectToClick, sf::RenderWindow &window);
 	void reduceAmount(AbstractBlock & toReduce);

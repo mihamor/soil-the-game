@@ -1,6 +1,7 @@
 #include "Inventory.hpp"
 #include <iostream>
 #include <sstream>
+#include "tinyxml.h"
 
 using namespace std;
 static String intToStr(int value) {
@@ -18,6 +19,11 @@ Inventory::Inventory(int maxSlots)
 {
 	added = 0;
 	this->maxSlots = maxSlots;
+
+	if (!this->font.loadFromFile("fonts/arial.ttf")) assert(0 && "font not loaded");
+	amountShow.setFont(font);
+	amountShow.setFillColor(Color::White);
+	amountShow.setCharacterSize(16);
 }
 
 bool Inventory::isFull(AbstractBlock * pb) {
@@ -84,14 +90,14 @@ void Inventory::reduceAmount(Slot * toReduce) {
 	}
 }
 
-void Inventory::draw(float vmodex, float vmodey, RenderWindow &window, bool *isGui, Vector2i * posMouse, Player * p)
+void Inventory::draw(float vmodex, float vmodey, RenderWindow &window, bool *isGui, Vector2i * posMouse, Player * p,HudItems & items)
 {
 	// отрисовка задника ивентаря
-	RectangleShape background(Vector2f( BLOCK_SIZE * 10, vmodey / 2));
-	background.setFillColor(Color::White);
+	RectangleShape background = items.invBg;
+	//background.setFillColor(Color::White);
 	background.setPosition(64, 64);
 
-	std::cout << "[Debug]: Inventory size: " << this->added << std::endl;
+	//std::cout << "[Debug]: Inventory size: " << this->added << std::endl;
 
 	if (Keyboard::isKeyPressed(Keyboard::Escape)) *isGui = false;
 
@@ -109,15 +115,9 @@ void Inventory::draw(float vmodex, float vmodey, RenderWindow &window, bool *isG
 		RectangleShape slotToDraw = (*it)->block->rectangle; // background of slot
 		slotToDraw.setPosition(posx, posy);
 
-		Text  amountShow;   //amount of slot
-		Font font;
-		if (!font.loadFromFile("fonts/arial.ttf")) assert(0 && "font not loaded");
 		String ss = intToStr((*it)->amount);
-		amountShow.setFont(font);
-		amountShow.setString(ss);
-		amountShow.setFillColor(Color::Black);
-		amountShow.setCharacterSize(32);
-		amountShow.setPosition(posx, posy);
+		this->amountShow.setString(ss);
+		this->amountShow.setPosition(posx, posy);
 
 		posx += 2 * BLOCK_SIZE;
 		counter++;
@@ -137,10 +137,73 @@ void Inventory::draw(float vmodex, float vmodey, RenderWindow &window, bool *isG
 		}
 	}
 }
+static std::string definePath(int slot) {
+	std::string path = "saves/inv";
+	switch (slot)
+	{
+	case 1:
+		path = path + "1.xml";
+		break;
+	case 2:
+		path = path + "2.xml";
+		break;
+	case 3:
+		path = path + "3.xml";
+		break;
+	default:
+		path = path + ".xml";
+		break;
+	}
+	return path;
+}
 
-void Inventory::saveInventory()
+void Inventory::saveInventory(int slot)
 {
-	// @TODO saves inventory to XML format file (include TinyXML library)
+
+	std::string path = definePath(slot);
+	TiXmlDocument doc;
+	TiXmlDeclaration * decl = new TiXmlDeclaration("1.0", "", "");
+	doc.LinkEndChild(decl);
+
+	TiXmlElement * list = new TiXmlElement("inventory");
+	doc.LinkEndChild(list);
+
+	for (Slot * s : this->slots) {
+		TiXmlElement * element = new TiXmlElement("slot");
+		element->SetAttribute("signature", s->block->singnature);
+		element->SetAttribute("amount", s->amount);
+		list->LinkEndChild(element);
+
+	}
+	doc.SaveFile(path.c_str());
+}
+
+bool Inventory::loadInventory(int slot, std::list <AbstractBlock *> &blocks) {
+
+	this->added = 0;
+	this->slots.clear();
+	std::string fileName = definePath(slot);
+
+	TiXmlDocument doc(fileName.c_str());
+	if (!doc.LoadFile()) return false; //@todo error handling
+
+
+	TiXmlElement * list = doc.FirstChildElement("inventory");
+
+	TiXmlElement *slotEl = list->FirstChildElement("slot");
+	int size = 0;
+	while (slotEl) {
+
+		char signature = (char)atoi(slotEl->Attribute("signature"));
+		AbstractBlock * block = AbstractBlock::getBlockFromList(signature, blocks);
+		int amount = atoi(slotEl->Attribute("amount"));
+		Slot * newSlot = new Slot(block, amount);
+		this->slots.push_back(newSlot);
+		slotEl = slotEl->NextSiblingElement("slot");
+		size++;
+	}
+	this->added = size;
+	return true;
 }
 bool Inventory::isRectClicked(sf::RectangleShape &rectToClick, sf::RenderWindow &window) {
 
