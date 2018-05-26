@@ -17,7 +17,7 @@ private:
 	//hud items
 	Text amountShow;
 	Font font;
-
+	void playerPosNormalize();
 public:
 	std::map<std::string, bool> key;
 	Player(AnimationManager &a, int X, int Y);
@@ -30,4 +30,5 @@ public:
 	void update(float time, String TileMap[], std::list<AbstractBlock *> blocks);
 	void Collision(int dir, String TileMap[], std::list<AbstractBlock *> blocks);
 	void drawHUD(RenderWindow & window, int vmodex, int vmodey, HudItems & items);
+	
 };

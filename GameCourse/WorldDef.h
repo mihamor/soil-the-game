@@ -3,8 +3,10 @@
 
 //const int H = 18;
 //const int W = 39;
+//const int H = 120;
+//const int W = 360;
 const int H = 120;
-const int W = 360;
+const int W = 230;
 
 //const int H = 10;
 //const int W = 40;

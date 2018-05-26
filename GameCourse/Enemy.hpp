@@ -7,6 +7,10 @@ class Enemy:public Entity
 {
 	bool onGround, shoot;
 	enum { stay, walk, playerDetected} STATE;
+	Vector2i initPosition;
+
+	void normalizePosition();
+
 public:
 
 	Enemy(AnimationManager a, int X, int Y, bool dir);

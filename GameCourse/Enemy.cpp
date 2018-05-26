@@ -21,6 +21,7 @@ Enemy::Enemy(AnimationManager a, int X, int Y, bool dir)
 	life = 3;
 	name = "Enemy";
 	this->hit = false;
+	this->initPosition = Vector2i(X, Y);
 }
 
 Enemy::~Enemy() {}
@@ -29,6 +30,12 @@ double normalizeDx(double dx) {
 	if (dx > 0)
 		return 0.05;
 	return -0.05;
+}
+
+void Enemy::normalizePosition() {
+
+	this->x = initPosition.x;
+	this->y = initPosition.y;
 }
 
 void Enemy::update(float time, String TileMap[], std::list<AbstractBlock *> blocks)
@@ -41,6 +48,8 @@ void Enemy::update(float time, String TileMap[], std::list<AbstractBlock *> bloc
 	onGround = false;
 	Collision(1, TileMap, blocks);
 
+
+	if (x > W * 32 || x < 0 || y < 0 || y > H * 32) normalizePosition();
 	
 	if (life)anim.tick(time);
 }

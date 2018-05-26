@@ -146,15 +146,8 @@ public:
 				setGuiWorkbench(true, wb->getId());
 			}
 		}
-		else if (hand
-			&& hand->block->interact() == spriticType
-			&& inRangePlayer) {
-
-			ls->addLight(Vector2i(posx, posy));
-		}
-		else if(hand
-				&& hand->block->type == Solid
-				&& inRangePlayer) this->ls->addPair(Vector2i(posx, posy));
+		else if (hand && hand->block->interact() == spriticType&& inRangePlayer) ls->addLight(Vector2i(posx, posy));
+		else if(hand && hand->block->type == Solid && inRangePlayer) this->ls->addPair(Vector2i(posx, posy));
 		std::cout << "Interaction " << bl->interact()  << std::endl;
 	}
 	void removeBlock(Vector2i a) {
@@ -289,7 +282,7 @@ private:
 			{
 				float posx = (float)(j * 32 - offsetX);
 				float posy = (float)(i * 32 - offsetY);
-				float reserve = BLOCK_SIZE * 2;
+				float reserve = BLOCK_SIZE*0.9;
 				if (posy > vmodey || posx > vmodex || posx < 0 - reserve || posy < 0 - reserve) continue;
 
 

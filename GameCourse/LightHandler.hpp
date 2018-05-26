@@ -47,6 +47,18 @@ class LightHandler
 			if (pair->coords == coords) return pair;
 		return nullptr;
 	}
+	static bool isContains(LightShapePair * pair, std::vector<LightShapePair *> added) {
+		for (auto pairTo : added) {
+			if (pairTo->coords == pair->coords) return true;
+		}
+		return false;
+	}
+	static bool isContains(Vector2i coords, std::vector<LightShapePair *> added) {
+		for (auto pairTo : added) {
+			if (pairTo->coords == coords) return true;
+		}
+		return false;
+	}
 
 public:
 	LightHandler(std::list<AbstractBlock *> & list, String * TileMap, RenderWindow & window, int vmodey, int vmodex) {
@@ -55,13 +67,13 @@ public:
 		this->vmodex = vmodex;
 		this->vmodey = vmodey;
 		penumbraTexture.loadFromFile("data/penumbraTexture.png");
-		penumbraTexture.setSmooth(true);
+		//penumbraTexture.setSmooth(true);
 
 		pointLightTexture.loadFromFile("data/pointLightTexture.png");
-		pointLightTexture.setSmooth(true);
+		//pointLightTexture.setSmooth(true);
 
 		ConeLightTexture.loadFromFile("data/spotLightTexture.png");
-		ConeLightTexture.setSmooth(true);
+		//ConeLightTexture.setSmooth(true);
 
 		unshadowShader.loadFromFile("data/unshadowShader.vert", "data/unshadowShader.frag");
 		lightOverShapeShader.loadFromFile("data/lightOverShapeShader.vert", "data/lightOverShapeShader.frag");
@@ -88,6 +100,7 @@ public:
 					if (block->getCollision() && block->interact() != spriticType) this->addPair(Vector2i(x, y));
 					else if (block->getCollision()) this->addLight(Vector2i(x, y));
 				}
+		Lsprite.setTexture(ls.getLightingTexture());
 	}
 
 	void removePair(Vector2i pairCoord) {
@@ -132,6 +145,7 @@ public:
 
 
 	void addPair(Vector2i pairCord) {
+		//if (isContains(pairCord, pairs)) return;
 		LightShapePair * pair = new LightShapePair();
 		pair->coords = Vector2i(pairCord.x, pairCord.y);
 		pair->lightShape = std::make_shared<ltbl::LightShape>();
@@ -144,7 +158,7 @@ public:
 		pair->lightShape->_shape.setPosition(0, 0);
 		pairs.push_back(pair);
 	}
-
+	
 	void render(float offsetX, float offsetY, float px, float py, RenderWindow & window) {
 
 		Vector2u size = Vector2u(vmodex, vmodey);
@@ -153,8 +167,8 @@ public:
 			
 			float posx = (float)(pair->coords.x * 32 - offsetX);
 			float posy = (float)(pair->coords.y * 32 - offsetY);
-			float reserve = BLOCK_SIZE * 2;
-			if (posy > size.y || posx > size.x || posx < 0 - reserve || posy < 0 - reserve) continue;
+			float reserve = 0.9 *BLOCK_SIZE;
+			if (posy > size.y || posx > size.x || posx < 0 - reserve || posy < 0 - reserve || isContains(pair, added)) continue;
 			pair->lightShape->_shape.setPosition(posx, posy);
 			ls.addShape(pair->lightShape);
 			added.push_back(pair);
@@ -174,12 +188,26 @@ public:
 		//view.setSize(Vector2f(size.x, size.y));
 		
 		ls.render(view, unshadowShader, lightOverShapeShader);
-		Lsprite.setTexture(ls.getLightingTexture());
+		//Lsprite.setTexture(ls.getLightingTexture());
 		lightRenderStates.blendMode = sf::BlendMultiply;
 		window.draw(Lsprite, lightRenderStates);
-
 		for(LightShapePair * pair : added)
 			ls.removeShape(pair->lightShape);
+		//added.clear();
+	}
+
+	~LightHandler() {
+		for (auto it = pairsPoint.begin(); it != pairsPoint.end(); it++)
+		{
+			LightPointPair * pair = *it;
+			this->ls.removeLight(pair->newLight);
+			delete pair;
+		}
+		for (auto it = pairs.begin(); it != pairs.end(); it++)
+		{
+			LightShapePair * pair = *it;
+			delete pair;
+		}
 	}
 };
 

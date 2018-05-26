@@ -106,6 +106,8 @@ void Player::KeyCheck()
 }
 
 
+
+
 void Player::update(float time, String TileMap[], std::list<AbstractBlock *> blocks)
 {
 
@@ -135,8 +137,15 @@ void Player::update(float time, String TileMap[], std::list<AbstractBlock *> blo
 	onGround = false;
 	Collision(1, TileMap, blocks);
 
+
+	if (x > W * 32 || x < 0 || y < 0 || y > H * 32) playerPosNormalize();
+
 	anim.tick(time);
 	key["R"] = key["L"] = key["Up"] = key["Down"] = key["Space"] = false;
+}
+void Player::playerPosNormalize() {
+	this->x = W * 16;
+	this->y = 60;
 }
 
 void Player::Collision(int dir, String TileMap[], std::list<AbstractBlock *> blocks)
