@@ -31,7 +31,7 @@ public:
 private:
 
 	static bool randomBoolean(unsigned int percetnage) {
-		return ((rand() % 100) + 1) <= percetnage;
+		return ((rand() % 100) + 1) <= (int)percetnage;
 	}
 	static String * generate() {
 		String * newMap = new String[H];
@@ -71,7 +71,7 @@ private:
 	}
 
 	static void randMountains(String * newMap) {
-		srand(time(0));
+		srand((unsigned int)time(0));
 		int h = jumpDist;
 		int lastRes = jumpDist;
 		for (int x = 1; x < W - 1; x++) {

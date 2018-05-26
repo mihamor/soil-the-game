@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <list>
 #include "tinyxml.h"
+#include "WorldDef.h"
 
 const char DEFAULT_BG_SINGNATURE = ' ';
 const int BLOCK_SIZE = 32;
@@ -19,7 +20,8 @@ enum interactionType {
 	doorType,
 	treeType,
 	craftType,
-	itemType
+	itemType,
+	spriticType
 };
 
 
@@ -66,6 +68,19 @@ public:
 		}
 
 	}
+	static bool hasBlockNeigh(int y, int x, String * map, char sign) {
+		for (int y1 = y - 1; y1 < y + 2; y1++) {
+			for (int x1 = x - 1; x1 < x + 2; x1++) {
+				if ((y1 == y - 1 && x1 == x - 1)
+					|| (y1 == y - 1 && x1 == x + 1)
+					|| (y1 == y + 1 && x1 == x - 1)
+					|| (y1 == y + 1 && x1 == x + 1)) continue;
+				if (y1 < H && x1 < W && map[y1][x1] == sign) return true;
+			}
+		}
+
+		return false;
+	}
 	static AbstractBlock * getBlockFromList(char signature, std::list<AbstractBlock *> & blocks) {
 		for (AbstractBlock * b : blocks) {
 			if (b->singnature == signature) {
@@ -99,7 +114,7 @@ public:
 		else if (type == Solid)
 			return true;
 		else assert(0);
-
+		return false;
 	}
 	virtual interactionType interact() = 0;
 
@@ -139,8 +154,8 @@ public:
 		for (int i = 0; i < H; i++)
 			for (int j = 0; j < W; j++)
 			{
-				float posx = j * 32 - offsetX;
-				float posy = i * 32 - offsetY;
+				float posx = (float)(j * 32 - offsetX);
+				float posy = (float)(i * 32 - offsetY);
 				float reserve = BLOCK_SIZE * 2;
 				if (posy > vmodey || posx > vmodex  || posx < 0 - reserve  || posy < 0 - reserve) continue;
 
@@ -155,9 +170,15 @@ public:
 					std::cout << (char)TileMap[i][j] << std::endl;
 					abort();
 				}
+				if (b->type == spriticType) {
 				
-				rectangle.setPosition(posx, posy);
-				window.draw(rectangle);
+					
+
+				}
+				else {
+					rectangle.setPosition(posx, posy);
+					window.draw(rectangle);
+				}
 			}
 	}
 

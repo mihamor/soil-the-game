@@ -29,7 +29,7 @@ saveSlotNumber saveMenu(RenderWindow & window, bool mode, int vmodex, int vmodey
 	menuBackground.loadFromFile("menu/menubg.png");
 	Sprite menu1(menuTexture1), menu2(menuTexture2), menu3(menuTexture3), menuBg(menuBackground);
 	bool isMenu = 1;
-	saveSlotNumber menuNum;
+	saveSlotNumber menuNum = NONE;
 	menu1.setPosition((res.x - buttonSize.x) / 2, res.y / 2);
 	menu2.setPosition((res.x - buttonSize.x) / 2, res.y / 2 + 60);
 	menu3.setPosition((res.x - buttonSize.x) / 2, res.y / 2 + 120);

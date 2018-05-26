@@ -190,8 +190,8 @@ void Player::drawHUD(RenderWindow & window, int vmodex, int vmodey, HudItems & i
 			heart.setPosition(0 + 30 * i, 0);
 			window.draw(heart);
 	}
-	if (!hand) return;
-	if (!this->getHand()->amount) this->setHand(nullptr);
+	if (!hand || !hand->block) return;
+	else if (this->getHand()->amount == 0) this->setHand(nullptr);
 	else {
 		RectangleShape inHand = hand->block->rectangle;
 		String ss = intToStr(hand->amount);

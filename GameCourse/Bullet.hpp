@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics.hpp>
 #include "Entity.hpp"
-#define SFML_DYNAMIC
 using namespace sf;
 class Bullet:public Entity
 {

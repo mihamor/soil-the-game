@@ -29,7 +29,7 @@ MenuChoiceCustom menu(RenderWindow & window, int vmodex, int vmodey)
 	menuBackground.loadFromFile("menu/menubg.png");
 	Sprite menu1(menuTexture1), menu2(menuTexture2), menu3(menuTexture3), /*about(aboutTexture),*/ menuBg(menuBackground);
 	bool isMenu = 1;
-	MenuChoiceCustom menuNum;
+	MenuChoiceCustom menuNum = NONE;
 	menu1.setPosition( (res.x - buttonSize.x)  / 2, res.y / 2 );
 	menu2.setPosition( (res.x - buttonSize.x) / 2, res.y / 2 + 60);
 	menu3.setPosition( (res.x - buttonSize.x) / 2, res.y / 2 + 120);

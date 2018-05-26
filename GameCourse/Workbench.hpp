@@ -56,7 +56,7 @@ public:
 				for (Slot * s : r.getRequired()) {
 					RectangleShape slotToDraw = s->block->rectangle; // background of slot
 					posx = posx + BLOCK_SIZE;
-					slotToDraw.setPosition(posx, posy);
+					slotToDraw.setPosition((float)posx, (float)posy);
 					amountShow.setString(intToStr(s->amount));
 					amountShow.setPosition(posx, posy);
 					window.draw(slotToDraw);

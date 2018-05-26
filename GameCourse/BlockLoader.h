@@ -5,6 +5,7 @@
 #include "TreeBlock.hpp" 
 #include "WorkbenchBlock.hpp"
 #include "Item.hpp"
+#include "SpriticBlock.h"
 
 
 class BlockLoader
@@ -35,6 +36,9 @@ public:
 			}
 			else if (b->interact() == itemType) {
 				element->SetAttribute("type", "Item");
+			}
+			else if (b->interact() == spriticType) {
+				element->SetAttribute("type", "Spritic");
 			}
 			else element->SetAttribute("type", b->getCollision() ? "Solid" : "Background");
 			element->SetAttribute("signature", b->singnature);
@@ -80,6 +84,9 @@ public:
 			}
 			else if (!strcmp(block->Attribute("type"), "Item")) {
 				b = new Item(bFileName, signature, Solid);
+			}
+			else if (!strcmp(block->Attribute("type"), "Spritic")) {
+				b = new SpriticBlock(bFileName, signature, Solid);
 			}
 			else if ((type == Solid || type == Background ))
 				 b = new Block(bFileName, signature, type);

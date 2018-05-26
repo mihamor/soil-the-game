@@ -1,8 +1,12 @@
 <?xml version="1.0" ?>
 <inventory>
-    <slot signature="68" amount="106" />
-    <slot signature="82" amount="83" />
-    <slot signature="73" amount="109" />
+    <slot signature="68" amount="63" />
+    <slot signature="82" amount="120" />
+    <slot signature="73" amount="93" />
     <slot signature="73" amount="42" />
-    <slot signature="105" amount="19" />
+    <slot signature="105" amount="35" />
+    <slot signature="83" amount="19" />
+    <slot signature="115" amount="43" />
+    <slot signature="82" amount="121" />
+    <slot signature="116" amount="43" />
 </inventory>

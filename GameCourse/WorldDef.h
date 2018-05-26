@@ -6,6 +6,9 @@
 const int H = 120;
 const int W = 360;
 
+//const int H = 10;
+//const int W = 40;
+
 
 typedef struct  {
 	sf::RectangleShape invBg;

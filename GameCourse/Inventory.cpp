@@ -69,22 +69,29 @@ void Inventory::reduceAmount(AbstractBlock & toReduce) {
 				this->added--;
 				slots.remove(s);
 				delete s;
+				s = nullptr;
 			};
 			break;
 		}
 	}
 }
 
-void Inventory::reduceAmount(Slot * toReduce) {
+void Inventory::reduceAmount(Player * p) {
+
+	Slot * toReduce = p->getHand();
 	if (toReduce == nullptr) return;
 	
 	for (Slot * s : slots) {
 		if (s == toReduce) {
-			if (--s->amount <= 0) {
+			
+			s->amount--;
+			if (s->amount <= 0) {
 				this->added--;
 				slots.remove(s);
-				delete s;
+				delete s;	
+				p->setHand(nullptr);
 			};
+			
 			break;
 		}
 	}

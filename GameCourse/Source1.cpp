@@ -33,8 +33,9 @@ int vmodey = 32 * 12;
 
 int main() {
 
-
-	RenderWindow window(VideoMode(vmodex, vmodey), "Miha game");
+	ContextSettings contextSettings;
+	contextSettings.antialiasingLevel = 8;
+	RenderWindow window(VideoMode(vmodex, vmodey), "Miha game", sf::Style::Default, contextSettings);
 	window.setMouseCursorVisible(false);
 	MenuChoiceCustom menuChoice = menu(window, vmodex, vmodey);
 	if (menuChoice == NONE || menuChoice == EXIT) return EXIT_SUCCESS;
@@ -46,7 +47,7 @@ int main() {
 	Clock clock;
 	View view;
 
-	Environment e(vmodex, vmodey, menuChoice, slot);
+	Environment e(vmodex, vmodey, menuChoice, slot, window);
 
 	RectangleShape rectangle;
 	sf::Vector2i a(0, 0);

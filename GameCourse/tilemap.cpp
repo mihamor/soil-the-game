@@ -6,6 +6,7 @@
 #include <assert.h>
 
 
+static void copyTileMapToCharMatrix(char map[H][W + 1], String * TileMap);
 bool TMap::isEmptySlot(unsigned int slot) {
 	
 	std::string FileName;
@@ -29,7 +30,7 @@ bool TMap::isEmptySlot(unsigned int slot) {
 	is.open(FileName.c_str(), std::ios::binary);
 	if (!is.is_open()) return true;
 	is.seekg(0, std::ios::end);
-	int length = is.tellg();
+	int length = (int)is.tellg();
 	std::cout << length << std::endl;
 	is.close();
 	return length <= 0;
@@ -82,17 +83,11 @@ void TMap::saveTileMap(const char * FileName, String TileMap[])
 {
 	char map[H][W + 1];
 
-	for (int i = 0; i < H; i++)
-	{
-		for (int j = 0; j < W + 1; j++)
-		{
-			map[i][j] = TileMap[i][j];
-		}
-		map[i][W] = '\0';
-	}
+	copyTileMapToCharMatrix(map, TileMap);
 
 	FILE *fp;
 	fopen_s(&fp, FileName, "w");
+	if (!fp) std::cerr << "Can't open file " << FileName << std::endl;
 	for (int i = 0; i < H; i++)
 	{
 		fputs(map[i], fp);
@@ -100,6 +95,16 @@ void TMap::saveTileMap(const char * FileName, String TileMap[])
 			fputs("\n", fp);
 	}
 	fclose(fp);
+}
+static void copyTileMapToCharMatrix(char map[H][W+1], String * TileMap){
+	for (int i = 0; i < H; i++)
+	{
+		for (int j = 0; j < W; j++)
+		{
+			map[i][j] = TileMap[i][j];
+		}
+		map[i][W] = '\0';
+	}
 }
 void TMap::loadTileMap(const char * FileName, String TileMap[])
 {
@@ -133,7 +138,7 @@ bool TMap::setBlock(Player * p, int x, int y, float offsetX, float offsetY, std:
 		int posy = (y + (int)offsetY) / 32;
 		AbstractBlock *check = AbstractBlock::getBlock(blocks, TileMap, posy, posx);
 		if (check->singnature == DEFAULT_BG_SINGNATURE)
-		{ // проверка если блок, на место которого нужно поставить - бэкграундный блокв
+		{ // проверка если блок, на место которого нужно поставить - бэкграундный блок
 			Slot * h = p->getHand();
 			if(h->block->type == Solid) TileMap[posy][posx] = h->block->singnature;
 			else if(h->block->type == Background){
@@ -143,7 +148,7 @@ bool TMap::setBlock(Player * p, int x, int y, float offsetX, float offsetY, std:
 			}
 			//AbstractBlock * bHand = p->getHand()->block;
 			//p->reduceAmount(inv.getList());
-			inv.reduceAmount(p->getHand());
+			inv.reduceAmount(p);
 			return true;
 		}
 		return false;

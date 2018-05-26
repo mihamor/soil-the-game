@@ -10,6 +10,9 @@
 #include "Workbench.hpp"
 #include <map>
 #include "Cursor.hpp"
+#include "LightHandler.hpp"
+
+
 const int INV_SIZE = 10;
 const Vector2i startPlayerPos(16*W,64);
 using namespace sf;
@@ -37,6 +40,10 @@ class Environment
 	AnimationManager anim;
 	AnimationManager enemyAnim;
 
+	//light
+
+	LightHandler * ls;
+
 	void initMap() {
 		for(int y = 0; y < H; y++)
 			for (int x = 0; x < W; x++) {
@@ -48,7 +55,7 @@ class Environment
 public:
 
 
-	Environment(int vmodex, int vmodey, int choice, int slot) {
+	Environment(int vmodex, int vmodey, int choice, int slot, RenderWindow & window) {
 		this->vmodex = vmodex;
 		this->vmodey = vmodey;
 		this->menuChoice = choice;
@@ -88,11 +95,14 @@ public:
 		this->entities->push_back(new Enemy(enemyAnim, 32 * (W - W / 2), 32 * 12, true));
 
 		this->blocks = BlockLoader::loadBlocksFromXml("blocks.xml");
+		if(choice == 1)
 		inv->loadInventory(slot, *this->blocks);
 
 		wbenches["player"] = new Workbench(inv, *blocks, "recipes/player.xml");
 		wbenches["workbench"] = new Workbench(inv, *blocks, "recipes/workbench.xml");
 		wbenches["furnace"] = new Workbench(inv, *blocks, "recipes/furnace.xml");
+
+		this->ls = new LightHandler(*this->blocks, TileMap, window, vmodey, vmodex);
 	};
 
 	Player * player() {
@@ -122,6 +132,7 @@ public:
 		int posx = (a.x + (int)offsetX) / 32;
 		int posy = (a.y + (int)offsetY) / 32;
 		AbstractBlock * bl = AbstractBlock::getBlock(*blocks, TileMap, posy, posx);
+		Slot * hand = p->getHand();
 		if (!TMap::setBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv)) {
 			if (bl->interact() == doorType) {
 				DoorBlock * db = (DoorBlock *)bl;
@@ -133,6 +144,9 @@ public:
 				setGuiWorkbench(true, wb->getId());
 			}
 		}
+		else if(hand
+				&& hand->block->type == Solid
+				&& p->isInRange(a.x, a.y, offsetX, offsetY)) this->ls->addPair(Vector2i(posx, posy));
 	}
 	void removeBlock(Vector2i a) {
 		int posx = (a.x + (int)offsetX) / 32;
@@ -147,6 +161,7 @@ public:
 			TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
 		}else TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
 		std::cout << "Interaction " << bl->interact() << std::endl;
+		if(p->isInRange(a.x, a.y, offsetX, offsetY))ls->removePair(Vector2i(posx, posy));
 	}
 	bool isInvGui() {
 		return isGuiInv;
@@ -190,11 +205,11 @@ public:
 			Entity::updateAllEntities(entities, time, TileMap, *blocks);
 
 		// сдвиг карты при движение 
-		/*
-		View view;
-		view.setCenter(p->x, p->y);
-		view.setSize(Vector2f(vmodex, vmodey));
-		window.setView(view);*/
+		
+		//View view;
+		//view.setCenter(p->x, p->y);
+		//view.setSize(Vector2f(vmodex, vmodey));
+		//window.setView(view);
 
 		if (p->x > vmodex / 2 && p->x  <  W*(32) - vmodex / 2) offsetX = p->x - vmodex / 2;
 		if (p->y > vmodey / 2 && p->y  < H*(32) - vmodey / 2) offsetY = p->y - vmodey / 2;
@@ -209,6 +224,9 @@ public:
 		Entity::drawAllEntities(entities, offsetX, offsetY, window);
 		// отрисовка курсора
 
+		int t = groundLevel * BLOCK_SIZE + groundLevel * BLOCK_SIZE /2;
+		std::cout << p->y << " : " << t << std::endl;
+		if (p->y > t) ls->render(offsetX, offsetY, p->x, p->y, window);
 		//ќтрисовка HUD
 		p->drawHUD(window, vmodex, vmodey, this->hItems);
 		//отрисовка инвентар€(ставить последним)
@@ -224,6 +242,10 @@ public:
 		Entity::deleteAllEntities(entities);
 		delete entities;
 
+		
+		inv->saveInventory(this->slot);
+		TMap::saveTileMapToSlot(slot, TileMap, TileMapBg);
+
 
 		while (!this->blocks->empty()) {
 			auto it = blocks->begin();
@@ -235,10 +257,11 @@ public:
 		delete blocks;
 
 
-		TMap::saveTileMapToSlot(slot, TileMap, TileMapBg);
-		inv->saveInventory(this->slot);
+		
+		
 		//wb->workbenchSave("");
 
+		delete ls;
 		delete anim.getTexture();
 		delete enemyAnim.getTexture();
 		delete wbenches["player"];

@@ -118,7 +118,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\SFML-2.5.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\ltblinclude;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile />
     </ClCompile>
@@ -137,6 +137,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>E:\ltblinclude;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -152,10 +153,22 @@
     <ClInclude Include="Cursor.hpp" />
     <ClInclude Include="Block.hpp" />
     <ClInclude Include="DoorBlock.h" />
+    <ClInclude Include="E:\ltblinclude\ltbl\lighting\LightDirectionEmission.h" />
+    <ClInclude Include="E:\ltblinclude\ltbl\lighting\LightPointEmission.h" />
+    <ClInclude Include="E:\ltblinclude\ltbl\lighting\LightShape.h" />
+    <ClInclude Include="E:\ltblinclude\ltbl\lighting\LightSystem.h" />
+    <ClInclude Include="E:\ltblinclude\ltbl\Math.h" />
+    <ClInclude Include="E:\ltblinclude\ltbl\quadtree\DynamicQuadtree.h" />
+    <ClInclude Include="E:\ltblinclude\ltbl\quadtree\Quadtree.h" />
+    <ClInclude Include="E:\ltblinclude\ltbl\quadtree\QuadtreeNode.h" />
+    <ClInclude Include="E:\ltblinclude\ltbl\quadtree\QuadtreeOccupant.h" />
+    <ClInclude Include="E:\ltblinclude\ltbl\quadtree\StaticQuadtree.h" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Environment.hpp" />
     <ClInclude Include="Item.hpp" />
+    <ClInclude Include="LightHandler.hpp" />
+    <ClInclude Include="SpriticBlock.h" />
     <ClInclude Include="WorkbenchBlock.hpp" />
     <ClInclude Include="WorldDef.h" />
     <ClInclude Include="Inventory.hpp" />
@@ -178,14 +191,27 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="DoorBlock.cpp" />
+    <ClCompile Include="E:\ltblinclude\ltbl\lighting\LightDirectionEmission.cpp" />
+    <ClCompile Include="E:\ltblinclude\ltbl\lighting\LightPointEmission.cpp" />
+    <ClCompile Include="E:\ltblinclude\ltbl\lighting\LightShape.cpp" />
+    <ClCompile Include="E:\ltblinclude\ltbl\lighting\LightSystem.cpp" />
+    <ClCompile Include="E:\ltblinclude\ltbl\Math.cpp" />
+    <ClCompile Include="E:\ltblinclude\ltbl\quadtree\DynamicQuadtree.cpp" />
+    <ClCompile Include="E:\ltblinclude\ltbl\quadtree\Quadtree.cpp" />
+    <ClCompile Include="E:\ltblinclude\ltbl\quadtree\QuadtreeNode.cpp" />
+    <ClCompile Include="E:\ltblinclude\ltbl\quadtree\QuadtreeOccupant.cpp" />
+    <ClCompile Include="E:\ltblinclude\ltbl\quadtree\StaticQuadtree.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Environment.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="LightHandler.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Recipe.cpp" />
+    <ClCompile Include="ltbltest.cpp" />
     <ClCompile Include="Source1.cpp" />
+    <ClCompile Include="SpriticBlock.cpp" />
     <ClCompile Include="tilemap.cpp" />
     <ClCompile Include="tinystr.cpp" />
     <ClCompile Include="tinyxml.cpp" />
