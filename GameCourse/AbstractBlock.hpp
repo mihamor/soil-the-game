@@ -148,41 +148,6 @@ public:
 	}
 
 
-	static void drawViewField(std::list<AbstractBlock*> * blocks, String * TileMap, String * TileMapBg, double offsetX, double offsetY, int H, int W, RenderWindow & window, int vmodex, int vmodey)
-	{
-		RectangleShape rectangle;
-		for (int i = 0; i < H; i++)
-			for (int j = 0; j < W; j++)
-			{
-				float posx = (float)(j * 32 - offsetX);
-				float posy = (float)(i * 32 - offsetY);
-				float reserve = BLOCK_SIZE * 2;
-				if (posy > vmodey || posx > vmodex  || posx < 0 - reserve  || posy < 0 - reserve) continue;
-
-
-				AbstractBlock *b = AbstractBlock::getBlock(*blocks, TileMap, i, j);
-				if (b->type == Background && b->interact() == removeType) b = AbstractBlock::getBlock(*blocks, TileMapBg, i, j);
-				if (b != NULL)
-					rectangle = b->rectangle;
-				else
-				{
-					fprintf(stderr, "Unknown block was found ");
-					std::cout << (char)TileMap[i][j] << std::endl;
-					abort();
-				}
-				if (b->type == spriticType) {
-				
-					
-
-				}
-				else {
-					rectangle.setPosition(posx, posy);
-					window.draw(rectangle);
-				}
-			}
-	}
-
-
 	static bool isContains(AbstractBlock *b, std::list<AbstractBlock*> vec)
 	{
 		for (std::list<AbstractBlock*>::iterator i = vec.begin(); i != vec.end(); i++)

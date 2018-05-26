@@ -10,7 +10,14 @@ typedef struct {
 public:
 	std::shared_ptr<ltbl::LightShape>  lightShape;
 	Vector2i coords;
-}LightPair;
+}LightShapePair;
+
+typedef struct {
+public:
+	std::shared_ptr<ltbl::LightPointEmission>  newLight;
+	Vector2i coords;
+}LightPointPair;
+
 
 class LightHandler
 {
@@ -19,7 +26,8 @@ class LightHandler
 	int vmodey, vmodex;
 
 	ltbl::LightSystem ls;
-	std::vector<LightPair *> pairs;
+	std::vector<LightShapePair *> pairs;
+	std::vector<LightPointPair *> pairsPoint;
 	std::shared_ptr<ltbl::LightPointEmission> playerLight;
 
 	sf::Sprite Lsprite;//Спрайт света.
@@ -28,13 +36,17 @@ class LightHandler
 	Shader unshadowShader, lightOverShapeShader;// Шейдеры для рендера света.
 	sf::RenderStates lightRenderStates;
 
-	LightPair * getPair(Vector2i coords) {
-		for (LightPair * pair : this->pairs)
+	LightShapePair * getPair(Vector2i coords) {
+		for (LightShapePair * pair : this->pairs)
 			if (pair->coords == coords) return pair;
 		return nullptr;
 	}
 
-	static bool isNeighoorsShapes() {}
+	LightPointPair * getPairPoint(Vector2i coords) {
+		for (LightPointPair * pair : this->pairsPoint)
+			if (pair->coords == coords) return pair;
+		return nullptr;
+	}
 
 public:
 	LightHandler(std::list<AbstractBlock *> & list, String * TileMap, RenderWindow & window, int vmodey, int vmodex) {
@@ -63,9 +75,9 @@ public:
 		playerLight = std::make_shared<ltbl::LightPointEmission>();
 		playerLight->_emissionSprite.setOrigin(sf::Vector2f(pointLightTexture.getSize().x * 0.5f, pointLightTexture.getSize().y * 0.5f));
 		playerLight->_emissionSprite.setTexture(pointLightTexture);
-		playerLight->_emissionSprite.setScale(sf::Vector2f(5, 5));
+		playerLight->_emissionSprite.setScale(sf::Vector2f(2, 2));
 		playerLight->_emissionSprite.setColor(sf::Color(255, 255, 255));
-		playerLight->_sourceRadius = 4;
+		playerLight->_sourceRadius = 1;
 		ls.addLight(playerLight);
 
 
@@ -73,28 +85,15 @@ public:
 				for (int x = 0; x < W; x++) {
 					AbstractBlock * block = AbstractBlock::getBlock(list, TileMap, y, x);
 					if (!block) continue;
-					if (block->getCollision())
-					{
-						LightPair * pair = new LightPair();
-						pair->coords = Vector2i(x, y);
-						pair->lightShape = std::make_shared<ltbl::LightShape>();
-						pair->lightShape->_shape.setPointCount(4);
-						pair->lightShape->_shape.setPoint(0, Vector2f(0, 0));// Что бы избажать глюков с тенью строить фигуру нужно опираясь на координаты 0,0.
-						pair->lightShape->_shape.setPoint(1, Vector2f(BLOCK_SIZE, 0));
-						pair->lightShape->_shape.setPoint(2, Vector2f(BLOCK_SIZE, BLOCK_SIZE));
-						pair->lightShape->_shape.setPoint(3, Vector2f(0, BLOCK_SIZE));
-						pair->lightShape->_renderLightOverShape = true;//Рендерить свет сквозь фигуру.По умолчанию false.
-						pair->lightShape->_shape.setPosition(0, 0);
-						pairs.push_back(pair);
-						//ls.addShape(pair->lightShape);
-					}
+					if (block->getCollision() && block->interact() != spriticType) this->addPair(Vector2i(x, y));
+					else if (block->getCollision()) this->addLight(Vector2i(x, y));
 				}
 	}
 
 	void removePair(Vector2i pairCoord) {
 		for (auto it = pairs.begin(); it != pairs.end(); it++)
 		{
-			LightPair * pair = *it;
+			LightShapePair * pair = *it;
 			if (pair->coords.x == pairCoord.x && pairCoord.y == pair->coords.y) {
 				it = pairs.erase(it);
 				//this->ls.removeShape(pair->lightShape);
@@ -103,9 +102,37 @@ public:
 			}
 		}
 	}
+	void removeLight(Vector2i pairCoord) {
+		for (auto it = pairsPoint.begin(); it != pairsPoint.end(); it++)
+		{
+			LightPointPair * pair = *it;
+			if (pair->coords.x == pairCoord.x && pairCoord.y == pair->coords.y) {
+				it = pairsPoint.erase(it);
+				this->ls.removeLight(pair->newLight);
+				delete pair;
+				break;
+			}
+		}
+	}
+
+	void addLight(Vector2i pairCord) {
+		LightPointPair * pair = new LightPointPair();
+		pair->coords = pairCord;
+		pair->newLight = std::make_shared<ltbl::LightPointEmission>();
+		pair->newLight->_emissionSprite.setOrigin(sf::Vector2f(pointLightTexture.getSize().x * 0.5f, pointLightTexture.getSize().y * 0.5f));
+		pair->newLight->_emissionSprite.setTexture(pointLightTexture);
+		pair->newLight->_emissionSprite.setScale(sf::Vector2f(5, 5));
+		pair->newLight->_emissionSprite.setColor(sf::Color(255, 255, 255));
+		pair->newLight->_sourceRadius = 4;
+		pair->newLight->_emissionSprite.setPosition(Vector2f(pairCord.x, pairCord.y));
+
+		pairsPoint.push_back(pair);
+		ls.addLight(pair->newLight);
+	}
+
 
 	void addPair(Vector2i pairCord) {
-		LightPair * pair = new LightPair();
+		LightShapePair * pair = new LightShapePair();
 		pair->coords = Vector2i(pairCord.x, pairCord.y);
 		pair->lightShape = std::make_shared<ltbl::LightShape>();
 		pair->lightShape->_shape.setPointCount(4);
@@ -117,26 +144,20 @@ public:
 		pair->lightShape->_shape.setPosition(0, 0);
 		pairs.push_back(pair);
 	}
+
 	void render(float offsetX, float offsetY, float px, float py, RenderWindow & window) {
 
 		Vector2u size = Vector2u(vmodex, vmodey);
-		std::vector<LightPair *> added;
-		for (LightPair * pair : this->pairs) {
+		std::vector<LightShapePair *> added;
+		for (LightShapePair * pair : this->pairs) {
 			
 			float posx = (float)(pair->coords.x * 32 - offsetX);
 			float posy = (float)(pair->coords.y * 32 - offsetY);
 			float reserve = BLOCK_SIZE * 2;
 			if (posy > size.y || posx > size.x || posx < 0 - reserve || posy < 0 - reserve) continue;
-			//if (AbstractBlock::hasBlockNeigh(pair->coords.y, pair->coords.y, TileMap, DEFAULT_BG_SINGNATURE)) {
-				pair->lightShape->_shape.setPosition(posx, posy);
-				ls.addShape(pair->lightShape);
-				added.push_back(pair);
-			//}
-			//	if (!AbstractBlock::hasBlockNeigh(pair->coords.y, pair->coords.y, TileMap, DEFAULT_BG_SINGNATURE)) {
-				//	pair->lightShape->_shape.
-		
-				//}
-
+			pair->lightShape->_shape.setPosition(posx, posy);
+			ls.addShape(pair->lightShape);
+			added.push_back(pair);
 		}
 		
 		View view = window.getDefaultView();
@@ -144,6 +165,10 @@ public:
 		float centery = size.y/2;
 		if (px > size.x / 2 && px  <  W*(32) - size.x / 2) centerx = px - offsetX;
 		if (py > size.y / 2 && py  < H*(32) - size.y / 2)  centery = py - offsetY;
+		for (auto pair : pairsPoint) {
+			Vector2i posL = pair->coords;
+			pair->newLight->_emissionSprite.setPosition(posL.x * BLOCK_SIZE - offsetX, posL.y * BLOCK_SIZE - offsetY);
+		}
 		playerLight->_emissionSprite.setPosition(px - offsetX, py - offsetY);
 		view.setCenter(Vector2f(centerx, centery));
 		//view.setSize(Vector2f(size.x, size.y));
@@ -153,7 +178,7 @@ public:
 		lightRenderStates.blendMode = sf::BlendMultiply;
 		window.draw(Lsprite, lightRenderStates);
 
-		for(LightPair * pair : added) 
+		for(LightShapePair * pair : added)
 			ls.removeShape(pair->lightShape);
 	}
 };

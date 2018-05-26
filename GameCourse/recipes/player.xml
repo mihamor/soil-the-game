@@ -14,6 +14,13 @@
     </recipe>
 	<recipe>
         <required>
+            <slot signature="105" amount="2" />
+			<slot signature="87" amount="1" />
+        </required>
+        <result signature="76" amount="1" />
+    </recipe>
+	<recipe>
+        <required>
             <slot signature="87" amount="4" />
         </required>
         <result signature="75" amount="1" />

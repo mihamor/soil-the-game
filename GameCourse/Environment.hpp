@@ -131,9 +131,11 @@ public:
 	void setBlock(Vector2i a) {
 		int posx = (a.x + (int)offsetX) / 32;
 		int posy = (a.y + (int)offsetY) / 32;
+		bool inRangePlayer = p->isInRange(a.x, a.y, offsetX, offsetY);
 		AbstractBlock * bl = AbstractBlock::getBlock(*blocks, TileMap, posy, posx);
 		Slot * hand = p->getHand();
-		if (!TMap::setBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv)) {
+		bool status = TMap::setBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
+		if (!status) {
 			if (bl->interact() == doorType) {
 				DoorBlock * db = (DoorBlock *)bl;
 				std::cout << "Now type is " << (db->doorUse(posx, posy, this->TileMap) != Solid ? "SOLID" : "BACKGROUND") << std::endl;
@@ -144,11 +146,19 @@ public:
 				setGuiWorkbench(true, wb->getId());
 			}
 		}
+		else if (hand
+			&& hand->block->interact() == spriticType
+			&& inRangePlayer) {
+
+			ls->addLight(Vector2i(posx, posy));
+		}
 		else if(hand
 				&& hand->block->type == Solid
-				&& p->isInRange(a.x, a.y, offsetX, offsetY)) this->ls->addPair(Vector2i(posx, posy));
+				&& inRangePlayer) this->ls->addPair(Vector2i(posx, posy));
+		std::cout << "Interaction " << bl->interact()  << std::endl;
 	}
 	void removeBlock(Vector2i a) {
+		bool inRangePlayer = p->isInRange(a.x, a.y, offsetX, offsetY);
 		int posx = (a.x + (int)offsetX) / 32;
 		int posy = (a.y + (int)offsetY) / 32;
 		AbstractBlock * bl = AbstractBlock::getBlock(*blocks, TileMap, posy, posx);
@@ -161,7 +171,8 @@ public:
 			TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
 		}else TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
 		std::cout << "Interaction " << bl->interact() << std::endl;
-		if(p->isInRange(a.x, a.y, offsetX, offsetY))ls->removePair(Vector2i(posx, posy));
+		if(inRangePlayer && bl->interact() != spriticType )ls->removePair(Vector2i(posx, posy));
+		else if (inRangePlayer) ls->removeLight(Vector2i(posx, posy));
 	}
 	bool isInvGui() {
 		return isGuiInv;
@@ -219,13 +230,13 @@ public:
 		// отрисовка блоков
 		//if(p->isMoving())window.clear(Color(255, 255, 255));
 
-		AbstractBlock::drawViewField(blocks, TileMap, TileMapBg, offsetX, offsetY, H, W, window, vmodex, vmodey);
+		Environment::drawViewField(blocks, TileMap, TileMapBg, offsetX, offsetY, H, W, window, vmodex, vmodey);
 		// отрисовка сущностей
 		Entity::drawAllEntities(entities, offsetX, offsetY, window);
 		// отрисовка курсора
 
-		int t = groundLevel * BLOCK_SIZE + groundLevel * BLOCK_SIZE /2;
-		std::cout << p->y << " : " << t << std::endl;
+		int t = groundLevel * BLOCK_SIZE + groundLevel * BLOCK_SIZE /4;
+		//std::cout << p->y << " : " << t << std::endl;
 		if (p->y > t) ls->render(offsetX, offsetY, p->x, p->y, window);
 		//Отрисовка HUD
 		p->drawHUD(window, vmodex, vmodey, this->hItems);
@@ -267,6 +278,54 @@ public:
 		delete wbenches["player"];
 		delete wbenches["workbench"];
 		delete wbenches["furnace"];
+	}
+
+private: 
+	static void drawViewField(std::list<AbstractBlock*> * blocks, String * TileMap, String * TileMapBg, double offsetX, double offsetY, int H, int W, RenderWindow & window, int vmodex, int vmodey)
+	{
+		RectangleShape rectangle;
+		for (int i = 0; i < H; i++)
+			for (int j = 0; j < W; j++)
+			{
+				float posx = (float)(j * 32 - offsetX);
+				float posy = (float)(i * 32 - offsetY);
+				float reserve = BLOCK_SIZE * 2;
+				if (posy > vmodey || posx > vmodex || posx < 0 - reserve || posy < 0 - reserve) continue;
+
+
+				AbstractBlock *b = AbstractBlock::getBlock(*blocks, TileMap, i, j);
+				if (b->type == Background && b->interact() == removeType) b = AbstractBlock::getBlock(*blocks, TileMapBg, i, j);
+				if (b != NULL)
+					rectangle = b->rectangle;
+				else
+				{
+					fprintf(stderr, "Unknown block was found ");
+					std::cout << (char)TileMap[i][j] << std::endl;
+					abort();
+				}
+				if (b->interact() == spriticType) {
+
+					//std::cout << posx << " " << posy << std::endl;
+					AbstractBlock *bgBlock = AbstractBlock::getBlock(*blocks, TileMapBg, i, j);
+
+					rectangle = bgBlock->rectangle;
+					rectangle.setPosition(posx, posy);
+					
+					SpriticBlock * sb = (SpriticBlock*)b;
+					Sprite sp = sb->getSprite();
+					//sp.setColor(Color::Transparent);
+					sp.setPosition(posx, posy);
+
+
+					window.draw(rectangle);
+					window.draw(sp);
+
+				}
+				else {
+					rectangle.setPosition(posx, posy);
+					window.draw(rectangle);
+				}
+			}
 	}
 
 
