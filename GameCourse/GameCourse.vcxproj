@@ -149,6 +149,7 @@
     <ClInclude Include="AbstractBlock.hpp" />
     <ClInclude Include="anim.hpp" />
     <ClInclude Include="BlockLoader.h" />
+    <ClInclude Include="BlockPackage.h" />
     <ClInclude Include="Bullet.hpp" />
     <ClInclude Include="Cursor.hpp" />
     <ClInclude Include="Block.hpp" />
@@ -187,6 +188,7 @@
   <ItemGroup>
     <ClCompile Include="AbstractBlock.cpp" />
     <ClCompile Include="anim.cpp" />
+    <ClCompile Include="Block.cpp" />
     <ClCompile Include="BlockLoader.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Cursor.cpp" />
@@ -210,6 +212,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Recipe.cpp" />
     <ClCompile Include="ltbltest.cpp" />
+    <ClCompile Include="Slot.cpp" />
     <ClCompile Include="Source1.cpp" />
     <ClCompile Include="SpriticBlock.cpp" />
     <ClCompile Include="tilemap.cpp" />

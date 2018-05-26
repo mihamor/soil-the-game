@@ -9,16 +9,12 @@ class WorkbenchBlock : public AbstractBlock
 private:
 	std::string id;
 public:
-	interactionType interact() {
-		return craftType;
-	};
+	interactionType interact();
 
-	std::string getId() {
-		return this->id;
-	}
+	std::string getId();
 
-	WorkbenchBlock(Texture *t, char singnature, BlockType type, std::string id) : AbstractBlock(t, singnature, type) { this->id = id; };
-	WorkbenchBlock(std::string fileName, char singnature, BlockType type, std::string id) : AbstractBlock(fileName, singnature, type) { this->id = id; };
-	WorkbenchBlock(char signature, std::list<AbstractBlock *> & blocks, std::string id) : AbstractBlock(signature, blocks) { this->id = id; };
+	WorkbenchBlock(Texture *t, char singnature, BlockType type, std::string id);
+	WorkbenchBlock(std::string fileName, char singnature, BlockType type, std::string id);
+	WorkbenchBlock(char signature, std::list<AbstractBlock *> & blocks, std::string id);
 };
 
