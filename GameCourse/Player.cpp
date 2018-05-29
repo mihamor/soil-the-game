@@ -194,8 +194,9 @@ void Player::drawHUD(RenderWindow & window, int vmodex, int vmodey, HudItems & i
 	
 	
 	for (int i = 0; i < this->life; i++) {
-			CircleShape heart(10);
-			heart.setFillColor(Color::Red);
+			//CircleShape heart(10);
+			Sprite heart = items.heart;
+			//heart.setFillColor(Color::Red);
 			heart.setPosition(0 + 30 * i, 0);
 			window.draw(heart);
 	}

@@ -25,6 +25,8 @@ class LightHandler
 	String * TileMap;
 	int vmodey, vmodex;
 
+	int bufferRenderCounts;
+
 	ltbl::LightSystem ls;
 	std::vector<LightShapePair *> pairs;
 	std::vector<LightPointPair *> pairsPoint;
@@ -48,7 +50,7 @@ public:
 	void removeLight(Vector2i pairCoord);
 	void addLight(Vector2i pairCord);
 	void addPair(Vector2i pairCord);
-	void render(float offsetX, float offsetY, float px, float py, RenderWindow & window);
+	void render(float offsetX, float offsetY, float px, float py, RenderWindow & window, bool drawRendered = false);
 	~LightHandler();
 };
 

@@ -28,6 +28,7 @@ void GetDesktopResolution(int& horizontal, int& vertical)
 	vertical = desktop.bottom;
 }
 //const int ground = 32 * 18;
+
 int vmodex = 600;
 int vmodey = 32 * 12;
 

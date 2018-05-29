@@ -122,7 +122,7 @@ void LightHandler::addPair(Vector2i pairCord) {
 	pairs.push_back(pair);
 }
 
-void LightHandler::render(float offsetX, float offsetY, float px, float py, RenderWindow & window) {
+void LightHandler::render(float offsetX, float offsetY, float px, float py, RenderWindow & window, bool drawRendered) {
 
 	Vector2u size = Vector2u(vmodex, vmodey);
 	std::vector<LightShapePair *> added;
@@ -149,8 +149,7 @@ void LightHandler::render(float offsetX, float offsetY, float px, float py, Rend
 	playerLight->_emissionSprite.setPosition(px - offsetX, py - offsetY);
 	view.setCenter(Vector2f(centerx, centery));
 	//view.setSize(Vector2f(size.x, size.y));
-
-	ls.render(view, unshadowShader, lightOverShapeShader);
+	if(!drawRendered) ls.render(view, unshadowShader, lightOverShapeShader);
 	//Lsprite.setTexture(ls.getLightingTexture());
 	lightRenderStates.blendMode = sf::BlendMultiply;
 	window.draw(Lsprite, lightRenderStates);

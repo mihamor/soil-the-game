@@ -5,6 +5,7 @@ Environment::Environment(int vmodex, int vmodey, int choice, int slot, RenderWin
 	this->vmodey = vmodey;
 	this->menuChoice = choice;
 	this->slot = slot;
+	this->drawFullRender = false;
 
 	initMap();
 	if (choice == 1) {
@@ -18,10 +19,10 @@ Environment::Environment(int vmodex, int vmodey, int choice, int slot, RenderWin
 		TMap::copyFrom(generatedBg, TileMapBg);
 	}
 
-
+	cursor = new GameCursor(Vector2i(vmodex, vmodey));
 	Texture * playerT = new Texture();
 	Texture *  enemyT = new Texture();
-	this->hItems = HUD::loadHudItems("menu/invBg.png", "menu/playerHud.png", "menu/playerHud.png");
+	this->hItems = HUD::loadHudItems("menu/invBg.png", "menu/playerHud.png", "menu/playerHud.png", "menu/heart.jpg");
 	//this->hItems.craftBg->loadFromFile("menu/craftBg.png");
 	playerT->loadFromFile("sprites/willy.png");
 	//playerT->loadFromFile("sprites/megaman.png");
@@ -79,7 +80,9 @@ bool Environment::isWorkbenchGui() {
 void Environment::setBlock(Vector2i a) {
 	int posx = (a.x + (int)offsetX) / 32;
 	int posy = (a.y + (int)offsetY) / 32;
-	bool inRangePlayer = p->isInRange(a.x, a.y, offsetX, offsetY);
+	//bool inRangePlayer = p->isInRange(a.x, a.y, offsetX, offsetY) && !p->intersects(a, vmodey, vmodex);
+	bool inRangePlayer = this->cursor->getStatus();
+	if (!inRangePlayer) return;
 	AbstractBlock * bl = AbstractBlock::getBlock(*blocks, TileMap, posy, posx);
 	Slot * hand = p->getHand();
 	bool status = TMap::setBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
@@ -97,9 +100,12 @@ void Environment::setBlock(Vector2i a) {
 	else if (hand && hand->block->interact() == spriticType && inRangePlayer) ls->addLight(Vector2i(posx, posy));
 	else if (hand && hand->block->type == Solid && inRangePlayer) this->ls->addPair(Vector2i(posx, posy));
 	std::cout << "Interaction " << bl->interact() << std::endl;
+	drawFullRender = true;
 }
 void Environment::removeBlock(Vector2i a) {
-	bool inRangePlayer = p->isInRange(a.x, a.y, offsetX, offsetY);
+	//bool inRangePlayer = p->isInRange(a.x, a.y, offsetX, offsetY) && !p->intersects(a, vmodey, vmodex);
+	bool inRangePlayer = this->cursor->getStatus();
+	if (!inRangePlayer) return;
 	int posx = (a.x + (int)offsetX) / 32;
 	int posy = (a.y + (int)offsetY) / 32;
 	AbstractBlock * bl = AbstractBlock::getBlock(*blocks, TileMap, posy, posx);
@@ -115,6 +121,7 @@ void Environment::removeBlock(Vector2i a) {
 	std::cout << "Interaction " << bl->interact() << std::endl;
 	if (inRangePlayer && bl->interact() != spriticType)ls->removePair(Vector2i(posx, posy));
 	else if (inRangePlayer) ls->removeLight(Vector2i(posx, posy));
+	drawFullRender = true;
 }
 bool Environment::isInvGui() {
 	return isGuiInv;
@@ -146,7 +153,7 @@ Vector2i Environment::offset() {
 }
 
 void Environment::update(float time, RenderWindow &window, sf::Vector2i a) {
-	this->cursor.update(isRange(a), a, time);
+	this->cursor->update(isRange(a), a, time, this->p);
 	// взаемодействие динамических обьектов
 	Entity::entitiesInteraction(entities, p);
 	// апдейт динамических обьектов
@@ -161,8 +168,7 @@ void Environment::update(float time, RenderWindow &window, sf::Vector2i a) {
 	//window.setView(view);
 
 	if (p->x > vmodex / 2 && p->x  <  W*(32) - vmodex / 2) offsetX = p->x - vmodex / 2;
-	if (p->y > vmodey / 2 && p->y  < H*(32) - vmodey / 2) offsetY = p->y - vmodey / 2;
-
+	if (p->y > vmodey / 2 && p->y < H*(32) - vmodey / 2) offsetY = p->y - vmodey / 2;
 	// отрисовка общего задника
 	//window.draw(surface);
 	// отрисовка блоков
@@ -174,8 +180,13 @@ void Environment::update(float time, RenderWindow &window, sf::Vector2i a) {
 	// отрисовка курсора
 
 	int t = groundLevel * BLOCK_SIZE + groundLevel * BLOCK_SIZE / 4;
-	//std::cout << p->y << " : " << t << std::endl;
-	if (p->y > t) ls->render(offsetX, offsetY, p->x, p->y, window);
+
+	if (p->y > t) {
+		ls->render(offsetX, offsetY, p->x, p->y, window, !drawFullRender);
+		if (drawFullRender) drawFullRender = false;
+	}
+
+	if (p->isMoving()) drawFullRender = true;
 	//Отрисовка HUD
 	p->drawHUD(window, vmodex, vmodey, this->hItems);
 	//отрисовка инвентаря(ставить последним)
@@ -184,7 +195,8 @@ void Environment::update(float time, RenderWindow &window, sf::Vector2i a) {
 	else if (isGuiWorkbench)
 		this->wbenches[wbTrigger]->draw(window, vmodey, vmodex, &isGuiWorkbench);
 
-	cursor.draw(window);
+	
+	cursor->draw(window);
 }
 
 Environment::~Environment() {
@@ -202,6 +214,7 @@ Environment::~Environment() {
 		it = blocks->erase(it);
 		delete b->rectangle.getTexture();
 		delete b;
+		
 	}
 	delete blocks;
 
@@ -211,6 +224,7 @@ Environment::~Environment() {
 	//wb->workbenchSave("");
 
 	delete ls;
+	delete cursor;
 	delete anim.getTexture();
 	delete enemyAnim.getTexture();
 	delete wbenches["player"];

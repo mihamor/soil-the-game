@@ -14,7 +14,7 @@ static bool isPointed(IntRect button, RenderWindow & window, Vector2i a) {
 
 saveSlotNumber saveMenu(RenderWindow & window, bool mode, int vmodex, int vmodey)
 {
-	GameCursor c;
+	GameCursor c(Vector2i(vmodex, vmodey));
 	Vector2u res = Vector2u(vmodex, vmodey);
 	window.clear();
 	bool availableSlots[3];

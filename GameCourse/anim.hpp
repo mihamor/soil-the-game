@@ -41,4 +41,7 @@ public:
 	const Texture * getTexture() {
 		return animList["stay"].sprite.getTexture();
 	}
+	const IntRect getRect() {
+		return animList["stay"].sprite.getTextureRect();
+	}
 };

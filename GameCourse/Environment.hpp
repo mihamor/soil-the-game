@@ -13,6 +13,8 @@
 #include "LightHandler.hpp"
 
 
+
+
 const int INV_SIZE = 10;
 const Vector2i startPlayerPos(16*W,64);
 using namespace sf;
@@ -24,7 +26,7 @@ class Environment
 	Inventory * inv;
 	int menuChoice;
 	float offsetX = 0, offsetY = 0;
-	GameCursor cursor;
+	GameCursor  * cursor;
 	bool isGuiInv = false;
 	bool isGuiWorkbench = false;
 	String TileMap[H];
@@ -43,6 +45,7 @@ class Environment
 	//light
 
 	LightHandler * ls;
+	bool drawFullRender;
 
 	
 

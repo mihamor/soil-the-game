@@ -15,7 +15,7 @@ enum MenuChoiceCustom {
 
 MenuChoiceCustom menu(RenderWindow & window, int vmodex, int vmodey)
 {
-	GameCursor c;
+	GameCursor c(Vector2i(vmodex, vmodey));
 	bool resized = false;
 	Vector2u res = Vector2u(vmodex, vmodey);
 	

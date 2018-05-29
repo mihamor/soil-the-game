@@ -28,6 +28,11 @@ void Entity::draw(RenderWindow &window, float offsetX, float offsetY)
 
 	anim.draw(window, x - offsetX, y - offsetY);
 }
+bool Entity::intersects(Vector2i coords) {
+	auto rect = this->anim.getRect();
+	std::cout << coords.x << " " << coords.y << " : " << rect.top << " " << rect.width << std::endl;
+	return rect.contains(coords);
+}
 FloatRect Entity::getRect()
 {
 	return FloatRect(x, y, w, h);
