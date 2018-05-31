@@ -62,6 +62,7 @@ public:
 	std::list<AbstractBlock *> * blocksList();
 	std::list<Entity *>  * entitiesList();
 	void addBullet();
+	void addSword();
 	void setGuiInv(bool state);
 	void setGuiWorkbench(bool state, std::string trigger = 0);
 	void setBlock(Vector2i a);

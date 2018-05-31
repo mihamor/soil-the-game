@@ -44,4 +44,7 @@ public:
 	const IntRect getRect() {
 		return animList["stay"].sprite.getTextureRect();
 	}
+	bool isOver() {
+		return (int)this->animList[currentAnim].currentFrame == ((int)(this->animList[currentAnim].frames.size())- 1);
+	}
 };

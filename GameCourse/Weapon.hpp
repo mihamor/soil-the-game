@@ -1,11 +1,8 @@
 #pragma once
 #include "AbstractBlock.hpp"
 #include "Bullet.hpp"
+#include "WorldDef.h"
 
-enum WeaponType {
-	Meele,
-	Ranged
-};
 class Weapon :
 	public AbstractBlock
 {
@@ -18,8 +15,6 @@ public:
 	Weapon(char signature, std::list<AbstractBlock*>& blocks, WeaponType wtype);
 
 
-	void weaponUse() {
-
-	}
+	WeaponType getType();
 };
 

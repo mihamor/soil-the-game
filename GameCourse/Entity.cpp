@@ -30,7 +30,6 @@ void Entity::draw(RenderWindow &window, float offsetX, float offsetY)
 }
 bool Entity::intersects(Vector2i coords) {
 	auto rect = this->anim.getRect();
-	std::cout << coords.x << " " << coords.y << " : " << rect.top << " " << rect.width << std::endl;
 	return rect.contains(coords);
 }
 FloatRect Entity::getRect()
@@ -79,7 +78,7 @@ void Entity::entitiesInteraction(std::list<Entity*>  *entities, Entity * player)
 			for (std::list<Entity*>::iterator it2 = entities->begin(); it2 != entities->end(); it2++)
 			{
 				Entity *b = *it2;
-				if (b->name == "Bullet")
+				if (b->name == "Bullet" || b->name == "Sword")
 				{
 					if (b->getRect().intersects(e->getRect()))
 					{
@@ -102,11 +101,24 @@ void Entity::entitiesInteraction(std::list<Entity*>  *entities, Entity * player)
 	for (it = entities->begin(); it != entities->end(); it++)
 	{
 		Entity *b = *it;
-		if (b->name == "Bullet")
+		if (b->name == "Bullet") {
 			if (!b->life) {
 				it = entities->erase(it);
 				delete b;
 			}
+		}
+		if (b->name == "Sword") {
+			//std::cout << player->dir << std::endl;
+			if (player->dir) { b->x = player->x - 50; }
+			else { b->x = player->x; }
+
+			b->flip(player->dir);
+			b->y = player->y;
+			if (!b->life) {
+				it = entities->erase(it);
+				delete b;
+			}
+		}
 	}
 }
 void Entity::updateAllEntities(std::list<Entity*>  *entities, float time, String * TileMap, std::list<AbstractBlock *> blocks)

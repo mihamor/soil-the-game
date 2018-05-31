@@ -31,7 +31,9 @@
 			element->SetAttribute("type", "Spritic");
 		}
 		else if (b->interact() == weaponItemType) {
-			element->SetAttribute("type", "Ranged");
+			Weapon * w = (Weapon *)b;
+			if(w->getType() == Meele) element->SetAttribute("type", "Meele");
+			else element->SetAttribute("type", "Ranged");
 		}
 		else element->SetAttribute("type", b->getCollision() ? "Solid" : "Background");
 		element->SetAttribute("signature", b->singnature);
@@ -81,6 +83,9 @@
 		 }
 		 else if (!strcmp(block->Attribute("type"), "Ranged")) {
 			 b = new Weapon(bFileName, signature, Background, Ranged);
+		 }
+		 else if (!strcmp(block->Attribute("type"), "Meele")) {
+			 b = new Weapon(bFileName, signature, Background, Meele);
 		 }
 		 else if ((type == Solid || type == Background))
 			 b = new Block(bFileName, signature, type);

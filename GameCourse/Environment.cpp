@@ -68,7 +68,13 @@ std::list<Entity *>  *  Environment::entitiesList() {
 }
 void Environment::addBullet() {
 	this->soundSystem.play("bow_use");
-	entities->push_back(new Bullet(combatAnim, p->x + p->w / 2, p->y + p->h / 4, p->dir));
+	entities->push_back(new Bullet(combatAnim, p->x + p->w / 2, p->y + p->h / 4, p->dir, Ranged));
+}
+
+void Environment::addSword()
+{
+	this->soundSystem.play("sword_use");
+	entities->push_back(new Bullet(combatAnim, p->x + p->w / 2, p->y + p->h / 4, p->dir, Meele));
 }
 
 void Environment::setGuiInv(bool state) {
@@ -106,7 +112,9 @@ void Environment::setBlock(Vector2i a) {
 			std::cout << "Craft opening " << wb->getId() << std::endl;
 			setGuiWorkbench(true, wb->getId());
 		}else if (hand && hand->block->interact() == weaponItemType) {
-			this->addBullet();
+			Weapon * w = (Weapon *)hand->block;
+			if (w->getType() == Meele) this->addSword();
+			else this->addBullet();
 			return;
 		}
 	}

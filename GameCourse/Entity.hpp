@@ -19,6 +19,9 @@ public:
 	Entity();
 	void hitted(bool dir);
 	Entity(AnimationManager &a, int X, int Y);
+	void flip(bool side) {
+		this->anim.flip(side);
+	}
 	virtual void update(float time, String TileMap[], std::list<AbstractBlock *> blocks ) = 0;
 	void draw(RenderWindow &window, float offsetX, float offsetY);
 	FloatRect getRect();

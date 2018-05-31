@@ -7,3 +7,7 @@ Weapon::Weapon(char signature, std::list<AbstractBlock *> & blocks, WeaponType w
 interactionType Weapon::interact() {
 	return weaponItemType;
 };
+
+WeaponType Weapon::getType() {
+	return this->wtype;
+}

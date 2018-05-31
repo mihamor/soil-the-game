@@ -20,3 +20,7 @@ typedef struct  {
 namespace HUD {
 	HudItems loadHudItems(std::string invBg, std::string playerHud, std::string craftBg, std::string heartSp);
 }
+enum WeaponType {
+	Meele,
+	Ranged
+};
