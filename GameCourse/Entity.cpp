@@ -9,7 +9,7 @@ Entity::Entity(AnimationManager &a, int X, int Y)
 	x = X;
 	y = Y;
 	anim = a;
-	life = 3;
+	life = 6;
 	dir = 0;
 	hit = false;
 }
@@ -45,9 +45,10 @@ void Entity::deleteAllEntities(std::list<Entity*>  *entities)
 		delete b;
 	}
 }
-void Entity::entitiesInteraction(std::list<Entity*>  *entities, Entity * player)
+int Entity::entitiesInteraction(std::list<Entity*>  *entities, Entity * player,  SoundSystem * soundSystem)
 {
 	std::list<Entity*>::iterator it;
+	int counter = 0;
 	for (it = entities->begin(); it != entities->end(); it++)
 	{
 		if ((*it)->name == "Enemy")
@@ -56,6 +57,7 @@ void Entity::entitiesInteraction(std::list<Entity*>  *entities, Entity * player)
 
 			if (!e->life)
 			{
+				counter++;
 				it = entities->erase(it);
 				delete e;
 			}
@@ -63,8 +65,10 @@ void Entity::entitiesInteraction(std::list<Entity*>  *entities, Entity * player)
 			if ((player->getRect().intersects(e->getRect()) && player->dy > 0))
 			{
 				//e->dx = 0;
+				soundSystem->play("stab_enemy");
 				e->life = e->life - 1;
 				if (!e->life) {
+					counter++;
 					it = entities->erase(it);
 					delete e;
 				}
@@ -72,6 +76,7 @@ void Entity::entitiesInteraction(std::list<Entity*>  *entities, Entity * player)
 				player->dy = -0.2;
 			}
 			else if (player->getRect().intersects(e->getRect())  && !player->dy) {
+				soundSystem->play("stab_enemy");
 				player->hitted(e->dir);
 			}
 
@@ -82,13 +87,17 @@ void Entity::entitiesInteraction(std::list<Entity*>  *entities, Entity * player)
 				{
 					if (b->getRect().intersects(e->getRect()))
 					{
+						soundSystem->play("stab_enemy");
 						bool dirSplash = b->dir;
-						it2 = entities->erase(it2);
-						b->life = 0;
-						delete b;
+						if (b->name == "Bullet") {
+							it2 = entities->erase(it2);
+							b->life = 0;
+							delete b;
+						}
 						e->hitted(dirSplash);
 						//std::cout << e->hit << std::endl;
 						if (!e->life) { 
+							counter++;
 							it = entities->erase(it);
 							delete e;
 						}
@@ -120,6 +129,7 @@ void Entity::entitiesInteraction(std::list<Entity*>  *entities, Entity * player)
 			}
 		}
 	}
+	return counter;
 }
 void Entity::updateAllEntities(std::list<Entity*>  *entities, float time, String * TileMap, std::list<AbstractBlock *> blocks)
 {

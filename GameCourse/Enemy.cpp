@@ -18,7 +18,7 @@ Enemy::Enemy(AnimationManager a, int X, int Y, bool dir)
 	if (dir == 1) { dx = -dx; anim.flip(true); }
 	w = anim.getFrameWidth(0, "walk");
 	h = anim.getFrameHeight(0, "walk");
-	life = 3;
+	life = 6;
 	name = "Enemy";
 	this->hit = false;
 	this->initPosition = Vector2i(X, Y);

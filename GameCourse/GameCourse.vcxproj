@@ -169,6 +169,7 @@
     <ClInclude Include="Environment.hpp" />
     <ClInclude Include="Item.hpp" />
     <ClInclude Include="LightHandler.hpp" />
+    <ClInclude Include="MobSpawner.hpp" />
     <ClInclude Include="SoundSystem.hpp" />
     <ClInclude Include="SpriticBlock.h" />
     <ClInclude Include="Weapon.hpp" />
@@ -211,6 +212,7 @@
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="LightHandler.cpp" />
+    <ClCompile Include="MobSpawner.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Recipe.cpp" />
     <ClCompile Include="ltbltest.cpp" />

@@ -21,19 +21,18 @@ Environment::Environment(int vmodex, int vmodey, int choice, int slot, RenderWin
 
 	cursor = new GameCursor(Vector2i(vmodex, vmodey));
 	Texture * playerT = new Texture();
-	Texture *  enemyT = new Texture();
 	Texture * combatT = new Texture();
 	this->hItems = HUD::loadHudItems("menu/invBg.png", "menu/playerHud.png", "menu/playerHud.png", "menu/heart.jpg");
 	//this->hItems.craftBg->loadFromFile("menu/craftBg.png");
 	playerT->loadFromFile("sprites/willy.png");
 	//playerT->loadFromFile("sprites/megaman.png");
-	enemyT->loadFromFile("sprites/babypig.png");
 	anim.loadFromXML("sprites/willy_anim.xml", playerT);
 	//anim.loadFromXML("sprites/anim_megaman.xml", playerT);
-	enemyAnim.loadFromXML("sprites/babypig_anim.xml", enemyT);
 
 	combatT->loadFromFile("sprites/combatAnim.png");
 	combatAnim.loadFromXML("sprites/combat_anim.xml", combatT);
+	
+
 	this->p = new Player(anim, startPlayerPos.x, startPlayerPos.y, &soundSystem);
 	const int MAX_SIZE = 15;
 	inv = new Inventory(MAX_SIZE);
@@ -41,8 +40,11 @@ Environment::Environment(int vmodex, int vmodey, int choice, int slot, RenderWin
 
 	this->entities = new std::list<Entity *>();
 	this->entities->push_back(p);
-	this->entities->push_back(new Enemy(enemyAnim, 32 * (W - 1), 32 * 12, false));
+	/*this->entities->push_back(new Enemy(enemyAnim, 32 * (W - 1), 32 * 12, false));
 	this->entities->push_back(new Enemy(enemyAnim, 32 * (W - W / 2), 32 * 12, true));
+
+	this->entities->push_back(new Enemy(zombieAnim, 32 * (W - 10), 32 * 12, false));
+	this->entities->push_back(new Enemy(zombieAnim, 32 * (W - W / 2 - 5), 32 * 12, true));*/
 
 	this->blocks = BlockLoader::loadBlocksFromXml("blocks.xml");
 	if (choice == 1)
@@ -53,6 +55,8 @@ Environment::Environment(int vmodex, int vmodey, int choice, int slot, RenderWin
 	wbenches["furnace"] = new Workbench(inv, *blocks, "recipes/furnace.xml");
 
 	this->ls = new LightHandler(*this->blocks, TileMap, window, vmodey, vmodex);
+	this->spawner = new MobSpawner(this->entities);
+	this->spawner->check(W/30);
 };
 
 Player * Environment::player() {
@@ -169,8 +173,9 @@ Vector2i Environment::offset() {
 void Environment::update(float time, RenderWindow &window, sf::Vector2i a) {
 	
 	// взаемодействие динамических обьектов
-	Entity::entitiesInteraction(entities, p);
+	int killedEnemies = Entity::entitiesInteraction(entities, p, &soundSystem);
 	// апдейт динамических обьектов
+	
 	if (!isGui()) Entity::updateAllEntities(entities, time, TileMap, *blocks);
 
 	// сдвиг карты при движение 
@@ -209,6 +214,8 @@ void Environment::update(float time, RenderWindow &window, sf::Vector2i a) {
 
 	
 	cursor->draw(window);
+
+	spawner->check(killedEnemies);
 }
 
 Environment::~Environment() {
@@ -233,7 +240,7 @@ Environment::~Environment() {
 	delete ls;
 	delete cursor;
 	delete anim.getTexture();
-	delete enemyAnim.getTexture();
+	delete spawner;
 	delete wbenches["player"];
 	delete wbenches["workbench"];
 	delete wbenches["furnace"];

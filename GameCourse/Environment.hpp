@@ -12,6 +12,7 @@
 #include "Cursor.hpp"
 #include "LightHandler.hpp"
 #include "SoundSystem.hpp"
+#include "MobSpawner.hpp"
 
 
 
@@ -41,7 +42,6 @@ class Environment
 	int vmodex, vmodey;
 	int slot;
 	AnimationManager anim;
-	AnimationManager enemyAnim;
 	AnimationManager combatAnim;
 
 	//light
@@ -51,6 +51,9 @@ class Environment
 
 	//sounds
 	SoundSystem soundSystem;
+	
+	//mob spawner
+	MobSpawner  * spawner;
 
 
 public:

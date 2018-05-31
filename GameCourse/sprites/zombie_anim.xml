@@ -1,0 +1,8 @@
+<!DOCTYPE SpriteDecomposer>
+<sprites image="skeleton.png" transparentColor="">
+ <animation title="walk" delay="150">
+  <cut w="22" x="98" y="144" h="47" row="1" col="1"/>
+  <cut w="18" x="134" y="144" h="47" row="1" col="1"/>
+  <cut w="22" x="163" y="144" h="47" row="1" col="1"/>
+ </animation>
+</sprites>

@@ -15,6 +15,7 @@ public:
 		map["door_open"].loadFromFile("sounds/door_open.wav");
 		map["bow_use"].loadFromFile("sounds/bow.wav");
 		map["sword_use"].loadFromFile("sounds/sword_use.wav");
+		map["stab_enemy"].loadFromFile("sounds/stab_enemy.wav");
 	}
 	void play(std::string id) {
 		if (currSound.getStatus() == sf::SoundSource::Playing) {
