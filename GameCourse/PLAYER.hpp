@@ -26,14 +26,19 @@ public:
 	bool isInRange(int x, int y, double offsetX, double offsetY);
 	void KeyCheck();
 	bool isMoving();
-	bool intersects(Vector2i coords, int vmodey, int vmodex) {
-		auto rect = this->anim.getRect();
+	bool intersects(Vector2i coords, float offsetX, float offsetY) {
 		
-		rect.width = 32;
-		rect.height = 32;
-		rect.left = vmodex / 2 - 16;
-		rect.top = vmodey / 2 - 16;
-		return rect.contains(coords);
+		int posPx = (this->x +  this->w/2) / 32;
+		int posPy = (this->y +  this->h/2) / 32;
+
+
+		int posx = (coords.x + (int)offsetX) / 32;
+		int posy = (coords.y + (int)offsetY) / 32;
+
+
+		//std::cout << "(" << posPx << ", " << posPy << ")" << " - " << "(" << posx << ", " << posy << ")" << std::endl;
+
+		return posPx == posx && posPy == posy;
 	}
 	void update(float time, String TileMap[], std::list<AbstractBlock *> blocks);
 	void Collision(int dir, String TileMap[], std::list<AbstractBlock *> blocks);

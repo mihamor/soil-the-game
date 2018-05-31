@@ -13,6 +13,7 @@ public:
 		map["player_jump"].loadFromFile("sounds/player_jump.ogg");
 		map["place_block"].loadFromFile("sounds/place_block.wav");
 		map["door_open"].loadFromFile("sounds/door_open.wav");
+		map["bow_use"].loadFromFile("sounds/bow.wav");
 	}
 	void play(std::string id) {
 		if (currSound.getStatus() == sf::SoundSource::Playing) {

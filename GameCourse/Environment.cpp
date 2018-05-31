@@ -22,6 +22,7 @@ Environment::Environment(int vmodex, int vmodey, int choice, int slot, RenderWin
 	cursor = new GameCursor(Vector2i(vmodex, vmodey));
 	Texture * playerT = new Texture();
 	Texture *  enemyT = new Texture();
+	Texture * combatT = new Texture();
 	this->hItems = HUD::loadHudItems("menu/invBg.png", "menu/playerHud.png", "menu/playerHud.png", "menu/heart.jpg");
 	//this->hItems.craftBg->loadFromFile("menu/craftBg.png");
 	playerT->loadFromFile("sprites/willy.png");
@@ -30,6 +31,9 @@ Environment::Environment(int vmodex, int vmodey, int choice, int slot, RenderWin
 	anim.loadFromXML("sprites/willy_anim.xml", playerT);
 	//anim.loadFromXML("sprites/anim_megaman.xml", playerT);
 	enemyAnim.loadFromXML("sprites/babypig_anim.xml", enemyT);
+
+	combatT->loadFromFile("sprites/combatAnim.png");
+	combatAnim.loadFromXML("sprites/combat_anim.xml", combatT);
 	this->p = new Player(anim, startPlayerPos.x, startPlayerPos.y, &soundSystem);
 	const int MAX_SIZE = 15;
 	inv = new Inventory(MAX_SIZE);
@@ -63,7 +67,8 @@ std::list<Entity *>  *  Environment::entitiesList() {
 	return this->entities;
 }
 void Environment::addBullet() {
-	entities->push_back(new Bullet(anim, p->x + p->w / 2, p->y + p->h / 4, p->dir));
+	this->soundSystem.play("bow_use");
+	entities->push_back(new Bullet(combatAnim, p->x + p->w / 2, p->y + p->h / 4, p->dir));
 }
 
 void Environment::setGuiInv(bool state) {
@@ -78,13 +83,14 @@ bool Environment::isWorkbenchGui() {
 	return this->isGuiWorkbench;
 }
 void Environment::setBlock(Vector2i a) {
+	Slot * hand = p->getHand();
 	int posx = (a.x + (int)offsetX) / 32;
 	int posy = (a.y + (int)offsetY) / 32;
 	//bool inRangePlayer = p->isInRange(a.x, a.y, offsetX, offsetY) && !p->intersects(a, vmodey, vmodex);
 	bool inRangePlayer = this->cursor->getStatus();
 	if (!inRangePlayer) return;
 	AbstractBlock * bl = AbstractBlock::getBlock(*blocks, TileMap, posy, posx);
-	Slot * hand = p->getHand();
+	
 	bool status = TMap::setBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
 
 	if (status) soundSystem.play("place_block");
@@ -94,12 +100,14 @@ void Environment::setBlock(Vector2i a) {
 			DoorBlock * db = (DoorBlock *)bl;
 			std::cout << "Now type is " << (db->doorUse(posx, posy, this->TileMap) != Solid ? "SOLID" : "BACKGROUND") << std::endl;
 			soundSystem.play("door_open");
-		}
-		if (bl->interact() == craftType) {
+		}else if (bl->interact() == craftType) {
 			soundSystem.play("craft_open");
 			WorkbenchBlock * wb = (WorkbenchBlock *)bl;
 			std::cout << "Craft opening " << wb->getId() << std::endl;
 			setGuiWorkbench(true, wb->getId());
+		}else if (hand && hand->block->interact() == weaponItemType) {
+			this->addBullet();
+			return;
 		}
 	}
 	else if (hand && hand->block->interact() == spriticType && inRangePlayer) ls->addLight(Vector2i(posx, posy));
@@ -117,8 +125,6 @@ void Environment::removeBlock(Vector2i a) {
 	bool status = TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
 	if(status) soundSystem.play("break_block");
 	std::cout << "Interaction " << bl->interact() << std::endl;
-
-
 	if (inRangePlayer && bl->interact() != spriticType)ls->removePair(Vector2i(posx, posy));
 	else if (inRangePlayer) ls->removeLight(Vector2i(posx, posy));
 	drawFullRender = true;
@@ -153,12 +159,11 @@ Vector2i Environment::offset() {
 }
 
 void Environment::update(float time, RenderWindow &window, sf::Vector2i a) {
-	this->cursor->update(isRange(a), a, time, this->p);
+	
 	// взаемодействие динамических обьектов
 	Entity::entitiesInteraction(entities, p);
 	// апдейт динамических обьектов
-	if (!isGui())
-		Entity::updateAllEntities(entities, time, TileMap, *blocks);
+	if (!isGui()) Entity::updateAllEntities(entities, time, TileMap, *blocks);
 
 	// сдвиг карты при движение 
 
@@ -169,10 +174,9 @@ void Environment::update(float time, RenderWindow &window, sf::Vector2i a) {
 
 	if (p->x > vmodex / 2 && p->x  <  W*(32) - vmodex / 2) offsetX = p->x - vmodex / 2;
 	if (p->y > vmodey / 2 && p->y < H*(32) - vmodey / 2) offsetY = p->y - vmodey / 2;
+	this->cursor->update(isRange(a), a, time,Vector2f(offsetX, offsetY), this->p);
 	// отрисовка общего задника
-	//window.draw(surface);
 	// отрисовка блоков
-	//if(p->isMoving())window.clear(Color(255, 255, 255));
 
 	Environment::drawViewField(blocks, TileMap, TileMapBg, offsetX, offsetY, window, vmodex, vmodey);
 	// отрисовка сущностей
@@ -216,13 +220,8 @@ Environment::~Environment() {
 		delete b;
 		
 	}
+
 	delete blocks;
-
-
-
-
-	//wb->workbenchSave("");
-
 	delete ls;
 	delete cursor;
 	delete anim.getTexture();

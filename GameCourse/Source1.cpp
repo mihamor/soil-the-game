@@ -105,7 +105,7 @@ int main() {
 				switch (event.key.code)
 				{
 				case Keyboard::Space: {
-					e.addBullet();
+					//e.addBullet();
 					break;
 				}
 				default:

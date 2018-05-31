@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -171,6 +171,7 @@
     <ClInclude Include="LightHandler.hpp" />
     <ClInclude Include="SoundSystem.hpp" />
     <ClInclude Include="SpriticBlock.h" />
+    <ClInclude Include="Weapon.hpp" />
     <ClInclude Include="WorkbenchBlock.hpp" />
     <ClInclude Include="WorldDef.h" />
     <ClInclude Include="Inventory.hpp" />
@@ -223,6 +224,7 @@
     <ClCompile Include="tinyxmlerror.cpp" />
     <ClCompile Include="tinyxmlparser.cpp" />
     <ClCompile Include="TreeBlock.cpp" />
+    <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Workbench.cpp" />
     <ClCompile Include="WorkbenchBlock.cpp" />
     <ClCompile Include="WorldDef.cpp" />

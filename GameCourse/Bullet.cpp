@@ -14,6 +14,8 @@ Bullet::Bullet(AnimationManager a, int X, int Y, bool side)
 	life = true;
 	name = "Bullet";
 	hit = false;
+
+	anim.flip(side);
 }
 Bullet::~Bullet() {}
 

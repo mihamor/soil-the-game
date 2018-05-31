@@ -42,6 +42,7 @@ class Environment
 	int slot;
 	AnimationManager anim;
 	AnimationManager enemyAnim;
+	AnimationManager combatAnim;
 
 	//light
 

@@ -30,6 +30,9 @@
 		else if (b->interact() == spriticType) {
 			element->SetAttribute("type", "Spritic");
 		}
+		else if (b->interact() == weaponItemType) {
+			element->SetAttribute("type", "Ranged");
+		}
 		else element->SetAttribute("type", b->getCollision() ? "Solid" : "Background");
 		element->SetAttribute("signature", b->singnature);
 		element->SetAttribute("texture", b->getFileName().c_str());
@@ -75,6 +78,9 @@
 		 }
 		 else if (!strcmp(block->Attribute("type"), "Spritic")) {
 			 b = new SpriticBlock(bFileName, signature, Solid);
+		 }
+		 else if (!strcmp(block->Attribute("type"), "Ranged")) {
+			 b = new Weapon(bFileName, signature, Background, Ranged);
 		 }
 		 else if ((type == Solid || type == Background))
 			 b = new Block(bFileName, signature, type);

@@ -6,5 +6,5 @@
 #include "WorkbenchBlock.hpp"
 #include "Item.hpp"
 #include "SpriticBlock.h"
-
+#include "Weapon.hpp"
 // to include all block content

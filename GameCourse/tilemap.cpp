@@ -133,7 +133,8 @@ void TMap::loadTileMap(const char * FileName, String TileMap[])
 bool TMap::setBlock(Player * p, int x, int y, float offsetX, float offsetY, std::list<AbstractBlock*> blocks, sf::String * TileMap, sf::String * TileMapBg, Inventory& inv) {
 	if (p->isInRange(x, y, offsetX, offsetY) && p->getHand() != NULL) // поставить блок
 	{
-		if (p->getHand()->block->interact() == itemType) return false;
+		if(p->getHand()->block->interact() == itemType
+		|| p->getHand()->block->interact() == weaponItemType) return false;
 		int posx = (x + (int)offsetX) / 32;
 		int posy = (y + (int)offsetY) / 32;
 		AbstractBlock *check = AbstractBlock::getBlock(blocks, TileMap, posy, posx);

@@ -21,10 +21,9 @@ void AnimationManager::loadFromXML(std::string fileName, Texture *t)
 	animList.clear();
 	TiXmlDocument animFile(fileName.c_str());
 
-	animFile.LoadFile();
+	if(!animFile.LoadFile()) abort();
 
-	TiXmlElement *head;
-	head = animFile.FirstChildElement("sprites");
+	TiXmlElement * head = animFile.FirstChildElement("sprites");
 
 	TiXmlElement *animElement;
 	animElement = head->FirstChildElement("animation");

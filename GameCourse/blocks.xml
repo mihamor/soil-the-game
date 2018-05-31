@@ -24,4 +24,5 @@
     <block type="Item" signature="120" texture="blocks/goldIngot.png" />
     <block type="Item" signature="121" texture="blocks/wolframIngot.png" />
     <block type="Spritic" signature="76" texture="blocks/lamp.png" />
+    <block type="Ranged" signature="96" texture="blocks/bow.png" />
 </block_list>

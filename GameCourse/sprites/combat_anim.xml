@@ -1,0 +1,14 @@
+<!DOCTYPE SpriteDecomposer>
+<sprites image="combatAnim.png" transparentColor="">
+ <animation title="move" delay="150">
+  <cut w="41" x="204" y="101" h="8" row="1" col="1"/>
+ </animation>
+ <animation title="explode" delay="150">
+  <cut w="41" x="204" y="101" h="8" row="1" col="1"/>
+ </animation>
+ <animation title="sword" delay="150">
+  <cut w="56" x="56" y="36" h="53" row="1" col="1"/>
+  <cut w="76" x="56" y="100" h="24" row="1" col="1"/>
+  <cut w="60" x="56" y="148" h="51" row="1" col="1"/>
+ </animation>
+</sprites>
