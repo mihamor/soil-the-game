@@ -30,7 +30,7 @@ Environment::Environment(int vmodex, int vmodey, int choice, int slot, RenderWin
 	anim.loadFromXML("sprites/willy_anim.xml", playerT);
 	//anim.loadFromXML("sprites/anim_megaman.xml", playerT);
 	enemyAnim.loadFromXML("sprites/babypig_anim.xml", enemyT);
-	this->p = new Player(anim, startPlayerPos.x, startPlayerPos.y);
+	this->p = new Player(anim, startPlayerPos.x, startPlayerPos.y, &soundSystem);
 	const int MAX_SIZE = 15;
 	inv = new Inventory(MAX_SIZE);
 
@@ -86,12 +86,17 @@ void Environment::setBlock(Vector2i a) {
 	AbstractBlock * bl = AbstractBlock::getBlock(*blocks, TileMap, posy, posx);
 	Slot * hand = p->getHand();
 	bool status = TMap::setBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
+
+	if (status) soundSystem.play("place_block");
+
 	if (!status) {
 		if (bl->interact() == doorType) {
 			DoorBlock * db = (DoorBlock *)bl;
 			std::cout << "Now type is " << (db->doorUse(posx, posy, this->TileMap) != Solid ? "SOLID" : "BACKGROUND") << std::endl;
+			soundSystem.play("door_open");
 		}
 		if (bl->interact() == craftType) {
+			soundSystem.play("craft_open");
 			WorkbenchBlock * wb = (WorkbenchBlock *)bl;
 			std::cout << "Craft opening " << wb->getId() << std::endl;
 			setGuiWorkbench(true, wb->getId());
@@ -109,16 +114,11 @@ void Environment::removeBlock(Vector2i a) {
 	int posx = (a.x + (int)offsetX) / 32;
 	int posy = (a.y + (int)offsetY) / 32;
 	AbstractBlock * bl = AbstractBlock::getBlock(*blocks, TileMap, posy, posx);
-	if (bl->interact() == removeType)
-		TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
-	else if (bl->interact() == doorType) {
-		TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
-	}
-	else if (bl->interact() == treeType) {
-		TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
-	}
-	else TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
+	bool status = TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
+	if(status) soundSystem.play("break_block");
 	std::cout << "Interaction " << bl->interact() << std::endl;
+
+
 	if (inRangePlayer && bl->interact() != spriticType)ls->removePair(Vector2i(posx, posy));
 	else if (inRangePlayer) ls->removeLight(Vector2i(posx, posy));
 	drawFullRender = true;

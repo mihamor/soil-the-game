@@ -9,7 +9,7 @@ static String intToStr(int value)
 	return result;
 }
 
-Player::Player(AnimationManager &a, int X, int Y)
+Player::Player(AnimationManager &a, int X, int Y, SoundSystem * soundSystem)
 {
 	h = a.getFrameHeight(0, "stay");
 	w = a.getFrameWidth(0, "stay");
@@ -22,6 +22,9 @@ Player::Player(AnimationManager &a, int X, int Y)
 	range = 5;
 	this->hand = NULL;
 	hit = false;
+
+
+	this->soundHandler = soundSystem;
 
 	// @implement normal hud items connections
 
@@ -80,7 +83,7 @@ void Player::KeyCheck()
 
 	if (key["Up"])
 	{
-		if (STATE == stay || STATE == walk) { dy = -0.4; STATE = jump; }
+		if (STATE == stay || STATE == walk) { dy = -0.4; STATE = jump; this->soundHandler->play("player_jump");  }
 		if (STATE == swim || STATE == climb) dy = -0.05;
 	}
 	if (key["Down"])
@@ -114,7 +117,9 @@ void Player::update(float time, String TileMap[], std::list<AbstractBlock *> blo
 	if(!this->hit)KeyCheck();
 	if (STATE == stay) anim.set("stay");
 	if (STATE == walk) anim.set("walk");
-	if (STATE == jump) anim.set("jump");
+	if (STATE == jump) {
+		anim.set("jump");
+	}
 	if (STATE == duck) anim.set("duck");
 	if (STATE == climb)
 	{

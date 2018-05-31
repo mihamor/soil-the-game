@@ -19,7 +19,7 @@ private:
 	void playerPosNormalize();
 public:
 	std::map<std::string, bool> key;
-	Player(AnimationManager &a, int X, int Y);
+	Player(AnimationManager &a, int X, int Y, SoundSystem * soundSystem);
 	void setHand(Slot * bl);
 	Slot * getHand();
 	void reduceAmount(std::list<Slot* >  * slots);

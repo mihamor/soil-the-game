@@ -4,6 +4,7 @@
 #include "Block.hpp"
 #include <list>
 #include "WorldDef.h"
+#include "SoundSystem.hpp"
 class Entity
 {
 public:
@@ -13,6 +14,7 @@ public:
 	bool dir;
 	AnimationManager anim;
 	std::string name;
+	SoundSystem * soundHandler;
 
 	Entity();
 	void hitted(bool dir);

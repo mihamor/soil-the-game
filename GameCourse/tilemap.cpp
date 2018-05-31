@@ -156,7 +156,7 @@ bool TMap::setBlock(Player * p, int x, int y, float offsetX, float offsetY, std:
 	return false;
 }
 
-void TMap::removeBlock(Player * p, int x, int y, float offsetX, float offsetY, std::list<AbstractBlock*> blocks, sf::String * TileMap, sf::String * TileMapBg, Inventory& inv) {
+bool TMap::removeBlock(Player * p, int x, int y, float offsetX, float offsetY, std::list<AbstractBlock*> blocks, sf::String * TileMap, sf::String * TileMapBg, Inventory& inv) {
 	if (p->isInRange(x, y, offsetX, offsetY))
 	{
 		int posx = (x + (int)offsetX) / 32;
@@ -170,7 +170,8 @@ void TMap::removeBlock(Player * p, int x, int y, float offsetX, float offsetY, s
 		}
 		if (check->getPermision())
 		{
-			if (isBg) TileMapBg[posy][posx] = DEFAULT_BG_SINGNATURE;
+			
+			if(isBg) TileMapBg[posy][posx] = DEFAULT_BG_SINGNATURE;
 			else {
 				TileMap[posy][posx] = DEFAULT_BG_SINGNATURE;
 			}
@@ -178,8 +179,11 @@ void TMap::removeBlock(Player * p, int x, int y, float offsetX, float offsetY, s
 			//else TileMapBg[posy][posx] = DEFAULT_BG_SINGNATURE;
 			if (check->interact() == doorType) inv.addSlot(AbstractBlock::getBlockFromList(doorClosedSign, blocks));
 			else inv.addSlot(check);
+			return true;
 		}
+		else return false;
 	}
+	else return false;
 }
 
 void TMap::copyFrom(String * from, String * to) {

@@ -11,6 +11,7 @@
 #include <map>
 #include "Cursor.hpp"
 #include "LightHandler.hpp"
+#include "SoundSystem.hpp"
 
 
 
@@ -47,7 +48,9 @@ class Environment
 	LightHandler * ls;
 	bool drawFullRender;
 
-	
+	//sounds
+	SoundSystem soundSystem;
+
 
 public:
 
