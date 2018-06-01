@@ -36,4 +36,18 @@
         </required>
         <result signature="119" amount="1" />
     </recipe>
+	<recipe>
+        <required>
+			<slot signature="87" amount="2" />
+            <slot signature="121" amount="5" />
+        </required>
+        <result signature="42" amount="1" />
+    </recipe>
+	<recipe>
+        <required>
+			<slot signature="87" amount="2" />
+            <slot signature="120" amount="5" />
+        </required>
+        <result signature="96" amount="1" />
+    </recipe>
 </recipes_list>

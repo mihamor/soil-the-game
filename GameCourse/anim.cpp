@@ -76,8 +76,9 @@ void AnimationManager::draw(RenderWindow &window, int x, int y)
 {
 	animList[currentAnim].sprite.setPosition(x, y + animList[currentAnim].frames[0].height);
 	Vector2u a = window.getSize();
-	if (x >= 0 && y >= 0 && x <= a.x && y <= a.y)
+	if (x >= 0 && y >= 0 && x <= a.x && y <= a.y) {
 		window.draw(animList[currentAnim].sprite);
+	}
 }
 void AnimationManager::set(String name) { if(currentAnim != name) currentAnim = name; }
 void AnimationManager::flip(bool b) { animList[currentAnim].flip = b; }

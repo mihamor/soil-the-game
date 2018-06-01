@@ -142,6 +142,7 @@ void Entity::drawAllEntities(std::list<Entity*>  *entities, double offsetX, doub
 {
 	for (std::list<Entity*>::iterator it = entities->begin(); it != entities->end(); it++)
 	{
+
 		(*it)->draw(window, offsetX, offsetY);
 	}
 }
