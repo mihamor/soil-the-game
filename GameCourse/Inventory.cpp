@@ -99,6 +99,7 @@ void Inventory::reduceAmount(Player * p) {
 
 void Inventory::draw(float vmodex, float vmodey, RenderWindow &window, bool *isGui, Vector2i * posMouse, Player * p,HudItems & items)
 {
+	if (!*isGui) return;
 	// отрисовка задника ивентаря
 	RectangleShape background = items.invBg;
 	//background.setFillColor(Color::White);
@@ -106,7 +107,8 @@ void Inventory::draw(float vmodex, float vmodey, RenderWindow &window, bool *isG
 
 	//std::cout << "[Debug]: Inventory size: " << this->added << std::endl;
 
-	if (Keyboard::isKeyPressed(Keyboard::Escape)) *isGui = false;
+	//if (Keyboard::isKeyPressed(Keyboard::Escape)) *isGui = false;
+	
 
 	bool drawed = false;
 	window.draw(background);

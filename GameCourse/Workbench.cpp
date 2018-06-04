@@ -19,11 +19,12 @@ Workbench::~Workbench() {
 		delete r.getResult();
 	}
 };
-void Workbench::draw(RenderWindow & window, int vmodey, int vmodex, bool * isGui) {
+void Workbench::draw(RenderWindow & window, int vmodey, int vmodex, bool * isGui, HudItems * items){
 
 
-	RectangleShape background(Vector2f(vmodex - vmodex / 2, vmodey - vmodey / 2));
-	background.setFillColor(Color::White);
+	/*RectangleShape background(Vector2f(vmodex - vmodex / 2, vmodey - vmodey / 2));
+	background.setPosition(64, 64);*/
+	auto background = items->craftBg;
 	background.setPosition(64, 64);
 
 	std::vector<RectangleShape> results;
@@ -31,38 +32,32 @@ void Workbench::draw(RenderWindow & window, int vmodey, int vmodex, bool * isGui
 	Font font;
 	if (!font.loadFromFile("fonts/arial.ttf")) assert(0);
 	amountShow.setFont(font);
-	amountShow.setFillColor(Color::Black);
-	amountShow.setCharacterSize(32);
-	Text arrow;
-	arrow.setFont(font);
-	arrow.setFillColor(Color::Black);
-	arrow.setCharacterSize(32);
-	arrow.setString(String("->"));
+	amountShow.setFillColor(Color::White);
+	amountShow.setCharacterSize(16);
 
 	window.draw(background);
-	int posy = 70;
+	int posy = 80;
 	for (Recipe r : recepies) {
 
-		int posx = 70;
+		int posx = 80;
 		if (r.ifMatchesInv(*inv)) {
 			for (Slot * s : r.getRequired()) {
 				RectangleShape slotToDraw = s->block->rectangle; // background of slot
-				posx = posx + BLOCK_SIZE;
+				
 				slotToDraw.setPosition((float)posx, (float)posy);
 				amountShow.setString(intToStr(s->amount));
 				amountShow.setPosition(posx, posy);
 				window.draw(slotToDraw);
 				window.draw(amountShow);
-
+				posx = posx + 2* BLOCK_SIZE;
+				
 			}
 			posx = posx + BLOCK_SIZE;
-			arrow.setPosition(posx, posy);
-			window.draw(arrow);
 
 			Slot * result = r.getResult();
 			RectangleShape resultSlot = result->block->rectangle; // background of slot
 			results.push_back(resultSlot);
-			posx = posx + BLOCK_SIZE;
+			posx = background.getSize().x / 2 + 4*BLOCK_SIZE;
 
 			resultSlot.setPosition(posx, posy);
 			amountShow.setString(intToStr(result->amount));
@@ -89,7 +84,13 @@ void Workbench::draw(RenderWindow & window, int vmodey, int vmodex, bool * isGui
 
 
 		}
-		if (Keyboard::isKeyPressed(Keyboard::Escape))*isGui = false;
+
+		/*Event event;
+		while (window.pollEvent(event)) {
+			if (event.type == Event::KeyPressed && event.key.code == Keyboard::C) {
+				*isGui = false; break;
+			}
+		}*/ if (!*isGui) return;
 	}
 
 }

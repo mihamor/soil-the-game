@@ -2,6 +2,7 @@
 #include "Inventory.hpp"
 #include "Recipe.hpp"
 #include "tinyxml.h"
+#include "WorldDef.h"
 
 class Workbench
 {
@@ -13,7 +14,7 @@ class Workbench
 public:
 	Workbench(Inventory * inv, std::list<AbstractBlock*> &list, std::string fileName);
 	~Workbench();
-	void draw(RenderWindow & window, int vmodey, int vmodex, bool * isGui);
+	void draw(RenderWindow & window, int vmodey, int vmodex, bool * isGui, HudItems * items);
 	void load(std::list<AbstractBlock*> &blocks, std::string fileName);
 	void workbenchSave(std::string fileName);
 private:

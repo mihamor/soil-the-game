@@ -22,7 +22,7 @@ Environment::Environment(int vmodex, int vmodey, int choice, int slot, RenderWin
 	cursor = new GameCursor(Vector2i(vmodex, vmodey));
 	Texture * playerT = new Texture();
 	Texture * combatT = new Texture();
-	this->hItems = HUD::loadHudItems("menu/invBg.png", "menu/playerHud.png", "menu/playerHud.png", "menu/heart.jpg");
+	this->hItems = HUD::loadHudItems("menu/invBg.png", "menu/playerHud.png", "menu/craftBg.jpg", "menu/heart.jpg");
 	//this->hItems.craftBg->loadFromFile("menu/craftBg.png");
 	playerT->loadFromFile("sprites/willy.png");
 	//playerT->loadFromFile("sprites/megaman.png");
@@ -210,7 +210,7 @@ void Environment::update(float time, RenderWindow &window, sf::Vector2i a) {
 	if (isGuiInv)
 		this->inv->draw(vmodex, vmodey, window, &isGuiInv, &a, p, this->hItems);
 	else if (isGuiWorkbench)
-		this->wbenches[wbTrigger]->draw(window, vmodey, vmodex, &isGuiWorkbench);
+		this->wbenches[wbTrigger]->draw(window, vmodey, vmodex, &isGuiWorkbench, &this->hItems);
 
 	
 	cursor->draw(window);

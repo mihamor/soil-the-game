@@ -79,10 +79,8 @@ int main() {
 			}
 		}
 		// call inventory
-		if (Keyboard::isKeyPressed(Keyboard::I))
-			e.setGuiInv(true);
-		if (Keyboard::isKeyPressed(Keyboard::C))
-			e.setGuiWorkbench(true, "player");
+		//if (Keyboard::isKeyPressed(Keyboard::I))
+		//	e.setGuiInv(true);
 
 
 		Event event;
@@ -101,11 +99,18 @@ int main() {
 				//vmodey = event.size.height;
 				//window.create(sf::VideoMode(vmodex, vmodey, 32), "SFML Window");
 			}
-			if (event.type == Event::KeyPressed && !e.isGui())
+			if (event.type == Event::KeyPressed)
 				switch (event.key.code)
 				{
-				case Keyboard::Space: {
+				case Keyboard::C: {
+					if(!e.isInvGui()) e.setGuiWorkbench(!e.isWorkbenchGui(), "player");
 					//e.addSword();
+					std::cout << e.isWorkbenchGui() << std::endl;
+					break;
+				}
+				case Keyboard::I: {
+					if(!e.isWorkbenchGui()) e.setGuiInv(!e.isInvGui());
+					//std::cout << e.isInvGui() << std::endl;
 					break;
 				}
 				default:
