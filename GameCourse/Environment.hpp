@@ -6,7 +6,6 @@
 #include "BlockPackage.h"
 #include "WorldGenerator.hpp"
 #include "Inventory.hpp"
-#include <iostream>
 #include "Workbench.hpp"
 #include <map>
 #include "Cursor.hpp"

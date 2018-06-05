@@ -7,34 +7,6 @@
 
 
 static void copyTileMapToCharMatrix(char map[H][W + 1], String * TileMap);
-bool TMap::isEmptySlot(unsigned int slot) {
-	
-	std::string FileName;
-	switch (slot)
-	{
-	case 1:
-		FileName = "saves/map1.mf";
-		break;
-	case 2:
-		FileName = "saves/map2.mf";
-		break;
-	case 3:
-		FileName = "saves/map3.mf";
-		break;
-	default:
-		assert(0 && "Unknown slot");
-		break;
-	}
-
-	std::ifstream is;
-	is.open(FileName.c_str(), std::ios::binary);
-	if (!is.is_open()) return true;
-	is.seekg(0, std::ios::end);
-	int length = (int)is.tellg();
-	std::cout << length << std::endl;
-	is.close();
-	return length <= 0;
-}
 bool TMap::loadTileMapFromSlot(int slot, String* TileMap, String* TileMapBg) {
 	switch (slot)
 	{

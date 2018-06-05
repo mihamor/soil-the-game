@@ -144,11 +144,11 @@
     <ClInclude Include="MobSpawner.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source1.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="tilemap.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -270,6 +270,18 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="MobSpawner.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClCompile>
+    <ClCompile Include="saveMenu.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="menu.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

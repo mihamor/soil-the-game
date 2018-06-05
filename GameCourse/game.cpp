@@ -1,47 +1,20 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include "Windows.h"
+#include "Game.h"
 #include <Math.h>
-#include "tilemap.h"
 #include <assert.h>
 #include "Environment.hpp"
-#include "Cursor.hpp"
-#include "menu.hpp"
-#include "saveMenu.hpp"
-#define SFML_DYNAMIC
+
 
 #pragma comment(lib, "sfml-graphics-s-d.lib")
 
 using namespace sf;
 
-void GetDesktopResolution(int& horizontal, int& vertical)
-{
-	RECT desktop;
-	// Get a handle to the desktop window
-	const HWND hDesktop = GetDesktopWindow();
-	// Get the size of screen to the variable desktop
-	GetWindowRect(hDesktop, &desktop);
-	// The top left corner will have coordinates (0,0)
-	// and the bottom right corner will have coordinates
-	// (horizontal, vertical)
-	horizontal = desktop.right;
-	vertical = desktop.bottom;
-}
 //const int ground = 32 * 18;
 
-int vmodex = 600;
-int vmodey = 32 * 12;
-
-int main() {
-
-	ContextSettings contextSettings;
-	contextSettings.antialiasingLevel = 8;
-	RenderWindow window(VideoMode(vmodex, vmodey), "Miha game", sf::Style::Default, contextSettings);
-	window.setMouseCursorVisible(false);
-	MenuChoiceCustom menuChoice = menu(window, vmodex, vmodey);
-	if (menuChoice == NONE || menuChoice == EXIT) return EXIT_SUCCESS;
-	int slot = saveMenu(window, menuChoice == CONTINUE ? true : false, vmodex, vmodey);
-	window.clear();
+execResult game(int slot, MenuChoiceCustom menuChoice, RenderWindow & window, int vmodex, int vmodey) {
+	
+	
+	
+	if (menuChoice == NONE || menuChoice == EXIT) return EXIT_GAME;
 	bool gameOver = false;
 	bool Resized = false;
 
@@ -91,7 +64,7 @@ int main() {
 				auto list = e.blocksList();
 				BlockLoader::saveBlocksToXml(*list);
 				window.close();
-				return EXIT_SUCCESS;
+				return EXIT_GAME;
 			}
 			if (event.type == Event::Resized)
 			{
@@ -111,6 +84,11 @@ int main() {
 				case Keyboard::I: {
 					if(!e.isWorkbenchGui()) e.setGuiInv(!e.isInvGui());
 					//std::cout << e.isInvGui() << std::endl;
+					break;
+				}
+				case Keyboard::Escape: {
+					//...
+					return TO_MENU;
 					break;
 				}
 				default:
@@ -142,9 +120,9 @@ int main() {
 			auto list = e.blocksList();
 			BlockLoader::saveBlocksToXml(*list);
 			window.close();
-			return EXIT_SUCCESS;
+			return EXIT_GAME;
 		}
 	}
-	return EXIT_SUCCESS;
+	return EXIT_GAME;
 }
 
