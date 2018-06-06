@@ -11,7 +11,7 @@ class GameCursor
 	bool isOkay;
 public:
 	GameCursor(Vector2i res);
-	void update(bool isRange, Vector2i a, float time, Vector2f offset = Vector2f(0,0), Player * p = nullptr);
+	void update(bool isRange, Vector2i a, float time, Vector2f offset = Vector2f(0,0), std::list<Entity *> * vec = nullptr);
 	void draw(RenderWindow & window);
 	bool getStatus() {
 		return isOkay;

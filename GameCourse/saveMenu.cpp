@@ -71,8 +71,7 @@ saveSlotNumber saveMenu(RenderWindow & window, bool mode, int vmodex, int vmodey
 		{
 			if (event.type == Event::Closed)
 			{
-				window.close();
-				return 0;
+				return -2;
 			}
 			if (event.type == Event::Resized)
 			{

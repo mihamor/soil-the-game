@@ -30,6 +30,6 @@ public:
 	static void updateAllEntities(std::list<Entity*>  *entities, float time, String * TileMap, std::list<AbstractBlock *> blocks);
 	static void drawAllEntities(std::list<Entity*>  *entities, double offsetX, double offsetY, RenderWindow &window);
 
-	bool intersects(Vector2i coords);
+	bool intersects(Vector2i coords, float offsetX, float offsetY);
 };
 

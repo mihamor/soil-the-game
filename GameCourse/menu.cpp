@@ -35,7 +35,7 @@ MenuChoiceCustom menu(RenderWindow & window, int vmodex, int vmodey)
 			if (event.type == Event::Closed)
 			{
 				window.close();
-				return NONE;
+				return EXIT;
 			}
 			if (event.type == Event::Resized)
 			{

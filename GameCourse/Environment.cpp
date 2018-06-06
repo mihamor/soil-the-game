@@ -187,7 +187,7 @@ void Environment::update(float time, RenderWindow &window, sf::Vector2i a) {
 
 	if (p->x > vmodex / 2 && p->x  <  W*(32) - vmodex / 2) offsetX = p->x - vmodex / 2;
 	if (p->y > vmodey / 2 && p->y < H*(32) - vmodey / 2) offsetY = p->y - vmodey / 2;
-	this->cursor->update(isRange(a), a, time,Vector2f(offsetX, offsetY), this->p);
+	this->cursor->update(isRange(a), a, time,Vector2f(offsetX, offsetY), this->entities);
 	// отрисовка общего задника
 	// отрисовка блоков
 

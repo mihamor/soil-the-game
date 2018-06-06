@@ -119,8 +119,7 @@ execResult game(int slot, MenuChoiceCustom menuChoice, RenderWindow & window, in
 			// пока что просто выход (реализовать окно смерти и перезагрузки)
 			auto list = e.blocksList();
 			BlockLoader::saveBlocksToXml(*list);
-			window.close();
-			return EXIT_GAME;
+			return TO_MENU;
 		}
 	}
 	return EXIT_GAME;

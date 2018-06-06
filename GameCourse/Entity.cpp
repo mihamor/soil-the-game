@@ -28,9 +28,16 @@ void Entity::draw(RenderWindow &window, float offsetX, float offsetY)
 
 	anim.draw(window, x - offsetX, y - offsetY);
 }
-bool Entity::intersects(Vector2i coords) {
-	auto rect = this->anim.getRect();
-	return rect.contains(coords);
+bool Entity::intersects(Vector2i coords, float offsetX, float offsetY)
+{
+
+	int posPx = (this->x + this->w / 2) / 32;
+	int posPy = (this->y + this->h / 2) / 32;
+
+	int posx = (coords.x + (int)offsetX) / 32;
+	int posy = (coords.y + (int)offsetY) / 32;
+	//std::cout << "(" << posPx << ", " << posPy << ")" << " - " << "(" << posx << ", " << posy << ")" << std::endl;
+	return posPx == posx && posPy == posy;
 }
 FloatRect Entity::getRect()
 {
@@ -71,6 +78,10 @@ int Entity::entitiesInteraction(std::list<Entity*>  *entities, Entity * player, 
 					counter++;
 					it = entities->erase(it);
 					delete e;
+					if (player->life != 3) {
+						player->life++;
+						soundSystem->play("heal_up");
+					}
 				}
 
 				player->dy = -0.2;
@@ -99,6 +110,10 @@ int Entity::entitiesInteraction(std::list<Entity*>  *entities, Entity * player, 
 						if (!e->life) { 
 							counter++;
 							it = entities->erase(it);
+							if (player->life != 3) {
+								player->life++;
+								soundSystem->play("heal_up");
+							}
 							delete e;
 						}
 					}

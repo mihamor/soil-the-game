@@ -1,0 +1,459 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="TiXmlParsingData" Collapsed="true">
+    <Position X="18.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAQABAAEAAAAAAAAAAEEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tinyxmlparser.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlString" Collapsed="true">
+    <Position X="8.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAIAAAAEAAAlAsICAQACAAEAAIIAiQExCAABAAA=</HashCode>
+      <FileName>tinystr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlOutStream" Collapsed="true">
+    <Position X="8.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tinystr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlVisitor" Collapsed="true">
+    <Position X="5.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAQAAAAAAAAAAAAAIAAAAAAAAAAAgAA=</HashCode>
+      <FileName>tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlBase" Collapsed="true">
+    <Position X="7.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JAgggBQAEAgEAAAQAgBhABASADAQAiAIAAAiAAAkAAA=</HashCode>
+      <FileName>tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlNode" Collapsed="true">
+    <Position X="9" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AKAgAAAIAEAEiiBAhEAAYQAEAAqBgCECAYtgAAtAIDA=</HashCode>
+      <FileName>tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlAttribute" Collapsed="true">
+    <Position X="1" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQggAAAgAAQggAEAABAAQQAAAIEAGQAAABgQAIEEAA=</HashCode>
+      <FileName>tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlAttributeSet" Collapsed="true">
+    <Position X="24" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAQAAQAAABAAAAAAJAAAAACAiQAAAAAA=</HashCode>
+      <FileName>tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlElement" Collapsed="true">
+    <Position X="3.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAgAAAAACACQAAJAAAAIIEAgQSAAA0BCBAgAAAEIFE=</HashCode>
+      <FileName>tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlComment" Collapsed="true">
+    <Position X="5.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAgAIAAAAAAAAAAAAAAAQAAAAAAAAEIAAAgAAAEIBA=</HashCode>
+      <FileName>tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlText" Collapsed="true">
+    <Position X="7.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AKAgAAAABAAAAAAAAEAAAABAAAABgAEAAAAgAAAEIBQ=</HashCode>
+      <FileName>tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlDeclaration" Collapsed="true">
+    <Position X="10" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IIAgACCAAAQAAAAAAAAAAAAAgAAAAIEAAAIoAAAEKBA=</HashCode>
+      <FileName>tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlUnknown" Collapsed="true">
+    <Position X="12.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAgAAAAAEAAAAAAAAAAAAACAAAAAAEAAAAgAIAEIBA=</HashCode>
+      <FileName>tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlDocument" Collapsed="true">
+    <Position X="14.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAgAAAABBAQAQABAgEICAAAAAEQBAEBFAAgAEgUJBA=</HashCode>
+      <FileName>tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlHandle" Collapsed="true">
+    <Position X="17" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAEAAAAEAAAIAAAEgAIAABAAAAAAAAAIEoCAEAABA=</HashCode>
+      <FileName>tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlPrinter" Collapsed="true">
+    <Position X="5.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAEABEhAQgBAAQAAAAMAAAAAAAAABQIBQAwAA=</HashCode>
+      <FileName>tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractBlock" Collapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAABAAAAAAABIBCBgAAAhACAACEAABAAAQAA=</HashCode>
+      <FileName>AbstractBlock.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Animation" Collapsed="true">
+    <Position X="17" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAQgAAAAAAAgQAAAAAAABAAAQAEAAAAAQAAAAE=</HashCode>
+      <FileName>anim.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AnimationManager" Collapsed="true">
+    <Position X="18.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAACCAAkACASYBAIAAAADAAAAAAABAAIAAIAA=</HashCode>
+      <FileName>anim.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockLoader" Collapsed="true">
+    <Position X="20.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>BlockLoader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Bullet" Collapsed="true">
+    <Position X="5.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAAAAAUAAA=</HashCode>
+      <FileName>Bullet.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameCursor" Collapsed="true">
+    <Position X="24" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAIBAAAAAAQABAAAAQBgAAAMAAA=</HashCode>
+      <FileName>Cursor.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Block" Collapsed="true">
+    <Position X="1" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Block.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DoorBlock" Collapsed="true">
+    <Position X="3.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAEAAAAAAAAAAAAAAAAAACgAAAAAAACAAAA=</HashCode>
+      <FileName>DoorBlock.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Enemy" Collapsed="true">
+    <Position X="0.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QgAAAgAEQIAAAAAAACAAAAAAAAAAAAgAAAAAAAAEAAA=</HashCode>
+      <FileName>Enemy.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entity" Collapsed="true">
+    <Position X="3" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAEAAAAAACQAAgAAA0IIAAAgAAAEAAAEQQhggAQEBAA=</HashCode>
+      <FileName>Entity.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Environment" Collapsed="true">
+    <Position X="22.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AkCAJBACAIAIAAHAAQGAAEEAGAAAAdBDQ0KSABoGHAA=</HashCode>
+      <FileName>Environment.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Item" Collapsed="true">
+    <Position X="7.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Item.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LightHandler" Collapsed="true">
+    <Position X="20.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAgAQAAAEBBQAgDBAMAFAAAAAwBAAAACBIAAAASAAA=</HashCode>
+      <FileName>LightHandler.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MobSpawner" Collapsed="true">
+    <Position X="24" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAFAAgcAAAAAAAAAAAAAAAAAQAAAAAIAABAAAA=</HashCode>
+      <FileName>MobSpawner.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoundSystem" Collapsed="true">
+    <Position X="22.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAACAAAAAAAAAQAAAAAACEAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>SoundSystem.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpriticBlock" Collapsed="true">
+    <Position X="5.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAABAAAAAAAAAAACAAAAAAgAAAAAA=</HashCode>
+      <FileName>SpriticBlock.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Weapon" Collapsed="true">
+    <Position X="10" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAQAAACgAAAAAAAAAAAA=</HashCode>
+      <FileName>Weapon.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WorkbenchBlock" Collapsed="true">
+    <Position X="12.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAEAAAAAAAAACAAAAAAAAAAAgA=</HashCode>
+      <FileName>WorkbenchBlock.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Inventory" Collapsed="true">
+    <Position X="17" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAACAgAAAQQAIAAQAMAAAAAAAAAAAAGgAEAAA=</HashCode>
+      <FileName>Inventory.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player" Collapsed="true">
+    <Position X="3" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAIAAAgMQIAgAAAgAAAEAAIgAAACIAAAAAABCQAEgAA=</HashCode>
+      <FileName>PLAYER.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recipe" Collapsed="true">
+    <Position X="18.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAABBAAAAQABAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Recipe.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Slot" Collapsed="true">
+    <Position X="20.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAgAAAAAAAAAAABgA=</HashCode>
+      <FileName>Slot.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TreeBlock" Collapsed="true">
+    <Position X="14.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAiAAAAAAAAAAAAA=</HashCode>
+      <FileName>TreeBlock.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Workbench" Collapsed="true">
+    <Position X="20.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAIAAAAIQAAAgAQAIAAAAABAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Workbench.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WorldGenerator" Collapsed="true">
+    <Position X="22.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAMAgQAAgAAAIAIAAAAIAgAAAAASAAQAAAAAAAAAQ=</HashCode>
+      <FileName>WorldGenerator.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ltbl::LightDirectionEmission" Collapsed="true">
+    <Position X="18.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQBAAAAAAAAAAEABAAAEAAAAAAQAAA=</HashCode>
+      <FileName>E:\ltblinclude\ltbl\lighting\LightDirectionEmission.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ltbl::LightPointEmission" Collapsed="true">
+    <Position X="8.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABBAAAAAAAAAAEAAAAAQAEAAAAQAAE=</HashCode>
+      <FileName>E:\ltblinclude\ltbl\lighting\LightPointEmission.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ltbl::LightShape" Collapsed="true">
+    <Position X="10.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAgACAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>E:\ltblinclude\ltbl\lighting\LightShape.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ltbl::LightSystem" Collapsed="true">
+    <Position X="22.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CEAAQADCFAAAAAgAiAEAAAAIAEBBAQAIABDAAQAQACg=</HashCode>
+      <FileName>E:\ltblinclude\ltbl\lighting\LightSystem.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ltbl::DynamicQuadtree" Collapsed="true">
+    <Position X="2.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAgAAEACAAAAAAAAIAAAAAABAAAAAAAAIBgAAICCAA=</HashCode>
+      <FileName>E:\ltblinclude\ltbl\quadtree\DynamicQuadtree.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ltbl::Quadtree" Collapsed="true">
+    <Position X="1.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABBABAAAQEQAAgAAIAEAQAAAQAAAAAACgAACCACA=</HashCode>
+      <FileName>E:\ltblinclude\ltbl\quadtree\Quadtree.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ltbl::QuadtreeNode" Collapsed="true">
+    <Position X="17" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACQCAACIAAAgiAEEAAMAQAAAAAAKAAgAUHQAgAGABA=</HashCode>
+      <FileName>E:\ltblinclude\ltbl\quadtree\QuadtreeNode.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ltbl::QuadtreeOccupant" Collapsed="true">
+    <Position X="9.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAACAAAAMAAAAAAAAAAAAAAAQAAAAACAAAA=</HashCode>
+      <FileName>E:\ltblinclude\ltbl\quadtree\QuadtreeOccupant.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ltbl::StaticQuadtree" Collapsed="true">
+    <Position X="0.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAEAAAAAAAAAAAABAAAAAAAAIBgAAACAAA=</HashCode>
+      <FileName>E:\ltblinclude\ltbl\quadtree\StaticQuadtree.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="TiXmlCursor" Collapsed="true">
+    <Position X="17" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQACAAAAAAAAAAAABABAAAA=</HashCode>
+      <FileName>tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_01b7_1" Collapsed="true">
+    <Position X="5.5" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LightHandler.hpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_01b7_2" Collapsed="true">
+    <Position X="1.5" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LightHandler.hpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="__unnamed_struct_002f_1" Collapsed="true">
+    <Position X="12.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAIAAAAAAAAAAAAAIAAAQAA=</HashCode>
+      <FileName>WorldDef.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="LightShapePair" Collapsed="true">
+    <Position X="5.5" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LightHandler.hpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="LightPointPair" Collapsed="true">
+    <Position X="1.5" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LightHandler.hpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="HudItems" Collapsed="true">
+    <Position X="12.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WorldDef.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="saveSlotNumber" Collapsed="true">
+    <Position X="17" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>saveMenu.hpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="__unnamed_enum_0025_1" Collapsed="true">
+    <Position X="17" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAACABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TiXmlEncoding" Collapsed="true">
+    <Position X="17" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAABAAAAAAAABAAAA=</HashCode>
+      <FileName>tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BlockType" Collapsed="true">
+    <Position X="18.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAgAAAAAAA=</HashCode>
+      <FileName>AbstractBlock.hpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="interactionType" Collapsed="true">
+    <Position X="22.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUAAAAAAAAAABAAAAAAABAAAEAAAQAAAAACAAAAAAA=</HashCode>
+      <FileName>AbstractBlock.hpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="execResult" Collapsed="true">
+    <Position X="20.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="WeaponType" Collapsed="true">
+    <Position X="18.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WorldDef.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MenuChoiceCustom" Collapsed="true">
+    <Position X="24" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAQAACAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>menu.hpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

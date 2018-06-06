@@ -14,12 +14,18 @@ GameCursor::GameCursor(Vector2i res) {
 	//cursor = new RectangleShape(Vector2f(32, 32));
 	//cursor->setTexture(c);
 }
-void GameCursor::update(bool isRange, Vector2i a, float time, Vector2f offset,  Player * p) {
+void GameCursor::update(bool isRange, Vector2i a, float time, Vector2f offset, std::list<Entity *> * vec) {
 	this->x = a.x;
 	this->y = a.y;
 
 	
-	if (p != nullptr && p->intersects(a, offset.x, offset.y)) isRange = false;
+	if (vec != nullptr)
+		for (auto e : *vec) {
+			if (e->intersects(a, offset.x, offset.y)) {
+				isRange = false;
+				break;
+			}
+		}
 
 	if (isRange) { anim.set("in");  this->isOkay = true; }
 	else {
