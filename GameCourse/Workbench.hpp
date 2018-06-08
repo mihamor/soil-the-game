@@ -17,8 +17,5 @@ public:
 	void draw(RenderWindow & window, int vmodey, int vmodex, bool * isGui, HudItems * items);
 	void load(std::list<AbstractBlock*> &blocks, std::string fileName);
 	void workbenchSave(std::string fileName);
-private:
-
-	
 };
 

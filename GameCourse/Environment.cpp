@@ -161,7 +161,10 @@ void Environment::removeBlock(Vector2i a) {
 
 		if (bl->interact() == chestType) {
 			std::string key = std::to_string(posx) + "," + std::to_string(posy);
-			if(!chests.count(key)) delete this->chests[key];
+			if (chests.count(key)) {
+				delete this->chests[key];
+				chests.erase(key);
+			}
 		}
 	}
 	std::cout << "Interaction " << bl->interact() << std::endl;

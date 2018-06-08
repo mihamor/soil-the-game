@@ -7,9 +7,7 @@
     <slot signature="76" amount="123" />
     <slot signature="75" amount="1" />
     <slot signature="120" amount="11" />
-    <slot signature="104" amount="75" />
-    <slot signature="121" amount="2" />
-    <slot signature="87" amount="2" />
-    <slot signature="89" amount="2" />
+    <slot signature="104" amount="74" />
     <slot signature="42" amount="1" />
+    <slot signature="87" amount="1" />
 </inventory>
