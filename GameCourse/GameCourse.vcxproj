@@ -153,6 +153,7 @@
     <ClInclude Include="Bullet.hpp" />
     <ClInclude Include="Chest.hpp" />
     <ClInclude Include="ChestBlock.hpp" />
+    <ClInclude Include="ChestLoader.hpp" />
     <ClInclude Include="Cursor.hpp" />
     <ClInclude Include="Block.hpp" />
     <ClInclude Include="DoorBlock.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Chest.cpp" />
     <ClCompile Include="ChestBlock.cpp" />
+    <ClCompile Include="ChestLoader.cpp" />
     <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="DoorBlock.cpp" />
     <ClCompile Include="E:\ltblinclude\ltbl\lighting\LightDirectionEmission.cpp" />

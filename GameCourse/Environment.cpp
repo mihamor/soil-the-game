@@ -1,4 +1,5 @@
 #include "Environment.hpp"
+#include "ChestLoader.hpp"
 
 Environment::Environment(int vmodex, int vmodey, int choice, int slot, RenderWindow & window) {
 	this->vmodex = vmodex;
@@ -46,8 +47,10 @@ Environment::Environment(int vmodex, int vmodey, int choice, int slot, RenderWin
 	this->entities->push_back(new Enemy(zombieAnim, 32 * (W - W / 2 - 5), 32 * 12, true));*/
 
 	this->blocks = BlockLoader::loadBlocksFromXml("blocks.xml");
-	if (choice == 1)
+	if (choice == 1) {
 		inv->loadInventory(slot, *this->blocks);
+		this->chests = ChestLoader::loadChestsFromXml(slot, *this->blocks);
+	}
 
 	wbenches["player"] = new Workbench(inv, *blocks, "recipes/player.xml");
 	wbenches["workbench"] = new Workbench(inv, *blocks, "recipes/workbench.xml");
@@ -258,7 +261,7 @@ Environment::~Environment() {
 
 	inv->saveInventory(this->slot);
 	TMap::saveTileMapToSlot(slot, TileMap, TileMapBg);
-
+	ChestLoader::saveChestsToXml(this->chests, slot);
 
 	while (!this->blocks->empty()) {
 		auto it = blocks->begin();

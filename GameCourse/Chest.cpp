@@ -8,7 +8,12 @@ static String intToStr(int value) {
 	return result;
 }
 
-
+bool Chest::addSlotToList(Slot * slot) {
+	if (this->added >= this->maxSlots) return false;
+	this->slots.push_back(slot);
+	this->added++;
+	return true;
+}
 void Chest::draw(float vmodex, float vmodey, RenderWindow & window, bool * isGui, Vector2i * posMouse, Inventory * mainInventory, HudItems & items)
 {
 
