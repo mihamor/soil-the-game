@@ -26,4 +26,5 @@
     <block type="Spritic" signature="76" texture="blocks/lamp.png" />
     <block type="Ranged" signature="96" texture="blocks/bow.png" />
     <block type="Meele" signature="42" texture="blocks/sword.png" />
+    <block type="Chest" signature="104" texture="blocks/chest.png" />
 </block_list>

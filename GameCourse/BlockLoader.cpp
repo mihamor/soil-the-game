@@ -35,6 +35,9 @@
 			if(w->getType() == Meele) element->SetAttribute("type", "Meele");
 			else element->SetAttribute("type", "Ranged");
 		}
+		else if (b->interact() == chestType) {
+			element->SetAttribute("type", "Chest");
+		}
 		else element->SetAttribute("type", b->getCollision() ? "Solid" : "Background");
 		element->SetAttribute("signature", b->singnature);
 		element->SetAttribute("texture", b->getFileName().c_str());
@@ -77,6 +80,9 @@
 		 }
 		 else if (!strcmp(block->Attribute("type"), "Item")) {
 			 b = new Item(bFileName, signature, Solid);
+		 }
+		 else if (!strcmp(block->Attribute("type"), "Chest")) {
+			 b = new ChestBlock(bFileName, signature, Solid);
 		 }
 		 else if (!strcmp(block->Attribute("type"), "Spritic")) {
 			 b = new SpriticBlock(bFileName, signature, Solid);

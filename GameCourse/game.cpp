@@ -76,13 +76,14 @@ execResult game(int slot, MenuChoiceCustom menuChoice, RenderWindow & window, in
 				switch (event.key.code)
 				{
 				case Keyboard::C: {
-					if(!e.isInvGui()) e.setGuiWorkbench(!e.isWorkbenchGui(), "player");
+					if(!e.isInvGui() && !e.isChestGui()) e.setGuiWorkbench(!e.isWorkbenchGui(), "player");
 					//e.addSword();
 					std::cout << e.isWorkbenchGui() << std::endl;
 					break;
 				}
 				case Keyboard::I: {
-					if(!e.isWorkbenchGui()) e.setGuiInv(!e.isInvGui());
+					if (e.isChestGui()) e.setGuiChest(!e.isChestGui());
+					else if(!e.isWorkbenchGui() && !e.isChestGui()) e.setGuiInv(!e.isInvGui());
 					//std::cout << e.isInvGui() << std::endl;
 					break;
 				}

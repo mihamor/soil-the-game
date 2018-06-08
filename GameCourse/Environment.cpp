@@ -22,7 +22,7 @@ Environment::Environment(int vmodex, int vmodey, int choice, int slot, RenderWin
 	cursor = new GameCursor(Vector2i(vmodex, vmodey));
 	Texture * playerT = new Texture();
 	Texture * combatT = new Texture();
-	this->hItems = HUD::loadHudItems("menu/invBg.png", "menu/playerHud.png", "menu/craftBg.jpg", "menu/heart.jpg");
+	this->hItems = HUD::loadHudItems("menu/invBg.png", "menu/chestBg.png", "menu/playerHud.png", "menu/craftBg.jpg", "menu/heart.jpg");
 	//this->hItems.craftBg->loadFromFile("menu/craftBg.png");
 	playerT->loadFromFile("sprites/willy.png");
 	//playerT->loadFromFile("sprites/megaman.png");
@@ -34,8 +34,7 @@ Environment::Environment(int vmodex, int vmodey, int choice, int slot, RenderWin
 	
 
 	this->p = new Player(anim, startPlayerPos.x, startPlayerPos.y, &soundSystem);
-	const int MAX_SIZE = 15;
-	inv = new Inventory(MAX_SIZE);
+	inv = new Inventory(INV_SIZE);
 
 
 	this->entities = new std::list<Entity *>();
@@ -85,6 +84,11 @@ void Environment::setGuiInv(bool state) {
 	isGuiInv = state;
 }
 
+void Environment::setGuiChest(bool state)
+{
+	isGuiChest = state;
+}
+
 void Environment::setGuiWorkbench(bool state, std::string trigger) {
 	isGuiWorkbench = state;
 	this->wbTrigger = trigger;
@@ -103,13 +107,28 @@ void Environment::setBlock(Vector2i a) {
 	
 	bool status = TMap::setBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
 
-	if (status) soundSystem.play("place_block");
-
-	if (!status) {
+	if (status) {
+		soundSystem.play("place_block");
+		if (hand && hand->block->interact() == chestType) {
+			std::string key = std::to_string(posx) + "," + std::to_string(posy);
+			std::cout << key << std::endl;
+			this->chests[key] = new Chest(CHEST_SIZE);
+		}
+		//...
+		if (hand && hand->block->interact() == spriticType && inRangePlayer) ls->addLight(Vector2i(posx, posy));
+		else if (hand && hand->block->type == Solid && inRangePlayer) this->ls->addPair(Vector2i(posx, posy));
+	}else{
 		if (bl->interact() == doorType) {
 			DoorBlock * db = (DoorBlock *)bl;
 			std::cout << "Now type is " << (db->doorUse(posx, posy, this->TileMap) != Solid ? "SOLID" : "BACKGROUND") << std::endl;
 			soundSystem.play("door_open");
+		}
+		else if (bl->interact() == chestType) {
+			std::string key = std::to_string(posx) + "," + std::to_string(posy);
+			std::cout << key << std::endl;
+			if (!chests.count(key)) chests[key] = new Chest(CHEST_SIZE);
+			triggeredChest = chests[key];
+			setGuiChest(true);
 		}else if (bl->interact() == craftType) {
 			soundSystem.play("craft_open");
 			WorkbenchBlock * wb = (WorkbenchBlock *)bl;
@@ -122,8 +141,6 @@ void Environment::setBlock(Vector2i a) {
 			return;
 		}
 	}
-	else if (hand && hand->block->interact() == spriticType && inRangePlayer) ls->addLight(Vector2i(posx, posy));
-	else if (hand && hand->block->type == Solid && inRangePlayer) this->ls->addPair(Vector2i(posx, posy));
 	std::cout << "Interaction " << bl->interact() << std::endl;
 	drawFullRender = true;
 }
@@ -135,7 +152,16 @@ void Environment::removeBlock(Vector2i a) {
 	int posy = (a.y + (int)offsetY) / 32;
 	AbstractBlock * bl = AbstractBlock::getBlock(*blocks, TileMap, posy, posx);
 	bool status = TMap::removeBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
-	if(status) soundSystem.play("break_block");
+	if (status) {
+		soundSystem.play("break_block");
+		if (bl->interact() != spriticType) ls->removePair(Vector2i(posx, posy));
+		else ls->removeLight(Vector2i(posx, posy));
+
+		if (bl->interact() == chestType) {
+			std::string key = std::to_string(posx) + "," + std::to_string(posy);
+			if(!chests.count(key)) delete this->chests[key];
+		}
+	}
 	std::cout << "Interaction " << bl->interact() << std::endl;
 	if (inRangePlayer && bl->interact() != spriticType)ls->removePair(Vector2i(posx, posy));
 	else if (inRangePlayer) ls->removeLight(Vector2i(posx, posy));
@@ -145,8 +171,13 @@ bool Environment::isInvGui() {
 	return isGuiInv;
 }
 
+bool Environment::isChestGui()
+{
+	return isGuiChest;
+}
+
 bool Environment::isGui() {
-	return isGuiInv || isGuiWorkbench;
+	return isGuiInv || isGuiWorkbench || isGuiChest;
 }
 void Environment::addBlock(Vector2i a) {
 	int posx = (a.x + (int)offsetX) / 32;
@@ -211,6 +242,8 @@ void Environment::update(float time, RenderWindow &window, sf::Vector2i a) {
 		this->inv->draw(vmodex, vmodey, window, &isGuiInv, &a, p, this->hItems);
 	else if (isGuiWorkbench)
 		this->wbenches[wbTrigger]->draw(window, vmodey, vmodex, &isGuiWorkbench, &this->hItems);
+	else if (isGuiChest)
+		this->triggeredChest->draw(vmodex, vmodey, window, &isGuiChest, &a, inv, this->hItems);
 
 	
 	cursor->draw(window);

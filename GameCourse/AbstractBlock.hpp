@@ -20,7 +20,8 @@ enum interactionType {
 	craftType,
 	itemType,
 	spriticType,
-	weaponItemType
+	weaponItemType,
+	chestType
 };
 
 

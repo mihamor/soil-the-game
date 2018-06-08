@@ -42,27 +42,29 @@ bool Inventory::isFull(AbstractBlock * pb) {
 	return true;
 }
 
-void Inventory::addSlot(AbstractBlock * pb)
+bool Inventory::addSlot(AbstractBlock * pb)
 {
 	bool added = false;
-	if (pb == NULL) return;
+	if (pb == NULL) return false;
 	for (std::list<Slot* >::iterator it = slots.begin(); it != slots.end(); it++)
 	{
 		if ((*it)->block->singnature == pb->singnature && !(*it)->isStacked())
 		{
 			(*it)->amount++;
 			added = true;
-			return;
+			return true;
 		}
 	}
-	if (added) return;
-	if (this->added >= maxSlots) return;
+	if (added) return true;
+	if (this->added >= maxSlots) return false;
 	Slot * newSlot = new Slot(pb, 1);
 	this->added++;
 	slots.push_back(newSlot);
+
+	return true;
 }
 
-void Inventory::reduceAmount(AbstractBlock & toReduce) {
+bool Inventory::reduceAmount(AbstractBlock & toReduce) {
 	for (Slot * s : slots) {
 		if (Block::compare(s->block, &toReduce)) {
 			if (--s->amount <= 0) {
@@ -71,9 +73,10 @@ void Inventory::reduceAmount(AbstractBlock & toReduce) {
 				delete s;
 				s = nullptr;
 			};
-			break;
+			return true;
 		}
 	}
+	return false;
 }
 
 void Inventory::reduceAmount(Player * p) {
@@ -136,13 +139,13 @@ void Inventory::draw(float vmodex, float vmodey, RenderWindow &window, bool *isG
 		if (isRectClicked(slotToDraw, window))
 		{
 			p->setHand(*it);
-			break;
+			//break;
 		}
 		else if (isRectClickedToDel(slotToDraw, window)) {
 			if (p->getHand() == *(it)) p->setHand(nullptr);
 			it = slots.erase(it);
 			this->added--;
-			break;
+			//break;
 		}
 	}
 }

@@ -15,10 +15,11 @@ typedef struct  {
 	sf::RectangleShape invBg;
 	sf::RectangleShape playerHud;
 	sf::RectangleShape craftBg;
+	sf::RectangleShape chestBg;
 	sf::Sprite heart;
 } HudItems;
 namespace HUD {
-	HudItems loadHudItems(std::string invBg, std::string playerHud, std::string craftBg, std::string heartSp);
+	HudItems loadHudItems(std::string invBg, std::string chestBg, std::string playerHud, std::string craftBg, std::string heartSp);
 }
 enum WeaponType {
 	Meele,

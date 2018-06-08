@@ -5,18 +5,19 @@
 #include "Bullet.hpp"
 #include "BlockPackage.h"
 #include "WorldGenerator.hpp"
-#include "Inventory.hpp"
 #include "Workbench.hpp"
 #include <map>
 #include "Cursor.hpp"
 #include "LightHandler.hpp"
 #include "SoundSystem.hpp"
 #include "MobSpawner.hpp"
+#include "Chest.hpp"
 
 
 
 
-const int INV_SIZE = 10;
+const int INV_SIZE = 15;
+const int CHEST_SIZE = 4;
 const Vector2i startPlayerPos(16*W,64);
 using namespace sf;
 class Environment
@@ -30,13 +31,19 @@ class Environment
 	GameCursor  * cursor;
 	bool isGuiInv = false;
 	bool isGuiWorkbench = false;
+	bool isGuiChest = false;
 	String TileMap[H];
 	String TileMapBg[H];
 
+
+	
 	HudItems hItems;
 	
 	std::map<std::string, Workbench *> wbenches;
 	std::string wbTrigger;
+
+	std::map<std::string, Chest *> chests;
+	Chest * triggeredChest =  nullptr;
 
 	int vmodex, vmodey;
 	int slot;
@@ -66,10 +73,12 @@ public:
 	void addBullet();
 	void addSword();
 	void setGuiInv(bool state);
+	void setGuiChest(bool state);
 	void setGuiWorkbench(bool state, std::string trigger = 0);
 	void setBlock(Vector2i a);
 	void removeBlock(Vector2i a);
 	bool isInvGui();
+	bool isChestGui();
 	bool isWorkbenchGui();
 	bool isGui();
 	void addBlock(Vector2i a);
