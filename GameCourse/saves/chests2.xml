@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<chest_list>
+    <chest key="124,61">
+        <slot signature="88" amount="1" />
+        <slot signature="89" amount="1" />
+        <slot signature="68" amount="7" />
+        <slot signature="119" amount="9" />
+    </chest>
+    <chest key="125,58">
+        <slot signature="68" amount="34" />
+        <slot signature="116" amount="2" />
+    </chest>
+    <chest key="125,61">
+        <slot signature="115" amount="1" />
+        <slot signature="119" amount="50" />
+    </chest>
+    <chest key="126,61" />
+    <chest key="128,61" />
+    <chest key="129,61" />
+    <chest key="130,61" />
+</chest_list>

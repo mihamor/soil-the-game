@@ -101,25 +101,29 @@ bool Environment::isWorkbenchGui() {
 }
 void Environment::setBlock(Vector2i a) {
 	Slot * hand = p->getHand();
+	AbstractBlock * hblock = nullptr;
+	if (hand) hblock = hand->block;
 	int posx = (a.x + (int)offsetX) / 32;
 	int posy = (a.y + (int)offsetY) / 32;
 	//bool inRangePlayer = p->isInRange(a.x, a.y, offsetX, offsetY) && !p->intersects(a, vmodey, vmodex);
 	bool inRangePlayer = this->cursor->getStatus();
+	if (hblock && hblock->interact() == weaponItemType) inRangePlayer = true;
 	if (!inRangePlayer) return;
 	AbstractBlock * bl = AbstractBlock::getBlock(*blocks, TileMap, posy, posx);
 	
 	bool status = TMap::setBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
 
 	if (status) {
+		
 		soundSystem.play("place_block");
-		if (hand && hand->block->interact() == chestType) {
+		if (hblock && hblock->interact() == chestType) {
 			std::string key = std::to_string(posx) + "," + std::to_string(posy);
 			std::cout << key << std::endl;
 			this->chests[key] = new Chest(CHEST_SIZE);
 		}
 		//...
-		if (hand && hand->block->interact() == spriticType && inRangePlayer) ls->addLight(Vector2i(posx, posy));
-		else if (hand && hand->block->type == Solid && inRangePlayer) this->ls->addPair(Vector2i(posx, posy));
+		if (hblock && hblock->interact() == spriticType && inRangePlayer) ls->addLight(Vector2i(posx, posy));
+		else if (hblock && hblock->type == Solid && inRangePlayer) this->ls->addPair(Vector2i(posx, posy));
 	}else{
 		if (bl->interact() == doorType) {
 			DoorBlock * db = (DoorBlock *)bl;
