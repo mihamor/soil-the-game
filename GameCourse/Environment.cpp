@@ -128,7 +128,6 @@ void Environment::setBlock(Vector2i a) {
 		}
 		else if (bl->interact() == chestType) {
 			std::string key = std::to_string(posx) + "," + std::to_string(posy);
-			std::cout << key << std::endl;
 			if (!chests.count(key)) chests[key] = new Chest(CHEST_SIZE);
 			triggeredChest = chests[key];
 			setGuiChest(true);

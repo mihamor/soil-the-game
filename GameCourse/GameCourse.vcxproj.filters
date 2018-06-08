@@ -19,6 +19,21 @@
     <Filter Include="Исходные файлы\LTBL">
       <UniqueIdentifier>{7537707c-ce8c-4a69-a16f-8e73494e0620}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Blocks">
+      <UniqueIdentifier>{dd0d68b5-af28-4d70-b67c-f955b54d4181}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Entities">
+      <UniqueIdentifier>{988482e3-acba-438a-a1b6-059d3dac159c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Guis">
+      <UniqueIdentifier>{c084c189-6312-4dbe-a1b2-ce9a92c6f2f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Save/Load">
+      <UniqueIdentifier>{00984ab5-6eb8-46ed-8bf0-603ed3988fcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\World">
+      <UniqueIdentifier>{b56d9e52-7cc5-4e57-8af7-9e0bdef95266}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tinyxml.h">
@@ -27,73 +42,7 @@
     <ClInclude Include="tinystr.h">
       <Filter>Исходные файлы\xml</Filter>
     </ClInclude>
-    <ClInclude Include="anim.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Inventory.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="PLAYER.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Slot.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="menu.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="tilemap.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Environment.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Cursor.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="AbstractBlock.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Block.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="BlockLoader.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="DoorBlock.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldGenerator.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="TreeBlock.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Recipe.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Workbench.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="saveMenu.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldDef.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="WorkbenchBlock.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Item.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="E:\ltblinclude\ltbl\lighting\LightDirectionEmission.h">
@@ -126,35 +75,101 @@
     <ClInclude Include="E:\ltblinclude\ltbl\quadtree\StaticQuadtree.h">
       <Filter>Исходные файлы\LTBL</Filter>
     </ClInclude>
-    <ClInclude Include="LightHandler.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="SpriticBlock.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="BlockPackage.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundSystem.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Weapon.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="MobSpawner.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Chest.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="AbstractBlock.hpp">
+      <Filter>Файлы заголовков\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.hpp">
+      <Filter>Файлы заголовков\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockPackage.h">
+      <Filter>Файлы заголовков\Blocks</Filter>
     </ClInclude>
     <ClInclude Include="ChestBlock.hpp">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="DoorBlock.h">
+      <Filter>Файлы заголовков\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriticBlock.h">
+      <Filter>Файлы заголовков\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="WorkbenchBlock.hpp">
+      <Filter>Файлы заголовков\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="anim.hpp">
+      <Filter>Файлы заголовков\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.hpp">
+      <Filter>Файлы заголовков\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.hpp">
+      <Filter>Файлы заголовков\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.hpp">
+      <Filter>Файлы заголовков\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Cursor.hpp">
+      <Filter>Файлы заголовков\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="PLAYER.hpp">
+      <Filter>Файлы заголовков\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="MobSpawner.hpp">
+      <Filter>Файлы заголовков\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeBlock.hpp">
+      <Filter>Файлы заголовков\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.hpp">
+      <Filter>Файлы заголовков\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Chest.hpp">
+      <Filter>Файлы заголовков\Guis</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.hpp">
+      <Filter>Файлы заголовков\Guis</Filter>
+    </ClInclude>
+    <ClInclude Include="saveMenu.hpp">
+      <Filter>Файлы заголовков\Guis</Filter>
+    </ClInclude>
+    <ClInclude Include="menu.hpp">
+      <Filter>Файлы заголовков\Guis</Filter>
+    </ClInclude>
+    <ClInclude Include="Workbench.hpp">
+      <Filter>Файлы заголовков\Guis</Filter>
+    </ClInclude>
+    <ClInclude Include="Slot.hpp">
+      <Filter>Файлы заголовков\Guis</Filter>
+    </ClInclude>
+    <ClInclude Include="Recipe.hpp">
+      <Filter>Файлы заголовков\Guis</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.hpp">
+      <Filter>Файлы заголовков\Blocks</Filter>
     </ClInclude>
     <ClInclude Include="ChestLoader.hpp">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Save/Load</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockLoader.h">
+      <Filter>Файлы заголовков\Save/Load</Filter>
+    </ClInclude>
+    <ClInclude Include="LightHandler.hpp">
+      <Filter>Файлы заголовков\World</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldDef.h">
+      <Filter>Файлы заголовков\World</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldGenerator.hpp">
+      <Filter>Файлы заголовков\World</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundSystem.hpp">
+      <Filter>Файлы заголовков\World</Filter>
+    </ClInclude>
+    <ClInclude Include="tilemap.h">
+      <Filter>Файлы заголовков\World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
