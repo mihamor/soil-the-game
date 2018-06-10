@@ -1,7 +1,9 @@
 <?xml version="1.0" ?>
 <chest_list>
     <chest key="109,57">
-        <slot signature="104" amount="3" />
-        <slot signature="120" amount="1" />
+        <slot signature="120" amount="6" />
+        <slot signature="121" amount="5" />
+        <slot signature="67" amount="2" />
+        <slot signature="89" amount="69" />
     </chest>
 </chest_list>

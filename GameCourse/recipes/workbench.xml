@@ -6,12 +6,6 @@
         </required>
         <result signature="87" amount="2" />
     </recipe>
-    <recipe>
-        <required>
-            <slot signature="82" amount="1" />
-        </required>
-        <result signature="45" amount="1" />
-    </recipe>
 	<recipe>
         <required>
             <slot signature="82" amount="8" />
@@ -29,18 +23,6 @@
             <slot signature="87" amount="8" />
         </required>
         <result signature="104" amount="1" />
-    </recipe>
-	<recipe>
-        <required>
-            <slot signature="87" amount="4" />
-        </required>
-        <result signature="75" amount="1" />
-    </recipe>
-	<recipe>
-        <required>
-            <slot signature="87" amount="1" />
-        </required>
-        <result signature="119" amount="1" />
     </recipe>
 	<recipe>
         <required>

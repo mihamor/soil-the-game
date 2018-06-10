@@ -3,6 +3,7 @@
 #include "Recipe.hpp"
 #include "tinyxml.h"
 #include "WorldDef.h"
+#include "SoundSystem.hpp"
 
 class Workbench
 {
@@ -14,7 +15,7 @@ class Workbench
 public:
 	Workbench(Inventory * inv, std::list<AbstractBlock*> &list, std::string fileName);
 	~Workbench();
-	void draw(RenderWindow & window, int vmodey, int vmodex, bool * isGui, HudItems * items);
+	void draw(RenderWindow & window, int vmodey, int vmodex, bool * isGui, HudItems * items, SoundSystem & soundSystem);
 	void load(std::list<AbstractBlock*> &blocks, std::string fileName);
 	void workbenchSave(std::string fileName);
 };

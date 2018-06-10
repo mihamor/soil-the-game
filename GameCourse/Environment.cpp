@@ -107,7 +107,8 @@ void Environment::setBlock(Vector2i a) {
 	int posy = (a.y + (int)offsetY) / 32;
 	//bool inRangePlayer = p->isInRange(a.x, a.y, offsetX, offsetY) && !p->intersects(a, vmodey, vmodex);
 	bool inRangePlayer = this->cursor->getStatus();
-	if (hblock && hblock->interact() == weaponItemType) inRangePlayer = true;
+	bool weaponInHand = false;
+	if (hblock && hblock->interact() == weaponItemType) { weaponInHand = inRangePlayer = true; }
 	if (!inRangePlayer) return;
 	AbstractBlock * bl = AbstractBlock::getBlock(*blocks, TileMap, posy, posx);
 	
@@ -126,6 +127,7 @@ void Environment::setBlock(Vector2i a) {
 		else if (hblock && hblock->type == Solid && inRangePlayer) this->ls->addPair(Vector2i(posx, posy));
 	}else{
 		if (bl->interact() == doorType) {
+			if (weaponInHand && !this->cursor->getStatus()) return;
 			DoorBlock * db = (DoorBlock *)bl;
 			std::cout << "Now type is " << (db->doorUse(posx, posy, this->TileMap) != Solid ? "SOLID" : "BACKGROUND") << std::endl;
 			soundSystem.play("door_open");
@@ -250,7 +252,7 @@ void Environment::update(float time, RenderWindow &window, sf::Vector2i a) {
 	if (isGuiInv)
 		this->inv->draw(vmodex, vmodey, window, &isGuiInv, &a, p, this->hItems);
 	else if (isGuiWorkbench)
-		this->wbenches[wbTrigger]->draw(window, vmodey, vmodex, &isGuiWorkbench, &this->hItems);
+		this->wbenches[wbTrigger]->draw(window, vmodey, vmodex, &isGuiWorkbench, &this->hItems, this->soundSystem);
 	else if (isGuiChest)
 		this->triggeredChest->draw(vmodex, vmodey, window, &isGuiChest, &a, inv, this->hItems);
 

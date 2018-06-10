@@ -100,12 +100,14 @@ int Entity::entitiesInteraction(std::list<Entity*>  *entities, Entity * player, 
 					{
 						soundSystem->play("stab_enemy");
 						bool dirSplash = b->dir;
+						if(b->life) e->hitted(dirSplash);
+
+						b->life = 0;
 						if (b->name == "Bullet") {
 							it2 = entities->erase(it2);
-							b->life = 0;
 							delete b;
 						}
-						e->hitted(dirSplash);
+						
 						//std::cout << e->hit << std::endl;
 						if (!e->life) { 
 							counter++;
@@ -138,7 +140,7 @@ int Entity::entitiesInteraction(std::list<Entity*>  *entities, Entity * player, 
 
 			b->flip(player->dir);
 			b->y = player->y;
-			if (!b->life) {
+			if (b->anim.isOver()) {
 				it = entities->erase(it);
 				delete b;
 			}

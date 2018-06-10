@@ -18,8 +18,9 @@ Workbench::~Workbench() {
 		}
 		delete r.getResult();
 	}
-};
-void Workbench::draw(RenderWindow & window, int vmodey, int vmodex, bool * isGui, HudItems * items){
+}
+
+void Workbench::draw(RenderWindow & window, int vmodey, int vmodex, bool * isGui, HudItems * items, SoundSystem & soundSystem){
 
 
 	/*RectangleShape background(Vector2f(vmodex - vmodex / 2, vmodey - vmodey / 2));
@@ -68,6 +69,7 @@ void Workbench::draw(RenderWindow & window, int vmodey, int vmodex, bool * isGui
 			bool added = false;
 			if (isRectClicked(resultSlot, window) && !inv->isFull(result->block))
 			{
+				soundSystem.play("craft");
 				added = true;
 				std::cout << result->amount << std::endl;
 				int amount = result->amount;
