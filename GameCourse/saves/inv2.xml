@@ -2,11 +2,13 @@
 <inventory>
     <slot signature="108" amount="41" />
     <slot signature="71" amount="12" />
-    <slot signature="87" amount="30" />
+    <slot signature="87" amount="26" />
     <slot signature="83" amount="65" />
     <slot signature="82" amount="22" />
     <slot signature="76" amount="34" />
     <slot signature="75" amount="2" />
     <slot signature="45" amount="37" />
     <slot signature="67" amount="50" />
+    <slot signature="42" amount="1" />
+    <slot signature="96" amount="1" />
 </inventory>
