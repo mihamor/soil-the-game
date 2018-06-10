@@ -10,6 +10,7 @@ int main() {
 	contextSettings.antialiasingLevel = 8;
 	RenderWindow window(VideoMode(vmodex, vmodey), "Miha game", sf::Style::Default, contextSettings);
 	window.setMouseCursorVisible(false);
+	window.setFramerateLimit(200);
 	while (true) {
 		window.clear();
 		auto choice = menu(window, vmodex, vmodey);

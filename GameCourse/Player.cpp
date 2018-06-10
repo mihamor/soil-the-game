@@ -135,10 +135,15 @@ void Player::update(float time, String TileMap[], std::list<AbstractBlock *> blo
 	}
 	anim.flip(dir);
 
-	x += dx * time;
+	float encrease = dx * time;
+	int encLimit = 32;
+	if (fabs(encrease) > encLimit) { encrease = encrease > 0 ? encLimit : -encLimit; std::cout << "Enc Limit hit!" << std::endl; }
+	x += encrease;
 	Collision(0, TileMap, blocks);
 	if (!onGround) dy = dy + 0.0005*time;
-	y += dy * time;
+	encrease = dy * time;
+	if (fabs(encrease) > encLimit) { encrease = encrease > 0 ? encLimit : -encLimit; std::cout << "Enc Limit hit!" << std::endl; }
+	y += encrease;
 	onGround = false;
 	Collision(1, TileMap, blocks);
 
