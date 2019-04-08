@@ -153,6 +153,11 @@ void Player::update(float time, String TileMap[], std::list<AbstractBlock *> blo
 	anim.tick(time);
 	key["R"] = key["L"] = key["Up"] = key["Down"] = key["Space"] = false;
 }
+Entity * Player::clone()
+{
+	AnimationManager manager = *Entity::factory.getAnimationManager(this->anim.getFileNameOrigin(), (Texture *)this->anim.getTexture());
+	return new Player(manager, this->x, this->y, this->soundHandler);
+}
 void Player::playerPosNormalize() {
 	this->x = W * 16;
 	this->y = 60;

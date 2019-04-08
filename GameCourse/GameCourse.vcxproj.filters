@@ -171,6 +171,9 @@
     <ClInclude Include="tilemap.h">
       <Filter>Файлы заголовков\World</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationFactory.hpp">
+      <Filter>Файлы заголовков\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="tilemap.cpp">
@@ -315,6 +318,9 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="ChestLoader.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationFactory.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

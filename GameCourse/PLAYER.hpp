@@ -5,7 +5,7 @@
 
 using namespace sf;
 
-class Player :public Entity
+class Player : public Entity
 {
 private:
 	bool onGround, onLadder, shoot;
@@ -27,6 +27,7 @@ public:
 	void KeyCheck();
 	bool isMoving();
 	void update(float time, String TileMap[], std::list<AbstractBlock *> blocks);
+	Entity * clone();
 	void Collision(int dir, String TileMap[], std::list<AbstractBlock *> blocks);
 	void drawHUD(RenderWindow & window, int vmodex, int vmodey, HudItems & items);
 	

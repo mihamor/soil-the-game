@@ -19,6 +19,7 @@ float AnimationManager::getFrameHeight(int index, const char * key) {
 void AnimationManager::loadFromXML(std::string fileName, Texture *t)
 {
 	animList.clear();
+	this->fileName = fileName;
 	TiXmlDocument animFile(fileName.c_str());
 
 	if(!animFile.LoadFile()) abort();

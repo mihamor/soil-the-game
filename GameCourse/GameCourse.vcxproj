@@ -171,6 +171,7 @@
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Environment.hpp" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="AnimationFactory.hpp" />
     <ClInclude Include="Item.hpp" />
     <ClInclude Include="LightHandler.hpp" />
     <ClInclude Include="MobSpawner.hpp" />
@@ -229,6 +230,7 @@
     <ClCompile Include="SoundSystem.cpp" />
     <ClCompile Include="saveMenu.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="AnimationFactory.cpp" />
     <ClCompile Include="SpriticBlock.cpp" />
     <ClCompile Include="tilemap.cpp" />
     <ClCompile Include="tinystr.cpp" />

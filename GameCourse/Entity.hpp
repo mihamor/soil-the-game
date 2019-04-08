@@ -1,13 +1,18 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include"anim.hpp"
 #include "Block.hpp"
 #include <list>
 #include "WorldDef.h"
 #include "SoundSystem.hpp"
+#include "AnimationFactory.hpp"
+
+// prototype
+
+
 class Entity
 {
 public:
+	static AnimationFactory factory;
 	float x, y, dx, dy, w, h;
 	int life;
 	bool hit;
@@ -15,7 +20,7 @@ public:
 	AnimationManager anim;
 	std::string name;
 	SoundSystem * soundHandler;
-
+	
 	Entity();
 	void hitted(bool dir);
 	Entity(AnimationManager &a, int X, int Y);
@@ -23,6 +28,7 @@ public:
 		this->anim.flip(side);
 	}
 	virtual void update(float time, String TileMap[], std::list<AbstractBlock *> blocks ) = 0;
+	virtual Entity * clone() = 0;
 	void draw(RenderWindow &window, float offsetX, float offsetY);
 	FloatRect getRect();
 	static int entitiesInteraction(std::list<Entity*>  *entities, Entity * player, SoundSystem * soundSystem);
@@ -32,4 +38,3 @@ public:
 
 	bool intersects(Vector2i coords, float offsetX, float offsetY);
 };
-

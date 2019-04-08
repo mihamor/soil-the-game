@@ -8,16 +8,19 @@ Environment::Environment(int vmodex, int vmodey, int choice, int slot, RenderWin
 	this->slot = slot;
 	this->drawFullRender = false;
 
+
 	initMap();
 	if (choice == 1) {
 		if (!TMap::loadTileMapFromSlot(slot, TileMap, TileMapBg)) assert(0 && "Invalid slot");
 	}
 	else {
-		WorldGenerator gen;
-		String * generatedBg = gen.getBg();
-		String * generated = gen.getMap();
-		TMap::copyFrom(generated, TileMap);
-		TMap::copyFrom(generatedBg, TileMapBg);
+		WorldManager worldManager;
+		Map generatedMap = worldManager.generateWorld((AbstractWorldGenerator* )new DefaultWorldGenerator());
+
+		String * generatedBackground = generatedMap.background;
+		String * generatedForeground = generatedMap.foreground;
+		TMap::copyFrom(generatedForeground, TileMap);
+		TMap::copyFrom(generatedBackground, TileMapBg);
 	}
 
 	cursor = new GameCursor(Vector2i(vmodex, vmodey));
@@ -40,11 +43,6 @@ Environment::Environment(int vmodex, int vmodey, int choice, int slot, RenderWin
 
 	this->entities = new std::list<Entity *>();
 	this->entities->push_back(p);
-	/*this->entities->push_back(new Enemy(enemyAnim, 32 * (W - 1), 32 * 12, false));
-	this->entities->push_back(new Enemy(enemyAnim, 32 * (W - W / 2), 32 * 12, true));
-
-	this->entities->push_back(new Enemy(zombieAnim, 32 * (W - 10), 32 * 12, false));
-	this->entities->push_back(new Enemy(zombieAnim, 32 * (W - W / 2 - 5), 32 * 12, true));*/
 
 	this->blocks = BlockLoader::loadBlocksFromXml("blocks.xml");
 	if (choice == 1) {
@@ -115,14 +113,12 @@ void Environment::setBlock(Vector2i a) {
 	bool status = TMap::setBlock(p, a.x, a.y, offsetX, offsetY, *blocks, TileMap, TileMapBg, *inv);
 
 	if (status) {
-		
 		soundSystem.play("place_block");
 		if (hblock && hblock->interact() == chestType) {
 			std::string key = std::to_string(posx) + "," + std::to_string(posy);
 			std::cout << key << std::endl;
 			this->chests[key] = new Chest(CHEST_SIZE);
 		}
-		//...
 		if (hblock && hblock->interact() == spriticType && inRangePlayer) ls->addLight(Vector2i(posx, posy));
 		else if (hblock && hblock->type == Solid && inRangePlayer) this->ls->addPair(Vector2i(posx, posy));
 	}else{
@@ -221,11 +217,6 @@ void Environment::update(float time, RenderWindow &window, sf::Vector2i a) {
 	if (!isGui()) Entity::updateAllEntities(entities, time, TileMap, *blocks);
 
 	// сдвиг карты при движение 
-
-	//View view;
-	//view.setCenter(p->x, p->y);
-	//view.setSize(Vector2f(vmodex, vmodey));
-	//window.setView(view);
 
 	if (p->x > vmodex / 2 && p->x  <  W*(32) - vmodex / 2) offsetX = p->x - vmodex / 2;
 	if (p->y > vmodey / 2 && p->y < H*(32) - vmodey / 2) offsetY = p->y - vmodey / 2;

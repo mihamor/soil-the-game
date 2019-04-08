@@ -37,7 +37,6 @@ void Enemy::normalizePosition() {
 	this->x = initPosition.x;
 	this->y = initPosition.y;
 }
-
 void Enemy::update(float time, String TileMap[], std::list<AbstractBlock *> blocks)
 {
 	//dx = normalizeDx(dx);
@@ -52,6 +51,12 @@ void Enemy::update(float time, String TileMap[], std::list<AbstractBlock *> bloc
 	if (x > W * 32 || x < 0 || y < 0 || y > H * 32) normalizePosition();
 	
 	if (life)anim.tick(time);
+}
+
+Entity * Enemy::clone()
+{
+	AnimationManager manager = *Entity::factory.getAnimationManager(this->anim.getFileNameOrigin(), (Texture *)this->anim.getTexture());
+	return new Enemy(manager, this->x, this->y, this->dir);
 }
 
 void Enemy::Collision(int num, String TileMap[], std::list<AbstractBlock *> & blocks)

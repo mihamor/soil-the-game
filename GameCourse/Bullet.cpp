@@ -56,3 +56,9 @@ void Bullet::update(float time, String TileMap[], std::list<AbstractBlock *> blo
 	anim.tick(time);
 	
 }
+
+Entity * Bullet::clone()
+{
+	AnimationManager manager = *Entity::factory.getAnimationManager(this->anim.getFileNameOrigin(), (Texture *)this->anim.getTexture());
+	return new Bullet(manager, this->x, this->y, this->dir, this->wtype);
+}

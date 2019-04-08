@@ -1,8 +1,10 @@
 #include "Entity.hpp"
 
 
+
 Entity::Entity()
 {}
+AnimationFactory Entity::factory = AnimationFactory();
 
 Entity::Entity(AnimationManager &a, int X, int Y)
 {

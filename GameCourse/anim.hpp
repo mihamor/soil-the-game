@@ -24,6 +24,7 @@ public:
 class AnimationManager
 {
 	String currentAnim;
+	std::string fileName;
 	std::map<String, Animation> animList;
 public:
 	AnimationManager();
@@ -40,6 +41,10 @@ public:
 	void play();
 	const Texture * getTexture() {
 		return animList["stay"].sprite.getTexture();
+	}
+
+	const std::string getFileNameOrigin() {
+		return this->fileName;
 	}
 	const IntRect getRect() {
 		return animList["stay"].sprite.getTextureRect();

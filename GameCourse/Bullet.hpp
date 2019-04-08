@@ -12,4 +12,5 @@ public:
 	Bullet(AnimationManager a, int X, int Y, bool side, WeaponType wtype);
 	~Bullet();
 	void update(float time, String TileMap[], std::list<AbstractBlock *> blocks);
+	Entity * clone();
 };
