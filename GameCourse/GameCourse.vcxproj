@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{5DD27AB0-B144-45C0-BF5D-43FD34FB041F}</ProjectGuid>
     <RootNamespace>GameCourse</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -74,16 +74,16 @@
     <LibraryPath>C:\SFML-2.4.2\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>C:\SFML-2.4.2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\SFML-2.4.2\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\SFML-2.5.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\SFML-2.5.0\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>C:\SFML-2.4.2\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\SFML-2.4.2\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\SFML-2.4.2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\SFML-2.4.2\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\SFML-2.5.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\SFML-2.5.0\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -118,7 +118,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\ltblinclude;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\ltblinclude;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_DYNAMIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile />
     </ClCompile>
@@ -137,7 +137,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\ltblinclude;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\ltblinclude;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -156,17 +156,17 @@
     <ClInclude Include="ChestLoader.hpp" />
     <ClInclude Include="Cursor.hpp" />
     <ClInclude Include="Block.hpp" />
+    <ClInclude Include="D:\ltblinclude\ltbl\lighting\LightDirectionEmission.h" />
+    <ClInclude Include="D:\ltblinclude\ltbl\lighting\LightPointEmission.h" />
+    <ClInclude Include="D:\ltblinclude\ltbl\lighting\LightShape.h" />
+    <ClInclude Include="D:\ltblinclude\ltbl\lighting\LightSystem.h" />
+    <ClInclude Include="D:\ltblinclude\ltbl\Math.h" />
+    <ClInclude Include="D:\ltblinclude\ltbl\quadtree\DynamicQuadtree.h" />
+    <ClInclude Include="D:\ltblinclude\ltbl\quadtree\Quadtree.h" />
+    <ClInclude Include="D:\ltblinclude\ltbl\quadtree\QuadtreeNode.h" />
+    <ClInclude Include="D:\ltblinclude\ltbl\quadtree\QuadtreeOccupant.h" />
+    <ClInclude Include="D:\ltblinclude\ltbl\quadtree\StaticQuadtree.h" />
     <ClInclude Include="DoorBlock.h" />
-    <ClInclude Include="E:\ltblinclude\ltbl\lighting\LightDirectionEmission.h" />
-    <ClInclude Include="E:\ltblinclude\ltbl\lighting\LightPointEmission.h" />
-    <ClInclude Include="E:\ltblinclude\ltbl\lighting\LightShape.h" />
-    <ClInclude Include="E:\ltblinclude\ltbl\lighting\LightSystem.h" />
-    <ClInclude Include="E:\ltblinclude\ltbl\Math.h" />
-    <ClInclude Include="E:\ltblinclude\ltbl\quadtree\DynamicQuadtree.h" />
-    <ClInclude Include="E:\ltblinclude\ltbl\quadtree\Quadtree.h" />
-    <ClInclude Include="E:\ltblinclude\ltbl\quadtree\QuadtreeNode.h" />
-    <ClInclude Include="E:\ltblinclude\ltbl\quadtree\QuadtreeOccupant.h" />
-    <ClInclude Include="E:\ltblinclude\ltbl\quadtree\StaticQuadtree.h" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Environment.hpp" />
@@ -203,17 +203,17 @@
     <ClCompile Include="ChestBlock.cpp" />
     <ClCompile Include="ChestLoader.cpp" />
     <ClCompile Include="Cursor.cpp" />
+    <ClCompile Include="D:\ltblinclude\ltbl\lighting\LightDirectionEmission.cpp" />
+    <ClCompile Include="D:\ltblinclude\ltbl\lighting\LightPointEmission.cpp" />
+    <ClCompile Include="D:\ltblinclude\ltbl\lighting\LightShape.cpp" />
+    <ClCompile Include="D:\ltblinclude\ltbl\lighting\LightSystem.cpp" />
+    <ClCompile Include="D:\ltblinclude\ltbl\Math.cpp" />
+    <ClCompile Include="D:\ltblinclude\ltbl\quadtree\DynamicQuadtree.cpp" />
+    <ClCompile Include="D:\ltblinclude\ltbl\quadtree\Quadtree.cpp" />
+    <ClCompile Include="D:\ltblinclude\ltbl\quadtree\QuadtreeNode.cpp" />
+    <ClCompile Include="D:\ltblinclude\ltbl\quadtree\QuadtreeOccupant.cpp" />
+    <ClCompile Include="D:\ltblinclude\ltbl\quadtree\StaticQuadtree.cpp" />
     <ClCompile Include="DoorBlock.cpp" />
-    <ClCompile Include="E:\ltblinclude\ltbl\lighting\LightDirectionEmission.cpp" />
-    <ClCompile Include="E:\ltblinclude\ltbl\lighting\LightPointEmission.cpp" />
-    <ClCompile Include="E:\ltblinclude\ltbl\lighting\LightShape.cpp" />
-    <ClCompile Include="E:\ltblinclude\ltbl\lighting\LightSystem.cpp" />
-    <ClCompile Include="E:\ltblinclude\ltbl\Math.cpp" />
-    <ClCompile Include="E:\ltblinclude\ltbl\quadtree\DynamicQuadtree.cpp" />
-    <ClCompile Include="E:\ltblinclude\ltbl\quadtree\Quadtree.cpp" />
-    <ClCompile Include="E:\ltblinclude\ltbl\quadtree\QuadtreeNode.cpp" />
-    <ClCompile Include="E:\ltblinclude\ltbl\quadtree\QuadtreeOccupant.cpp" />
-    <ClCompile Include="E:\ltblinclude\ltbl\quadtree\StaticQuadtree.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Environment.cpp" />

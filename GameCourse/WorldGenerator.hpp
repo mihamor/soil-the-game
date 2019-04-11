@@ -8,7 +8,7 @@
 using namespace sf;
 
 const int groundLevel = H / 2;
-const int jumpDist = 3;
+const int jumpDist = 15;
 
 
 
@@ -61,7 +61,9 @@ public:
 	String * dispatchBackground();
 private:
 	static bool randomBoolean(unsigned int percetnage);
-
+	static double noise(int x);
+	static double cosineInterpolate(int a, int b, double x);
+	void interpolateMap(int x, int peakValue, int prevPeakValue);
 	static bool hasBlockNeigh(int y, int x, String * map, char sign);
 	
 };

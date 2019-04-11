@@ -16,9 +16,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Исходные файлы\LTBL">
-      <UniqueIdentifier>{7537707c-ce8c-4a69-a16f-8e73494e0620}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Файлы заголовков\Blocks">
       <UniqueIdentifier>{dd0d68b5-af28-4d70-b67c-f955b54d4181}</UniqueIdentifier>
     </Filter>
@@ -34,6 +31,9 @@
     <Filter Include="Файлы заголовков\World">
       <UniqueIdentifier>{b56d9e52-7cc5-4e57-8af7-9e0bdef95266}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\LTBL">
+      <UniqueIdentifier>{7a522d4e-9ee3-4ea6-b9ae-9c0b8d0f4fb2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tinyxml.h">
@@ -44,36 +44,6 @@
     </ClInclude>
     <ClInclude Include="Environment.hpp">
       <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\ltblinclude\ltbl\lighting\LightDirectionEmission.h">
-      <Filter>Исходные файлы\LTBL</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\ltblinclude\ltbl\lighting\LightPointEmission.h">
-      <Filter>Исходные файлы\LTBL</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\ltblinclude\ltbl\lighting\LightShape.h">
-      <Filter>Исходные файлы\LTBL</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\ltblinclude\ltbl\lighting\LightSystem.h">
-      <Filter>Исходные файлы\LTBL</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\ltblinclude\ltbl\Math.h">
-      <Filter>Исходные файлы\LTBL</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\ltblinclude\ltbl\quadtree\DynamicQuadtree.h">
-      <Filter>Исходные файлы\LTBL</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\ltblinclude\ltbl\quadtree\Quadtree.h">
-      <Filter>Исходные файлы\LTBL</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\ltblinclude\ltbl\quadtree\QuadtreeNode.h">
-      <Filter>Исходные файлы\LTBL</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\ltblinclude\ltbl\quadtree\QuadtreeOccupant.h">
-      <Filter>Исходные файлы\LTBL</Filter>
-    </ClInclude>
-    <ClInclude Include="E:\ltblinclude\ltbl\quadtree\StaticQuadtree.h">
-      <Filter>Исходные файлы\LTBL</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Файлы заголовков</Filter>
@@ -174,6 +144,36 @@
     <ClInclude Include="AnimationFactory.hpp">
       <Filter>Файлы заголовков\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="D:\ltblinclude\ltbl\lighting\LightDirectionEmission.h">
+      <Filter>Исходные файлы\LTBL</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\ltblinclude\ltbl\lighting\LightPointEmission.h">
+      <Filter>Исходные файлы\LTBL</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\ltblinclude\ltbl\lighting\LightShape.h">
+      <Filter>Исходные файлы\LTBL</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\ltblinclude\ltbl\lighting\LightSystem.h">
+      <Filter>Исходные файлы\LTBL</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\ltblinclude\ltbl\Math.h">
+      <Filter>Исходные файлы\LTBL</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\ltblinclude\ltbl\quadtree\DynamicQuadtree.h">
+      <Filter>Исходные файлы\LTBL</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\ltblinclude\ltbl\quadtree\Quadtree.h">
+      <Filter>Исходные файлы\LTBL</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\ltblinclude\ltbl\quadtree\QuadtreeNode.h">
+      <Filter>Исходные файлы\LTBL</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\ltblinclude\ltbl\quadtree\QuadtreeOccupant.h">
+      <Filter>Исходные файлы\LTBL</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\ltblinclude\ltbl\quadtree\StaticQuadtree.h">
+      <Filter>Исходные файлы\LTBL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="tilemap.cpp">
@@ -248,36 +248,6 @@
     <ClCompile Include="ltbltest.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="E:\ltblinclude\ltbl\lighting\LightDirectionEmission.cpp">
-      <Filter>Исходные файлы\LTBL</Filter>
-    </ClCompile>
-    <ClCompile Include="E:\ltblinclude\ltbl\lighting\LightPointEmission.cpp">
-      <Filter>Исходные файлы\LTBL</Filter>
-    </ClCompile>
-    <ClCompile Include="E:\ltblinclude\ltbl\lighting\LightShape.cpp">
-      <Filter>Исходные файлы\LTBL</Filter>
-    </ClCompile>
-    <ClCompile Include="E:\ltblinclude\ltbl\lighting\LightSystem.cpp">
-      <Filter>Исходные файлы\LTBL</Filter>
-    </ClCompile>
-    <ClCompile Include="E:\ltblinclude\ltbl\Math.cpp">
-      <Filter>Исходные файлы\LTBL</Filter>
-    </ClCompile>
-    <ClCompile Include="E:\ltblinclude\ltbl\quadtree\DynamicQuadtree.cpp">
-      <Filter>Исходные файлы\LTBL</Filter>
-    </ClCompile>
-    <ClCompile Include="E:\ltblinclude\ltbl\quadtree\Quadtree.cpp">
-      <Filter>Исходные файлы\LTBL</Filter>
-    </ClCompile>
-    <ClCompile Include="E:\ltblinclude\ltbl\quadtree\QuadtreeNode.cpp">
-      <Filter>Исходные файлы\LTBL</Filter>
-    </ClCompile>
-    <ClCompile Include="E:\ltblinclude\ltbl\quadtree\QuadtreeOccupant.cpp">
-      <Filter>Исходные файлы\LTBL</Filter>
-    </ClCompile>
-    <ClCompile Include="E:\ltblinclude\ltbl\quadtree\StaticQuadtree.cpp">
-      <Filter>Исходные файлы\LTBL</Filter>
-    </ClCompile>
     <ClCompile Include="LightHandler.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -322,6 +292,36 @@
     </ClCompile>
     <ClCompile Include="AnimationFactory.cpp">
       <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\ltblinclude\ltbl\lighting\LightDirectionEmission.cpp">
+      <Filter>Исходные файлы\LTBL</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\ltblinclude\ltbl\lighting\LightPointEmission.cpp">
+      <Filter>Исходные файлы\LTBL</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\ltblinclude\ltbl\lighting\LightShape.cpp">
+      <Filter>Исходные файлы\LTBL</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\ltblinclude\ltbl\lighting\LightSystem.cpp">
+      <Filter>Исходные файлы\LTBL</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\ltblinclude\ltbl\Math.cpp">
+      <Filter>Исходные файлы\LTBL</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\ltblinclude\ltbl\quadtree\DynamicQuadtree.cpp">
+      <Filter>Исходные файлы\LTBL</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\ltblinclude\ltbl\quadtree\Quadtree.cpp">
+      <Filter>Исходные файлы\LTBL</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\ltblinclude\ltbl\quadtree\QuadtreeNode.cpp">
+      <Filter>Исходные файлы\LTBL</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\ltblinclude\ltbl\quadtree\QuadtreeOccupant.cpp">
+      <Filter>Исходные файлы\LTBL</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\ltblinclude\ltbl\quadtree\StaticQuadtree.cpp">
+      <Filter>Исходные файлы\LTBL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
