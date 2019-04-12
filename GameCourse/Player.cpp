@@ -106,8 +106,8 @@ void Player::KeyCheck()
 		//if (STATE == stay) { dx = 0; STATE = duck; }
 		//if (STATE == swim || STATE == climb) dy = 0.05;
 	}
-	if (key["Space"])
-		shoot = true;
+	//if (key["Space"])
+	//	shoot = true;
 
 	// otpuskanie klavish
 	if (!key["R"] && !key["L"] && !key["Down"] && !key["Up"])

@@ -48,7 +48,7 @@ class Environment
 	int vmodex, vmodey;
 	int slot;
 	AnimationManager anim;
-	AnimationManager combatAnim;
+	AnimationManager * combatAnim;
 
 	//light
 
@@ -70,8 +70,7 @@ public:
 
 	std::list<AbstractBlock *> * blocksList();
 	std::list<Entity *>  * entitiesList();
-	void addBullet();
-	void addSword();
+	void addWeapon(WeaponType type);
 	void setGuiInv(bool state);
 	void setGuiChest(bool state);
 	void setGuiWorkbench(bool state, std::string trigger = 0);

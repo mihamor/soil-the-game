@@ -1,2 +1,5 @@
 <?xml version="1.0" ?>
-<chest_list />
+<chest_list>
+    <chest key="101,56" />
+    <chest key="102,56" />
+</chest_list>

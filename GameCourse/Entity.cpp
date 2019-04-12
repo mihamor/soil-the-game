@@ -96,16 +96,16 @@ int Entity::entitiesInteraction(std::list<Entity*>  *entities, Entity * player, 
 			for (std::list<Entity*>::iterator it2 = entities->begin(); it2 != entities->end(); it2++)
 			{
 				Entity *b = *it2;
-				if (b->name == "Bullet" || b->name == "Sword")
+				if (b->getName() == "Bullet" || b->getName() == "Sword")
 				{
 					if (b->getRect().intersects(e->getRect()))
 					{
 						soundSystem->play("stab_enemy");
-						bool dirSplash = b->dir;
-						if(b->life) e->hitted(dirSplash);
+						bool dirSplash = b->getDir();
+						if(b->isAlive()) e->hitted(dirSplash);
 
-						b->life = 0;
-						if (b->name == "Bullet") {
+						b->setLife(0);
+						if (b->getName() == "Bullet") {
 							it2 = entities->erase(it2);
 							delete b;
 						}
@@ -129,20 +129,20 @@ int Entity::entitiesInteraction(std::list<Entity*>  *entities, Entity * player, 
 	for (it = entities->begin(); it != entities->end(); it++)
 	{
 		Entity *b = *it;
-		if (b->name == "Bullet") {
-			if (!b->life) {
+		if (b->getName() == "Bullet") {
+			if (!b->isAlive()) {
 				it = entities->erase(it);
 				delete b;
 			}
 		}
-		if (b->name == "Sword") {
+		if (b->getName() == "Sword") {
 			//std::cout << player->dir << std::endl;
-			if (player->dir) { b->x = player->x - 50; }
-			else { b->x = player->x; }
+			if (player->dir) { b->setX(player->x - 50); }
+			else { b->setX(player->x); }
 
 			b->flip(player->dir);
-			b->y = player->y;
-			if (b->anim.isOver()) {
+			b->setY(player->y);
+			if (b->isOver()) {
 				it = entities->erase(it);
 				delete b;
 			}

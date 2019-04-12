@@ -34,8 +34,8 @@ Environment::Environment(int vmodex, int vmodey, int choice, int slot, RenderWin
 	//anim.loadFromXML("sprites/anim_megaman.xml", playerT);
 
 	combatT->loadFromFile("sprites/combatAnim.png");
-	combatAnim.loadFromXML("sprites/combat_anim.xml", combatT);
-	
+	//combatAnim.loadFromXML("sprites/combat_anim.xml", combatT);
+	combatAnim = (AnimationManager*)Entity::factory.getAnimationManager("./sprites/combat_anim.xml", combatT);
 
 	this->p = new Player(anim, startPlayerPos.x, startPlayerPos.y, &soundSystem);
 	inv = new Inventory(INV_SIZE);
@@ -70,6 +70,21 @@ std::list<AbstractBlock *> * Environment::blocksList() {
 std::list<Entity *>  *  Environment::entitiesList() {
 	return this->entities;
 }
+
+void Environment::addWeapon(WeaponType type) {
+
+	AbstractWeapon * weapon = NULL;
+
+
+	if (type == Meele)
+		weapon = new Sword(*combatAnim, p->x + p->w / 2, p->y + p->h / 4, p->dir);
+	else weapon = new Bullet(*combatAnim, p->x + p->w / 2, p->y + p->h / 4, p->dir);
+
+	ContextWeapon * context = new ContextWeapon(weapon);
+
+	entities->push_back((Entity *)context);
+}
+/*
 void Environment::addBullet() {
 	this->soundSystem.play("bow_use");
 	entities->push_back(new Bullet(combatAnim, p->x + p->w / 2, p->y + p->h / 4, p->dir, Ranged));
@@ -79,7 +94,7 @@ void Environment::addSword()
 {
 	this->soundSystem.play("sword_use");
 	entities->push_back(new Bullet(combatAnim, p->x + p->w / 2, p->y + p->h / 4, p->dir, Meele));
-}
+}*/
 
 void Environment::setGuiInv(bool state) {
 	isGuiInv = state;
@@ -140,8 +155,7 @@ void Environment::setBlock(Vector2i a) {
 			setGuiWorkbench(true, wb->getId());
 		}else if (hand && hand->block->interact() == weaponItemType) {
 			Weapon * w = (Weapon *)hand->block;
-			if (w->getType() == Meele) this->addSword();
-			else this->addBullet();
+			this->addWeapon(w->getType());
 			return;
 		}
 	}
