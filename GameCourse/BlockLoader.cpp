@@ -1,4 +1,5 @@
 #include "BlockPackage.h"
+#include "BlockFactory.hpp"
 #include <iostream>
 
  void BlockLoader::saveBlocksToXml(std::list<AbstractBlock*> &vec) {
@@ -52,6 +53,8 @@
 	 if (!doc.LoadFile()) abort(); //@todo error handling
 
 	 auto result = new std::list<AbstractBlock *>();
+	 BlockFactory * factory = new BlockFactory();
+
 
 	 TiXmlElement * list = doc.FirstChildElement("block_list");
 
@@ -60,41 +63,11 @@
 
 		 char signature = (char)atoi(block->Attribute("signature"));
 		 std::string bFileName = block->Attribute("texture");
-		 BlockType type = !strcmp(block->Attribute("type"), "Solid") ? Solid : Background;
+		 std::string blockName = block->Attribute("type");
+		 BlockType type = blockName == "Solid" ? Solid : Background;
+		 
+		 AbstractBlock * b = factory->createBlock(type, blockName, bFileName, signature);
 
-		 AbstractBlock * b;
-		 if (!strcmp(block->Attribute("type"), "DoorClosed"))
-			 b = new DoorBlock(bFileName, signature, Solid);
-		 else if (!strcmp(block->Attribute("type"), "DoorOpened")) {
-			 b = new DoorBlock(bFileName, signature, Background);
-			 b->rectangle.setFillColor(Color(105, 105, 105));
-		 }
-		 else if (!strcmp(block->Attribute("type"), "Tree")) {
-			 b = new TreeBlock(bFileName, signature, Background);
-		 }
-		 else if (!strcmp(block->Attribute("type"), "Furnace")) {
-			 b = new WorkbenchBlock(bFileName, signature, Solid, "furnace");
-		 }
-		 else if (!strcmp(block->Attribute("type"), "Workbench")) {
-			 b = new WorkbenchBlock(bFileName, signature, Solid, "workbench");
-		 }
-		 else if (!strcmp(block->Attribute("type"), "Item")) {
-			 b = new Item(bFileName, signature, Solid);
-		 }
-		 else if (!strcmp(block->Attribute("type"), "Chest")) {
-			 b = new ChestBlock(bFileName, signature, Solid);
-		 }
-		 else if (!strcmp(block->Attribute("type"), "Spritic")) {
-			 b = new SpriticBlock(bFileName, signature, Solid);
-		 }
-		 else if (!strcmp(block->Attribute("type"), "Ranged")) {
-			 b = new Weapon(bFileName, signature, Background, Ranged);
-		 }
-		 else if (!strcmp(block->Attribute("type"), "Meele")) {
-			 b = new Weapon(bFileName, signature, Background, Meele);
-		 }
-		 else if ((type == Solid || type == Background))
-			 b = new Block(bFileName, signature, type);
 		 result->push_back(b);
 		 block = block->NextSiblingElement("block");
 	 }

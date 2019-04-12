@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="AbstractBlock.hpp" />
     <ClInclude Include="anim.hpp" />
+    <ClInclude Include="BlockFactory.hpp" />
     <ClInclude Include="BlockLoader.h" />
     <ClInclude Include="BlockPackage.h" />
     <ClInclude Include="Bullet.hpp" />
@@ -197,6 +198,7 @@
     <ClCompile Include="AbstractBlock.cpp" />
     <ClCompile Include="anim.cpp" />
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="BlockFactory.cpp" />
     <ClCompile Include="BlockLoader.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Chest.cpp" />

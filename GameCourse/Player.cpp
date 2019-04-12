@@ -80,44 +80,22 @@ void Player::KeyCheck()
 
 
 	if (key["L"])
-	{
 		walkLeftPlayer();
-		//dir = 1;
-		//if (STATE != duck) dx = -0.1;
-		//if (STATE == stay) STATE = walk;
-	}
+
 	if (key["R"])
-	{	
 		walkRightPlayer();
-		//dir = 0;
-		//if (STATE != duck) dx = 0.1;
-		//if (STATE == stay) STATE = walk;
-	}
 
 	if (key["Up"])
-	{
 		jumpPlayer();
-		//if (STATE == stay || STATE == walk) { dy = -0.4; STATE = jump; this->soundHandler->play("player_jump");  }
-		//if (STATE == swim || STATE == climb) dy = -0.05;
-	}
-	if (key["Down"])
-	{
-		duckPlayer();
-		//if (STATE == stay) { dx = 0; STATE = duck; }
-		//if (STATE == swim || STATE == climb) dy = 0.05;
-	}
-	//if (key["Space"])
-	//	shoot = true;
 
-	// otpuskanie klavish
-	if (!key["R"] && !key["L"] && !key["Down"] && !key["Up"])
-	{
-		if(getCurrentStateName() != "jump") stayPlayer();
-		//dx = 0;
-		//if (STATE == walk) STATE = stay;
-	}
-	if (!key["Space"])
-		shoot = false;
+	if (key["Down"])
+		duckPlayer();
+
+	// keys release
+	if (!key["R"] && !key["L"] 
+	&& !key["Down"] && !key["Up"]
+	&& getCurrentStateName() != "jump")
+		stayPlayer();
 }
 
 
@@ -127,27 +105,8 @@ void Player::update(float time, String TileMap[], std::list<AbstractBlock *> blo
 {
 
 	if(!this->hit)KeyCheck();
-	//if (STATE == stay) anim.set("stay");
-	//if (STATE == walk) anim.set("walk");
-	//if (STATE == jump) {
-	//	anim.set("jump");
-	//}
-	//if (STATE == duck) anim.set("duck");
-	//if (STATE == climb)
-	//{
-		//		anim.set("climb");
-	//	anim.pause();
-	//	if (dy != 0) anim.play();
-	//	if (!onLadder) STATE = stay;
-	//}
-	if (shoot)
-	{
-		anim.set("shoot");
-		//if (STATE == walk) anim.set("shootAndWalk");
-	}
 	anim.flip(dir);
 
-	//std::cout << "dx: " << dx << std::endl;
 	float encrease = dx * time;
 	int encLimit = 32;
 	if (fabs(encrease) > encLimit) { encrease = encrease > 0 ? encLimit : -encLimit; std::cout << "Enc Limit hit!" << std::endl; }
@@ -161,7 +120,7 @@ void Player::update(float time, String TileMap[], std::list<AbstractBlock *> blo
 	Collision(1, TileMap, blocks);
 
 
-	if (x > W * 32 || x < 0 || y < 0 || y > H * 32) playerPosNormalize();
+	if (x > W * BLOCK_SIZE || x < 0 || y < 0 || y > H * BLOCK_SIZE) playerPosNormalize();
 
 	anim.tick(time);
 	key["R"] = key["L"] = key["Up"] = key["Down"] = key["Space"] = false;
@@ -172,7 +131,7 @@ Entity * Player::clone()
 	return new Player(manager, this->x, this->y, this->soundHandler);
 }
 void Player::playerPosNormalize() {
-	this->x = W * 16;
+	this->x = W * BLOCK_SIZE/2;
 	this->y = 60;
 }
 
@@ -218,19 +177,19 @@ void Player::duckPlayer()
 
 void Player::Collision(int dir, String TileMap[], std::list<AbstractBlock *> blocks)
 {
-	for (int i = y / 32; i < (y + h) / 32; i++)
-		for (int j = x / 32; j < (x + w) / 32; j++)
+	for (int i = y / BLOCK_SIZE; i < (y + h) / BLOCK_SIZE; i++)
+		for (int j = x / BLOCK_SIZE; j < (x + w) / BLOCK_SIZE; j++)
 		{
 			if (i >= H || j >= W || i < 0 || j < 0) continue;
 			char s = TileMap[i][j];
 			AbstractBlock * b = AbstractBlock::getBlockFromList(s, blocks);
 			if (b && b->getCollision())
 			{
-				if (dx > 0 && dir == 0) x = j * 32 - w;
-				else if (dx < 0 && dir == 0) x = j * 32 + 32;
+				if (dx > 0 && dir == 0) x = j * BLOCK_SIZE - w;
+				else if (dx < 0 && dir == 0) x = j * BLOCK_SIZE + BLOCK_SIZE;
 				if (dy > 0 && dir == 1)
 				{
-					y = i * 32 - h;
+					y = i * BLOCK_SIZE - h;
 					dy = 0;
 					onGround = true;
 
@@ -243,7 +202,7 @@ void Player::Collision(int dir, String TileMap[], std::list<AbstractBlock *> blo
 				}
 				else if (dy < 0 && dir == 1)
 				{
-					y = i * 32 + 32;
+					y = i * BLOCK_SIZE + BLOCK_SIZE;
 					dy = 0;
 					if (hit) {
 						hit = false;
@@ -257,17 +216,14 @@ void Player::Collision(int dir, String TileMap[], std::list<AbstractBlock *> blo
 void Player::drawHUD(RenderWindow & window, int vmodex, int vmodey, HudItems & items)
 {
 	RectangleShape bg = items.playerHud;
-	//bg.setFillColor(Color::White);
 	bg.setPosition(64, vmodey - 64);
 	window.draw(bg);
 	
 	
 	for (int i = 0; i < this->life; i++) {
-			//CircleShape heart(10);
-			Sprite heart = items.heart;
-			//heart.setFillColor(Color::Red);
-			heart.setPosition(0 + 30 * i, 0);
-			window.draw(heart);
+		Sprite heart = items.heart;
+		heart.setPosition(0 + 30 * i, 0);
+		window.draw(heart);
 	}
 	if (!hand || !hand->block) return;
 	else if (this->getHand()->amount == 0) this->setHand(nullptr);
