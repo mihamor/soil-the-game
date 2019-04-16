@@ -3,7 +3,9 @@
 #include "WorldDef.h"
 #include <time.h>
 using namespace std;
-class MobSpawner
+
+//Observer
+class MobSpawner : Observer
 {
 	list<Entity *> * entities;
 	int entityCount;
@@ -23,18 +25,21 @@ class MobSpawner
 		srand(time(0));
 		for (int j = 0; j < i; j++)
 		{
-			std::cout << "Spawned!" << std::endl;
+			
 			int x = (rand() % (W-2) ) + 1;
+			std::cout << "Spawned! "<< x << std::endl;
 
 			Entity * newEnemy = (rand() % 2) + 1 == 1 ? pig->clone() : zombie->clone();
+			newEnemy->addDeathHandler(this);
 			moveTo(newEnemy, x * 32, 32 * 12);
 			entities->push_back(newEnemy);
 		}
 	}
 
 	void moveTo(Entity * e, float x, float y) {
-		e->x = x;
-		e->y = y;
+		e->setLife(6);
+		e->setX(x);
+		e->setY(y);
 	}
 
 
@@ -42,9 +47,10 @@ class MobSpawner
 	Enemy * zombie;
 	
 public:
-	MobSpawner(list<Entity *> * entities) {
+	explicit MobSpawner(list<Entity *> * entities) {
 		this->entities = entities;
 		this->entityCount = W / 10;
+		srand(time(0));
 
 		Texture *  enemyT = new Texture();
 		Texture * zombieT = new Texture();
@@ -60,7 +66,16 @@ public:
 		zombie = new Enemy(animationZombie, 0, 0, true);
 	}
 
-	void check(int i) {
+	void handleEvent(Entity * deletedEntity) {
+		Entity * newEntity = deletedEntity->clone();
+		delete deletedEntity;
+		int newX = (rand() % (W - 2)) + 1;
+		moveTo(newEntity, newX * 32, 32 * 12);
+		newEntity->addDeathHandler(this);
+		entities->push_back(newEntity);
+	}
+
+	void generateRandomEntities(int i) {
 		genEnemies(i);
 	}
 

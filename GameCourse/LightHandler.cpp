@@ -43,8 +43,8 @@ LightHandler::LightHandler(std::list<AbstractBlock *> & list, String * TileMap, 
 
 	ls.create(ltbl::rectFromBounds(sf::Vector2f(-1000.0f, -1000.0f), sf::Vector2f(1000.0f, 1000.0f)), Vector2u(vmodex, vmodey), penumbraTexture, unshadowShader, lightOverShapeShader);
 
-	std::shared_ptr<ltbl::LightDirectionEmission> sun = std::make_shared<ltbl::LightDirectionEmission>();// Глобальный источник света что-то вроде солнца.
-	sun->_castDirection = ltbl::vectorNormalize(sf::Vector2f(-0.1f, 0.8f));//Вектор падения тени.
+	std::shared_ptr<ltbl::LightDirectionEmission> sun = std::make_shared<ltbl::LightDirectionEmission>();// Global light.
+	sun->_castDirection = ltbl::vectorNormalize(sf::Vector2f(-0.1f, 0.8f));// shadow vector.
 																		   //ls.addLight(sun);
 
 	playerLight = std::make_shared<ltbl::LightPointEmission>();

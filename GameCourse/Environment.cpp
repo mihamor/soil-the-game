@@ -56,7 +56,7 @@ Environment::Environment(int vmodex, int vmodey, int choice, int slot, RenderWin
 
 	this->ls = new LightHandler(*this->blocks, TileMap, window, vmodey, vmodex);
 	this->spawner = new MobSpawner(this->entities);
-	this->spawner->check(W/30);
+	this->spawner->generateRandomEntities(W/30);
 };
 
 Player * Environment::player() {
@@ -225,10 +225,10 @@ Vector2i Environment::offset() {
 void Environment::update(float time, RenderWindow &window, sf::Vector2i a) {
 	
 	// взаемодействие динамических обьектов
-	int killedEnemies = Entity::entitiesInteraction(entities, p, &soundSystem);
+	int killedEnemies = this->entitiesInteraction();
 	// апдейт динамических обьектов
 	
-	if (!isGui()) Entity::updateAllEntities(entities, time, TileMap, *blocks);
+	if (!isGui()) Environment::updateAllEntities(entities, time, TileMap, *blocks);
 
 	// сдвиг карты при движение 
 
@@ -240,7 +240,7 @@ void Environment::update(float time, RenderWindow &window, sf::Vector2i a) {
 
 	Environment::drawViewField(blocks, TileMap, TileMapBg, offsetX, offsetY, window, vmodex, vmodey);
 	// отрисовка сущностей
-	Entity::drawAllEntities(entities, offsetX, offsetY, window);
+	Environment::drawAllEntities(entities, offsetX, offsetY, window);
 	// отрисовка курсора
 
 	int t = groundLevel * BLOCK_SIZE + groundLevel * BLOCK_SIZE / 4;
@@ -264,11 +264,11 @@ void Environment::update(float time, RenderWindow &window, sf::Vector2i a) {
 	
 	cursor->draw(window);
 
-	spawner->check(killedEnemies);
+	//spawner->check(killedEnemies);
 }
 
 Environment::~Environment() {
-	Entity::deleteAllEntities(entities);
+	Environment::deleteAllEntities(entities);
 	delete entities;
 
 
@@ -348,4 +348,125 @@ void Environment::drawViewField(std::list<AbstractBlock*> * blocks, String * Til
 				window.draw(rectangle);
 			}
 		}
+}
+
+void Environment::deleteAllEntities(std::list<Entity*>  *entities)
+{
+	for (std::list<Entity*>::iterator it = entities->begin(); it != entities->end(); it++)
+	{
+		Entity * b = *it;
+		it = entities->erase(it);
+		delete b;
+	}
+}
+int Environment::entitiesInteraction()
+{
+	std::list<Entity*>::iterator it;
+	int counter = 0;
+	for (it = entities->begin(); it != entities->end(); it++)
+	{
+		if ((*it)->name == "Enemy")
+		{
+			Entity *e = *it;
+
+			if (!e->life)
+			{
+				counter++;
+				it = entities->erase(it);
+				e->kill();
+			}
+
+			if ((player()->getRect().intersects(e->getRect()) && player()->dy > 0))
+			{
+				//e->dx = 0;
+				soundSystem.play("stab_enemy");
+				e->life = e->life - 1;
+				if (!e->life) {
+					counter++;
+					it = entities->erase(it);
+					e->kill();
+					if (player()->life != 3) {
+						player()->life++;
+						soundSystem.play("heal_up");
+					}
+				}
+
+				player()->dy = -0.2;
+			}
+			else if (player()->getRect().intersects(e->getRect()) && !player()->dy) {
+				soundSystem.play("stab_enemy");
+				player()->hitted(e->dir);
+			}
+
+			for (std::list<Entity*>::iterator it2 = entities->begin(); it2 != entities->end(); it2++)
+			{
+				Entity *b = *it2;
+				if (b->getName() == "Bullet" || b->getName() == "Sword")
+				{
+					if (b->getRect().intersects(e->getRect()))
+					{
+						soundSystem.play("stab_enemy");
+						bool dirSplash = b->getDir();
+						if (b->isAlive()) e->hitted(dirSplash);
+
+						b->setLife(0);
+						if (b->getName() == "Bullet") {
+							it2 = entities->erase(it2);
+							delete b;
+						}
+
+						//std::cout << e->hit << std::endl;
+						if (!e->life) {
+							counter++;
+							it = entities->erase(it);
+							if (player()->life != 3) {
+								player()->life++;
+								soundSystem.play("heal_up");
+							}
+							e->kill();
+						}
+					}
+
+				}
+			}
+		}
+	}
+	for (it = entities->begin(); it != entities->end(); it++)
+	{
+		Entity *b = *it;
+		if (b->getName() == "Bullet") {
+			if (!b->isAlive()) {
+				it = entities->erase(it);
+				delete b;
+			}
+		}
+		if (b->getName() == "Sword") {
+			//std::cout << player->dir << std::endl;
+			if (player()->dir) { b->setX(player()->x - 50); }
+			else { b->setX(player()->getX()); }
+
+			b->flip(player()->getDir());
+			b->setY(player()->getY());
+			if (b->isOver()) {
+				it = entities->erase(it);
+				delete b;
+			}
+		}
+	}
+	return counter;
+}
+void Environment::updateAllEntities(std::list<Entity*>  *entities, float time, String * TileMap, std::list<AbstractBlock *> blocks)
+{
+	for (std::list<Entity*>::iterator it = entities->begin(); it != entities->end(); it++)
+	{
+		(*it)->update(time, TileMap, blocks);
+	}
+}
+void Environment::drawAllEntities(std::list<Entity*>  *entities, double offsetX, double offsetY, RenderWindow &window)
+{
+	for (std::list<Entity*>::iterator it = entities->begin(); it != entities->end(); it++)
+	{
+
+		(*it)->draw(window, offsetX, offsetY);
+	}
 }

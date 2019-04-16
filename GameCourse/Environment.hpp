@@ -90,8 +90,11 @@ public:
 private:
 	
 	void initMap();
+
 	static void drawViewField(std::list<AbstractBlock*> * blocks, String * TileMap, String * TileMapBg, double offsetX, double offsetY, RenderWindow & window, int vmodex, int vmodey);
-
-
+	static void deleteAllEntities(std::list<Entity*>* entities);
+	int entitiesInteraction();
+	static void updateAllEntities(std::list<Entity*>* entities, float time, String * TileMap, std::list<AbstractBlock*> blocks);
+	static void drawAllEntities(std::list<Entity*>* entities, double offsetX, double offsetY, RenderWindow & window);
 };
 
