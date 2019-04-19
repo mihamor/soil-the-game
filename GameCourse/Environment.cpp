@@ -76,9 +76,12 @@ void Environment::addWeapon(WeaponType type) {
 	AbstractWeapon * weapon = NULL;
 
 
+	int X = p->getX() + p->getWidth() / 2;
+	int Y = p->getY() + p->getHeight() / 4;
+
 	if (type == Meele)
-		weapon = new Sword(*combatAnim, p->x + p->w / 2, p->y + p->h / 4, p->dir);
-	else weapon = new Bullet(*combatAnim, p->x + p->w / 2, p->y + p->h / 4, p->dir);
+		weapon = new Sword(*combatAnim, X, Y, p->getDir());
+	else weapon = new Bullet(*combatAnim, X, Y, p->getDir());
 	soundSystem.play(type == Meele ? "sword_use" : "bow_use");
 
 	ContextWeapon * context = new ContextWeapon(weapon);
@@ -233,8 +236,10 @@ void Environment::update(float time, RenderWindow &window, sf::Vector2i a) {
 
 	// сдвиг карты при движение 
 
-	if (p->x > vmodex / 2 && p->x  <  W*(32) - vmodex / 2) offsetX = p->x - vmodex / 2;
-	if (p->y > vmodey / 2 && p->y < H*(32) - vmodey / 2) offsetY = p->y - vmodey / 2;
+
+
+	if (p->getX() > vmodex / 2 && p->getX()  <  W*(32) - vmodex / 2) offsetX = p->getX() - vmodex / 2;
+	if (p->getY() > vmodey / 2 && p->getY() < H*(32) - vmodey / 2) offsetY = p->getY() - vmodey / 2;
 	this->cursor->update(isRange(a), a, time,Vector2f(offsetX, offsetY), this->entities);
 	// отрисовка общего задника
 	// отрисовка блоков
@@ -246,8 +251,8 @@ void Environment::update(float time, RenderWindow &window, sf::Vector2i a) {
 
 	int t = groundLevel * BLOCK_SIZE + groundLevel * BLOCK_SIZE / 4;
 
-	if (p->y > t) {
-		ls->render(offsetX, offsetY, p->x, p->y, window, !drawFullRender);
+	if (p->getY() > t) {
+		ls->render(offsetX, offsetY, p->getX(), p->getY(), window, !drawFullRender);
 		if (drawFullRender) drawFullRender = false;
 	}
 
@@ -366,37 +371,39 @@ int Environment::entitiesInteraction()
 	int counter = 0;
 	for (it = entities->begin(); it != entities->end(); it++)
 	{
-		if ((*it)->name == "Enemy")
+		if ((*it)->getName() == "Enemy")
 		{
 			Entity *e = *it;
 
-			if (!e->life)
+			if (!e->isAlive())
 			{
 				counter++;
 				it = entities->erase(it);
 				e->kill();
 			}
 
-			if ((player()->getRect().intersects(e->getRect()) && player()->dy > 0))
+			if ((player()->getRect().intersects(e->getRect()) && player()->getDy() > 0))
 			{
 				//e->dx = 0;
 				soundSystem.play("stab_enemy");
-				e->life = e->life - 1;
-				if (!e->life) {
+				int life = e->isAlive() - 1;
+				e->setLife(life);
+				if (!life) {
 					counter++;
 					it = entities->erase(it);
 					e->kill();
-					if (player()->life != 3) {
-						player()->life++;
+					if (player()->isAlive() != 3) {
+						life = player()->isAlive() + 1;
+						player()->setLife(life);
 						soundSystem.play("heal_up");
 					}
 				}
 
-				player()->dy = -0.2;
+				player()->setDy(-0.2);
 			}
-			else if (player()->getRect().intersects(e->getRect()) && !player()->dy) {
+			else if (player()->getRect().intersects(e->getRect()) && !player()->getDy()) {
 				soundSystem.play("stab_enemy");
-				player()->hitted(e->dir);
+				player()->hitted(e->getDir());
 			}
 
 			for (std::list<Entity*>::iterator it2 = entities->begin(); it2 != entities->end(); it2++)
@@ -417,11 +424,12 @@ int Environment::entitiesInteraction()
 						}
 
 						//std::cout << e->hit << std::endl;
-						if (!e->life) {
+						if (!e->isAlive()) {
 							counter++;
 							it = entities->erase(it);
-							if (player()->life != 3) {
-								player()->life++;
+							if (player()->isAlive() != 3) {
+								int life = player()->isAlive() + 1;
+								player()->setLife(life);
 								soundSystem.play("heal_up");
 							}
 							e->kill();
@@ -443,7 +451,7 @@ int Environment::entitiesInteraction()
 		}
 		if (b->getName() == "Sword") {
 			//std::cout << player->dir << std::endl;
-			if (player()->dir) { b->setX(player()->x - 50); }
+			if (player()->getDir()) { b->setX(player()->getX() - 50); }
 			else { b->setX(player()->getX()); }
 
 			b->flip(player()->getDir());

@@ -1,4 +1,4 @@
-#include "Bullet.hpp"
+#include "Weapon.hpp"
 
 Bullet::Bullet(AnimationManager a, int X, int Y, bool side)
 {

@@ -1,6 +1,6 @@
 #pragma once
 #include "AbstractBlock.hpp"
-#include "Bullet.hpp"
+#include "Weapon.hpp"
 #include "WorldDef.h"
 
 class WeaponBlock :

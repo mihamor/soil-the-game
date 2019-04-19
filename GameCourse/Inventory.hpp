@@ -12,8 +12,6 @@ protected:
 	int added;
 	int maxSlots;
 
-
-	// hud items
 	Text  amountShow;
 	Font font;
 public:

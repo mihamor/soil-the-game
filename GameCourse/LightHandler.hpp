@@ -18,8 +18,6 @@ public:
 	Vector2i coords;
 }LightPointPair;
 
-
-
 // Facade
 class LightHandler
 {

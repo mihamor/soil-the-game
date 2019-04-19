@@ -8,4 +8,5 @@
     <slot signature="121" amount="2" />
     <slot signature="96" amount="1" />
     <slot signature="42" amount="1" />
+    <slot signature="71" amount="1" />
 </inventory>

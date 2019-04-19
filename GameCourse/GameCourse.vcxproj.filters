@@ -84,9 +84,6 @@
     <ClInclude Include="WorkbenchBlock.hpp">
       <Filter>Файлы заголовков\Blocks</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.hpp">
-      <Filter>Файлы заголовков\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy.hpp">
       <Filter>Файлы заголовков\Entities</Filter>
     </ClInclude>
@@ -195,6 +192,9 @@
     <ClInclude Include="State.hpp">
       <Filter>Файлы заголовков\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Weapon.hpp">
+      <Filter>Файлы заголовков\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="tinyxml.cpp">
@@ -281,9 +281,6 @@
     <ClCompile Include="AnimationFactory.cpp">
       <Filter>Исходные файлы\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Исходные файлы\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Cursor.cpp">
       <Filter>Исходные файлы\Entities</Filter>
     </ClCompile>
@@ -348,6 +345,9 @@
       <Filter>Исходные файлы\Entities</Filter>
     </ClCompile>
     <ClCompile Include="State.cpp">
+      <Filter>Исходные файлы\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
       <Filter>Исходные файлы\Entities</Filter>
     </ClCompile>
   </ItemGroup>

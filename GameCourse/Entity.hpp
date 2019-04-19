@@ -24,8 +24,6 @@ protected:
 		std::cout << _observer << std::endl;
 		if(_observer) _observer->handleEvent(this);
 	}
-public:
-	static AnimationFactory factory;
 	float x, y, dx, dy, w, h;
 	int life;
 	bool hit;
@@ -33,6 +31,9 @@ public:
 	AnimationManager anim;
 	std::string name;
 	SoundSystem * soundHandler;
+public:
+	static AnimationFactory factory;
+	
 	
 	Entity();
 	void hitted(bool dir);
@@ -63,10 +64,10 @@ public:
 	virtual float getY() { return y; }
 	virtual float getDx() { return dx; }
 	virtual float getDy() { return dy; }
-	virtual float getWeight() { return w; }
-	virtual float getHeight() { return h; }
+	virtual float getWidth() { return w; }
+ 	virtual float getHeight() { return h; }
 	virtual AnimationManager * getAnimationManager() { return &anim; }
-	virtual bool isAlive() { return life; }
+	virtual int isAlive() { return life; }
 	virtual std::string getName() { return name; }
 	virtual FloatRect getRect();
 	

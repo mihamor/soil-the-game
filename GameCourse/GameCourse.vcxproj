@@ -151,7 +151,7 @@
     <ClInclude Include="BlockFactory.hpp" />
     <ClInclude Include="BlockLoader.h" />
     <ClInclude Include="BlockPackage.h" />
-    <ClInclude Include="Bullet.hpp" />
+    <ClInclude Include="Weapon.hpp" />
     <ClInclude Include="Chest.hpp" />
     <ClInclude Include="ChestBlock.hpp" />
     <ClInclude Include="ChestLoader.hpp" />
@@ -201,7 +201,7 @@
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BlockFactory.cpp" />
     <ClCompile Include="BlockLoader.cpp" />
-    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Chest.cpp" />
     <ClCompile Include="ChestBlock.cpp" />
     <ClCompile Include="ChestLoader.cpp" />

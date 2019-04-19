@@ -22,7 +22,7 @@ class ContextWeapon : public AbstractWeapon {
 public:
 	ContextWeapon(AbstractWeapon * weapon) {
 		this->weapon = weapon;
-		this->name = weapon->name;
+		this->name = weapon->getName();
 	}
 	~ContextWeapon(){
 		if (!weapon) delete weapon;
@@ -36,9 +36,9 @@ public:
 	float getDx() { return this->weapon->getDx(); }
 	void flip(bool side) { this->weapon->flip(side); }
 	float getDy() { return this->weapon->getDy(); }
-	float getWeight() { return this->weapon->getWeight(); }
+	float getWidth() { return this->weapon->getWidth(); }
 	float getHeight() { return this->weapon->getHeight(); }
-	bool isAlive() { return this->weapon->isAlive(); }
+	int isAlive() { return this->weapon->isAlive(); }
 	std::string getName() { return this->weapon->getName(); }
 	FloatRect getRect() { return this->weapon->getRect(); }
 

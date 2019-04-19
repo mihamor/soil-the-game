@@ -2,7 +2,7 @@
 #include "Enemy.hpp"
 #include "PLAYER.hpp"
 #include <list>
-#include "Bullet.hpp"
+#include "Weapon.hpp"
 #include "BlockPackage.h"
 #include "WorldGenerator.hpp"
 #include "Workbench.hpp"

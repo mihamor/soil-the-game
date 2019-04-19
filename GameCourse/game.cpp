@@ -26,7 +26,7 @@ execResult game(int slot, MenuChoiceCustom menuChoice, RenderWindow & window, in
 	RectangleShape rectangle;
 	sf::Vector2i a(0, 0);
 	
-	while (window.isOpen() && e.player()->life) {
+	while (window.isOpen() && e.player()->isAlive()) {
 		
 		float time = clock.getElapsedTime().asMicroseconds(); // тик рейт
 		clock.restart();
@@ -114,7 +114,7 @@ execResult game(int slot, MenuChoiceCustom menuChoice, RenderWindow & window, in
 		e.update(time, window, a);
 
 		window.display();
-		if (e.player()->life == false || menuChoice == EXIT)
+		if (e.player()->isAlive() == false || menuChoice == EXIT)
 		{
 
 			// пока что просто выход (реализовать окно смерти и перезагрузки)

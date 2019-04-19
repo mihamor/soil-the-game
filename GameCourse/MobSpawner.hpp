@@ -9,15 +9,6 @@ class MobSpawner : Observer
 {
 	list<Entity *> * entities;
 	int entityCount;
-	int countEnemies() {
-		int count = 0;
-		for (Entity * en : *entities) {
-			if (en->name == "Enemy") {
-				count++;
-			}
-		}
-		return count;
-	}
 	void genEnemies(int i) {
 		
 		if (i == 0) return;
@@ -41,8 +32,6 @@ class MobSpawner : Observer
 		e->setX(x);
 		e->setY(y);
 	}
-
-
 	Enemy * pig;
 	Enemy * zombie;
 	
