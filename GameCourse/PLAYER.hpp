@@ -9,8 +9,6 @@ using namespace sf;
 class Player : public Entity
 {
 private:
-	bool onLadder, shoot;
-	enum { stay, walk, duck, jump, climb, swim } STATE;
 	int range;
 	Slot * hand;
 	class State * current;
