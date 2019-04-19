@@ -35,7 +35,6 @@ private:
 };
 
 
-
 struct Map {
 public:
 	String * background;
@@ -66,6 +65,25 @@ private:
 	void interpolateMap(int x, int peakValue, int prevPeakValue);
 	static bool hasBlockNeigh(int y, int x, String * map, char sign);
 	
+};
+
+class FlatWorldGenerator : AbstractWorldGenerator
+{
+	String * bg;
+	String * map;
+	static bool randomBoolean(unsigned int percetnage);
+public:
+	FlatWorldGenerator();
+	~FlatWorldGenerator();
+	void generateForeground();
+	void generateBackground();
+	void generateMountains();
+	void fillGroundLevel();
+	void fillGrass();
+	void fillRocks();
+	void fillTrees();
+	String * dispatchForeground();
+	String * dispatchBackground();
 };
 
 class WorldManager {

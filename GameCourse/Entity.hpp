@@ -18,11 +18,15 @@ public:
 class Entity
 {
 protected:
-	Observer *  _observer = NULL;
+	std::vector<Observer *> _observers;
 	void _Notify()
 	{
-		std::cout << _observer << std::endl;
-		if(_observer) _observer->handleEvent(this);
+		for (auto it = _observers.begin(); it != _observers.end(); ++it) {
+			Observer * observer = *it;
+			std::cout << observer << std::endl;
+			if(observer) observer->handleEvent(this);
+		}
+		
 	}
 	float x, y, dx, dy, w, h;
 	int life;
@@ -44,7 +48,7 @@ public:
 	void kill() { _Notify(); }
 	void addDeathHandler(Observer * ref){
 		std::cout << "added observer: "<< ref << std::endl;
-		_observer = ref;
+		_observers.push_back(ref);
 	}
 	virtual void setX(float value) { x = value; }
 	virtual void setY(float value) { y = value; }

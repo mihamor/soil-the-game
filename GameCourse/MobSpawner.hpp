@@ -57,7 +57,6 @@ public:
 
 	void handleEvent(Entity * deletedEntity) {
 		Entity * newEntity = deletedEntity->clone();
-		delete deletedEntity;
 		int newX = (rand() % (W - 2)) + 1;
 		moveTo(newEntity, newX * 32, 32 * 12);
 		newEntity->addDeathHandler(this);

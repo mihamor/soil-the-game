@@ -42,6 +42,37 @@ void DefaultWorldGenerator::generateBackground() {
 	}
 };
 
+bool FlatWorldGenerator::randomBoolean(unsigned int percetnage)
+{
+	return ((rand() % 100) + 1) <= (int)percetnage;
+}
+
+FlatWorldGenerator::FlatWorldGenerator()
+{
+}
+
+FlatWorldGenerator::~FlatWorldGenerator()
+{
+}
+
+void FlatWorldGenerator::generateForeground() {
+	this->map = new String[H];
+}
+void FlatWorldGenerator::generateBackground() {
+	this->bg = new String[H];
+	for (int y = 0; y < H; y++) {
+		for (int x = 0; x < W + 1; x++) {
+			if (y > H - groundLevel && y != H - 1) this->bg[y].insert(x, "s");
+			else this->bg[y].insert(x, " ");
+		}
+	}
+}
+void FlatWorldGenerator::generateMountains()
+{
+	// no mountains
+}
+;
+
  bool DefaultWorldGenerator::hasBlockNeigh(int y, int x, String * map, char sign) {
 	for (int y1 = y - 1; y1 < y + 2; y1++) {
 		for (int x1 = x - 1; x1 < x + 2; x1++) {
@@ -55,7 +86,7 @@ void DefaultWorldGenerator::generateBackground() {
 
 	return false;
 }
- void DefaultWorldGenerator::fillGroundLevel() {
+ void FlatWorldGenerator::fillGroundLevel() {
 	for (int y = 0; y < H; y++) {
 		for (int x = 0; x < W + 1; x++) {
 			//std::string block = DEFAULT_BG_SINGNATURE + "";
@@ -66,6 +97,54 @@ void DefaultWorldGenerator::generateBackground() {
 		}
 	}
 }
+ void FlatWorldGenerator::fillGrass()
+ {
+	for (int x = 1; x < W - 1; x++) {
+		 this->map[groundLevel][x] = 'G';
+	 }
+ }
+ void FlatWorldGenerator::fillRocks()
+ {
+	 for (int x = 1; x < W - 1; x++) {
+		 int h = (rand() % groundLevel / 4 + groundLevel / 2);
+		 for (int y = 0; y < h; y++)
+		 {
+			 bool placeIron = randomBoolean(10);
+			 bool placeGold = randomBoolean(5);
+			 bool placeWolfram = randomBoolean(1);
+			 if (placeIron) this->map[H - 2 - y][x] = 'I';
+			 else if (placeGold) this->map[H - 2 - y][x] = 'X';
+			 else if (placeWolfram) this->map[H - 2 - y][x] = 'Y';
+			 else this->map[H - 2 - y][x] = 'R';
+		 }
+	 }
+	 
+ }
+ void FlatWorldGenerator::fillTrees()
+ {
+	 int treesCount = W / 10;
+	 int j = 0;
+	 int i = 0;
+	 while (j < treesCount && i < 100000) {
+		 for (int y = groundLevel - jumpDist; y < groundLevel + jumpDist; y++) {
+			int x = (rand() % (W - 1)) + 1;
+			TreeBlock::placeTree(groundLevel, x, this->map);
+			 j++;
+		 }
+		 i++;
+	 }
+ }
+ void DefaultWorldGenerator::fillGroundLevel() {
+	 for (int y = 0; y < H; y++) {
+		 for (int x = 0; x < W + 1; x++) {
+			 //std::string block = DEFAULT_BG_SINGNATURE + "";
+			 if (x == 0 || x == W - 1) this->map[y].insert(x, "B");
+			 else if (y > H - groundLevel && y != H - 1) this->map[y].insert(x, "S");
+			 else if (y == H - 1) this->map[y].insert(x, "B");
+			 else this->map[y].insert(x, " ");
+		 }
+	 }
+ }
 
  int mapNumber(int num, int min, int max) {
 	 return min + (num % static_cast<int>(max - min + 1));
@@ -160,6 +239,16 @@ String * DefaultWorldGenerator::dispatchForeground()
 }
 
 String * DefaultWorldGenerator::dispatchBackground()
+{
+	return this->bg;
+}
+
+String * FlatWorldGenerator::dispatchForeground()
+{
+	return this->map;
+}
+
+String * FlatWorldGenerator::dispatchBackground()
 {
 	return this->bg;
 }

@@ -9,6 +9,7 @@ const float ENEMY_SPEED = 0.05;
 Enemy::Enemy(AnimationManager a, int X, int Y, bool dir) : Entity(a, X,Y)
 {
 	anim.set("walk");
+	this->_observers.clear();
 	//anim.animList["walk"].sprite.setColor(Color::Red);
 	dx = 0.05;
 	this->dir = dir;
