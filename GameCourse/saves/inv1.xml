@@ -1,2 +1,5 @@
 <?xml version="1.0" ?>
-<inventory />
+<inventory>
+    <slot signature="71" amount="4" />
+    <slot signature="83" amount="1" />
+</inventory>

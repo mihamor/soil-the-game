@@ -4,7 +4,7 @@
 
 Entity::Entity()
 {
-	this->_observers.clear();
+	_observer = NULL;
 }
 AnimationFactory Entity::factory = AnimationFactory();
 

@@ -11,37 +11,37 @@
 	TiXmlElement * list = new TiXmlElement("block_list");
 	doc.LinkEndChild(list);
 
-	for (AbstractBlock * b : vec) {
+	for (AbstractBlock * block : vec) {
 		TiXmlElement * element = new TiXmlElement("block");
-		if (b->interact() == doorType) {
-			if (b->singnature == doorOpenSign)
+		if (block->interact() == doorType) {
+			if (block->singnature == doorOpenSign)
 				element->SetAttribute("type", "DoorOpened");
 			else  element->SetAttribute("type", "DoorClosed");
 		}
-		else if (b->interact() == treeType) {
+		else if (block->interact() == treeType) {
 			element->SetAttribute("type", "Tree");;
 		}
-		else if (b->interact() == craftType) {
-			if (b->singnature == DEFAULT_BENCH_SIGN) element->SetAttribute("type", "Workbench");
+		else if (block->interact() == craftType) {
+			if (block->singnature == DEFAULT_BENCH_SIGN) element->SetAttribute("type", "Workbench");
 			else element->SetAttribute("type", "Furnace");
 		}
-		else if (b->interact() == itemType) {
+		else if (block->interact() == itemType) {
 			element->SetAttribute("type", "Item");
 		}
-		else if (b->interact() == spriticType) {
+		else if (block->interact() == spriticType) {
 			element->SetAttribute("type", "Spritic");
 		}
-		else if (b->interact() == weaponItemType) {
-			Weapon * w = (Weapon *)b;
-			if(w->getType() == Meele) element->SetAttribute("type", "Meele");
+		else if (block->interact() == weaponItemType) {
+			WeaponBlock * weaponBlock = (WeaponBlock *)block;
+			if(weaponBlock->getType() == Meele) element->SetAttribute("type", "Meele");
 			else element->SetAttribute("type", "Ranged");
 		}
-		else if (b->interact() == chestType) {
+		else if (block->interact() == chestType) {
 			element->SetAttribute("type", "Chest");
 		}
-		else element->SetAttribute("type", b->getCollision() ? "Solid" : "Background");
-		element->SetAttribute("signature", b->singnature);
-		element->SetAttribute("texture", b->getFileName().c_str());
+		else element->SetAttribute("type", block->getCollision() ? "Solid" : "Background");
+		element->SetAttribute("signature", block->singnature);
+		element->SetAttribute("texture", block->getFileName().c_str());
 		list->LinkEndChild(element);
 	}
 

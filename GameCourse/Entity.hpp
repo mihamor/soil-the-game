@@ -17,13 +17,12 @@ public:
 
 class Entity
 {
-	std::list<Observer *> _observers;
+protected:
+	Observer *  _observer = NULL;
 	void _Notify()
 	{
-		for (Observer * observer : _observers)
-		{
-			observer->handleEvent(this);
-		}
+		std::cout << _observer << std::endl;
+		if(_observer) _observer->handleEvent(this);
 	}
 public:
 	static AnimationFactory factory;
@@ -42,19 +41,31 @@ public:
 		this->anim.flip(side);
 	}
 	void kill() { _Notify(); }
-	void addDeathHandler(Observer * ref){ _observers.push_back(ref); }
+	void addDeathHandler(Observer * ref){
+		std::cout << "added observer: "<< ref << std::endl;
+		_observer = ref;
+	}
 	virtual void setX(float value) { x = value; }
 	virtual void setY(float value) { y = value; }
+	virtual void setDx(float value) { dx = value; }
+	virtual void setDy(float value) { dy = value; }
+	virtual void setDir(bool value) { dir = value; }
+	virtual void setAnimationManager(AnimationManager value) { anim = value; }
+
+
 	virtual bool isOver() { return anim.isOver(); }
 	virtual void setLife(int value) { life = value; }
 	virtual bool getDir() { return dir; }
 
+
+	virtual SoundSystem * getSoundHandler() { return soundHandler; }
 	virtual float getX() { return x; }
 	virtual float getY() { return y; }
 	virtual float getDx() { return dx; }
 	virtual float getDy() { return dy; }
 	virtual float getWeight() { return w; }
 	virtual float getHeight() { return h; }
+	virtual AnimationManager * getAnimationManager() { return &anim; }
 	virtual bool isAlive() { return life; }
 	virtual std::string getName() { return name; }
 	virtual FloatRect getRect();

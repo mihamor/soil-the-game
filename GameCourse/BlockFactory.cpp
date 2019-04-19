@@ -23,9 +23,9 @@ AbstractBlock * BlockFactory::createBlock(BlockType type, std::string blockName,
 	else if (blockName == "Spritic")
 		newBlock = new SpriticBlock(bFileName, signature, Solid);
 	else if (blockName == "Ranged")
-		newBlock = new Weapon(bFileName, signature, Background, Ranged);
+		newBlock = new WeaponBlock(bFileName, signature, Background, Ranged);
 	else if (blockName == "Meele")
-		newBlock = new Weapon(bFileName, signature, Background, Meele);
+		newBlock = new WeaponBlock(bFileName, signature, Background, Meele);
 	else if ((type == Solid || type == Background))
 		newBlock = new Block(bFileName, signature, type);
 

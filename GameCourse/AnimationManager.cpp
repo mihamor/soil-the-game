@@ -1,4 +1,4 @@
-#include "anim.hpp"
+#include "AnimationManager.hpp"
 
 AnimationManager::AnimationManager() {}
 AnimationManager::~AnimationManager() {}
@@ -25,7 +25,6 @@ void AnimationManager::loadFromXML(std::string fileName, Texture *t)
 	if(!animFile.LoadFile()) abort();
 
 	TiXmlElement * head = animFile.FirstChildElement("sprites");
-
 	TiXmlElement *animElement;
 	animElement = head->FirstChildElement("animation");
 	while (animElement)

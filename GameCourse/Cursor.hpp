@@ -1,5 +1,5 @@
 #pragma once
-#include "anim.hpp"
+#include "AnimationManager.hpp"
 #include "PLAYER.hpp"
 using namespace sf;
 class GameCursor

@@ -154,7 +154,7 @@ void Environment::setBlock(Vector2i a) {
 			std::cout << "Craft opening " << wb->getId() << std::endl;
 			setGuiWorkbench(true, wb->getId());
 		}else if (hand && hand->block->interact() == weaponItemType) {
-			Weapon * w = (Weapon *)hand->block;
+			WeaponBlock * w = (WeaponBlock *)hand->block;
 			this->addWeapon(w->getType());
 			return;
 		}

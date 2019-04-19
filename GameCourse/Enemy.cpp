@@ -6,21 +6,16 @@
 
 const float ENEMY_SPEED = 0.05;
 
-Enemy::Enemy(AnimationManager a, int X, int Y, bool dir)
+Enemy::Enemy(AnimationManager a, int X, int Y, bool dir) : Entity(a, X,Y)
 {
-	anim = a;
 	anim.set("walk");
 	//anim.animList["walk"].sprite.setColor(Color::Red);
-	x = X;
-	y = Y;
 	dx = 0.05;
 	this->dir = dir;
 	if (dir == 1) { dx = -dx; anim.flip(true); }
 	w = anim.getFrameWidth(0, "walk");
 	h = anim.getFrameHeight(0, "walk");
-	life = 6;
 	name = "Enemy";
-	this->hit = false;
 	this->initPosition = Vector2i(X, Y);
 }
 

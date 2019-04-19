@@ -1,5 +1,5 @@
 #include "PLAYER.hpp"
-
+#include "State.hpp"
 
 static String intToStr(int value)
 {
@@ -19,22 +19,16 @@ std::string Player::getCurrentStateName()
 	return current->getStateName();
 }
 
-Player::Player(AnimationManager &a, int X, int Y, SoundSystem * soundSystem)
+Player::Player(AnimationManager &a, int X, int Y, SoundSystem * soundSystem) : Entity(a, X, Y)
 {
 	h = a.getFrameHeight(0, "stay");
 	w = a.getFrameWidth(0, "stay");
-	x = X;
-	y = Y;
-	anim = a;
 	life = 3;
 	//STATE = stay;
 	setCurrentState((State* )(new StayState()));
 	name = "Player";
 	range = 5;
 	this->hand = NULL;
-	hit = false;
-
-
 	this->soundHandler = soundSystem;
 
 	// @implement normal hud items connections
@@ -98,9 +92,6 @@ void Player::KeyCheck()
 		stayPlayer();
 }
 
-
-
-
 void Player::update(float time, String TileMap[], std::list<AbstractBlock *> blocks)
 {
 
@@ -138,7 +129,7 @@ void Player::playerPosNormalize() {
 void Player::walkLeftPlayer()
 {
 	if (current->getStateName() != "walkLeft") {
-		std::cout << "walkLeft" << std::endl;
+		//std::cout << "walkLeft" << std::endl;
 		current->walkLeft(this);
 	}
 }
@@ -146,7 +137,7 @@ void Player::walkLeftPlayer()
 void Player::walkRightPlayer()
 {
 	if (current->getStateName() != "walkRight") {
-		std::cout << "walkRight" << std::endl;
+		//std::cout << "walkRight" << std::endl;
 		current->walkRight(this);
 	}
 }
@@ -154,7 +145,7 @@ void Player::walkRightPlayer()
 void Player::jumpPlayer()
 {
 	if (current->getStateName() != "jump") {
-		std::cout << "jump" << std::endl;
+		//std::cout << "jump" << std::endl;
 		current->jump(this);
 	}
 }
@@ -162,7 +153,7 @@ void Player::jumpPlayer()
 void Player::stayPlayer()
 {
 	if (current->getStateName() != "stay") {
-		std::cout << "stay" << std::endl;
+		//std::cout << "stay" << std::endl;
 		current->stay(this);
 	}
 }
@@ -170,7 +161,7 @@ void Player::stayPlayer()
 void Player::duckPlayer()
 {
 	if (current->getStateName() != "duck") {
-		std::cout << "duck" << std::endl;
+		//std::cout << "duck" << std::endl;
 		current->duck(this);
 	}
 }
@@ -236,182 +227,4 @@ void Player::drawHUD(RenderWindow & window, int vmodex, int vmodey, HudItems & i
 		window.draw(inHand);
 		window.draw(amountShow);
 	}
-}
-
-
-void setValuesToJump(Player * p) {
-	p->dy = -0.4;
-	p->onGround = false;
-	p->soundHandler->play("player_jump");
-	p->anim.set("jump");
-}
-void setValuesToStay(Player * p) {
-	p->dx = 0;
-	p->anim.set("stay");
-}
-void setValuesToDuck(Player * p) {
-	p->dx = 0;
-	p->anim.set("duck");
-}
-void setValuesToWalk(Player * p, int dir) {
-	p->dx = dir ? -0.1 : 0.1;
-	p->dir = dir;
-	p->anim.set("walk");
-}
-
-void WalkRightState::walkLeft(Player * p)
-{
-	setValuesToWalk(p, 1);
-	p->setCurrentState((State *)(new WalkLeftState()));
-	//p->dx = p->dir ? -0.1 : 0.1;
-	//p->anim.set("walk");
-	//set values
-}
-void WalkRightState::walkRight(Player * p)
-{
-	std::cout << "Already in walkRight state" << std::endl;
-	
-	//p->dx = p->dir ? -0.1 : 0.1;
-	//p->anim.set("walk");
-	//set values
-}
-
-void WalkRightState::stay(Player * p)
-{
-	setValuesToStay(p);
-	p->setCurrentState((State *)(new StayState()));
-}
-void WalkRightState::duck(Player * p)
-{
-	setValuesToDuck(p);
-	p->setCurrentState((State *)(new DuckState()));
-}
-void WalkRightState::jump(Player * p)
-{
-	setValuesToJump(p);
-	p->setCurrentState((State *)(new JumpState()));
-}
-///////////////////////////////////
-
-
-void WalkLeftState::walkLeft(Player * p)
-{
-	std::cout << "Already in walkLeft state" << std::endl;
-	//p->dx = p->dir ? -0.1 : 0.1;
-	//p->anim.set("walk");
-	//set values
-}
-void WalkLeftState::walkRight(Player * p)
-{
-	setValuesToWalk(p, 0);
-	p->setCurrentState((State *)(new WalkRightState()));
-	//p->dx = p->dir ? -0.1 : 0.1;
-	//p->anim.set("walk");
-	//set values
-}
-
-void WalkLeftState::stay(Player * p)
-{
-	setValuesToStay(p);
-	p->setCurrentState((State *)(new StayState()));
-}
-void WalkLeftState::duck(Player * p)
-{
-	setValuesToDuck(p);
-	p->setCurrentState((State *)(new DuckState()));
-}
-void WalkLeftState::jump(Player * p)
-{
-	setValuesToJump(p);
-	p->setCurrentState((State *)(new JumpState()));
-}
-///////////////////////////////////
-void StayState::walkLeft(Player * p)
-{
-	setValuesToWalk(p, 1);
-	p->setCurrentState((State *)(new WalkLeftState()));
-}
-void StayState::walkRight(Player * p)
-{
-	setValuesToWalk(p, 0);
-	p->setCurrentState((State *)(new WalkRightState()));
-}
-void StayState::stay(Player * p)
-{
-	std::cout << "Already in stay state" << std::endl;
-	//p->dx = 0;
-	//p->anim.set("stay");
-	//set values
-}
-void StayState::duck(Player * p)
-{
-	setValuesToDuck(p);
-	p->setCurrentState((State *)(new DuckState()));
-}
-void StayState::jump(Player * p)
-{
-	setValuesToJump(p);
-	p->setCurrentState((State *)(new JumpState()));
-}
-/////////////////////
-void DuckState::walkLeft(Player * p)
-{
-	setValuesToWalk(p, 1);
-	p->setCurrentState((State *)(new WalkLeftState()));
-}
-void DuckState::walkRight(Player * p)
-{
-	setValuesToWalk(p, 0);
-	p->setCurrentState((State *)(new WalkRightState()));
-}
-
-
-void DuckState::stay(Player * p)
-{
-	setValuesToStay(p);
-	p->setCurrentState((State *)(new StayState()));
-}
-void DuckState::duck(Player * p)
-{
-	//p->dx = 0;
-	//p->anim.set("duck");
-	// set values
-	std::cout << "Already in duck state" << std::endl;
-}
-void DuckState::jump(Player * p)
-{
-	setValuesToJump(p);
-	p->setCurrentState((State *)(new JumpState()));
-}
-///////////////////////////////
-void JumpState::walkLeft(Player * p)
-{
-	p->dir = 1;
-	p->dx = -0.1;
-	//p->setCurrentState((State *)(new WalkLeftState()));
-}
-void JumpState::walkRight(Player * p)
-{
-	p->dir = 0;
-	p->dx = 0.1;
-	//p->setCurrentState((State *)(new WalkLeftState()));
-}
-void JumpState::stay(Player * p)
-{
-	setValuesToStay(p);
-	p->setCurrentState((State *)(new StayState()));
-}
-void JumpState::duck(Player * p)
-{
-	setValuesToDuck(p);
-	p->setCurrentState((State *)(new DuckState()));
-}
-void JumpState::jump(Player * p)
-{
-	std::cout << "Already in jump state" << std::endl;
-	//p->dy = -0.4;
-	//p->onGround = false;
-	//p->soundHandler->play("player_jump");
-	//p->anim.set("jump");
-	//set value
 }
