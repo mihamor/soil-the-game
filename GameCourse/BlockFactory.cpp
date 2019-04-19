@@ -8,7 +8,7 @@ AbstractBlock * BlockFactory::createBlock(BlockType type, std::string blockName,
 		newBlock = new DoorBlock(bFileName, signature, Solid);
 	else if (blockName == "DoorOpened") {
 		newBlock = new DoorBlock(bFileName, signature, Background);
-		newBlock->rectangle.setFillColor(Color(105, 105, 105));
+		newBlock->getRectangleShape()->setFillColor(Color(105, 105, 105));
 	}
 	else if (blockName == "Tree")
 		newBlock = new TreeBlock(bFileName, signature, Background);

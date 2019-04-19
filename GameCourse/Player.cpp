@@ -219,7 +219,7 @@ void Player::drawHUD(RenderWindow & window, int vmodex, int vmodey, HudItems & i
 	if (!hand || !hand->block) return;
 	else if (this->getHand()->amount == 0) this->setHand(nullptr);
 	else {
-		RectangleShape inHand = hand->block->rectangle;
+		RectangleShape inHand = *(hand->block->getRectangleShape());
 		String ss = intToStr(hand->amount);
 		amountShow.setString(ss);
 		amountShow.setPosition(48 + 32, vmodey - 48);

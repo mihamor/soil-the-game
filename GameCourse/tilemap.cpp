@@ -110,13 +110,13 @@ bool TMap::setBlock(Player * p, int x, int y, float offsetX, float offsetY, std:
 		int posx = (x + (int)offsetX) / 32;
 		int posy = (y + (int)offsetY) / 32;
 		AbstractBlock *check = AbstractBlock::getBlock(blocks, TileMap, posy, posx);
-		if (check->singnature == DEFAULT_BG_SINGNATURE)
+		if (check->getSingature() == DEFAULT_BG_SINGNATURE)
 		{ // проверка если блок, на место которого нужно поставить - бэкграундный блок
 			Slot * h = p->getHand();
-			if(h->block->type == Solid) TileMap[posy][posx] = h->block->singnature;
-			else if(h->block->type == Background){
+			if(h->block->getBlockType() == Solid) TileMap[posy][posx] = h->block->getSingature();
+			else if(h->block->getBlockType() == Background){
 				check = AbstractBlock::getBlock(blocks, TileMapBg, posy, posx);
-				if (check->singnature == DEFAULT_BG_SINGNATURE) TileMapBg[posy][posx] = h->block->singnature;
+				if (check->getSingature() == DEFAULT_BG_SINGNATURE) TileMapBg[posy][posx] = h->block->getSingature();
 				else return false;
 			}
 			//AbstractBlock * bHand = p->getHand()->block;
@@ -136,7 +136,7 @@ bool TMap::removeBlock(Player * p, int x, int y, float offsetX, float offsetY, s
 		int posy = (y + (int)offsetY) / 32;
 		bool isBg = false;
 		AbstractBlock *check = AbstractBlock::getBlock(blocks, TileMap, posy, posx);
-		if (check->singnature == DEFAULT_BG_SINGNATURE)
+		if (check->getSingature() == DEFAULT_BG_SINGNATURE)
 		{
 			check = AbstractBlock::getBlock(blocks, TileMapBg, posy, posx);
 			isBg = true;

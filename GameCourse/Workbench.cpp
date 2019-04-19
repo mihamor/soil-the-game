@@ -43,7 +43,7 @@ void Workbench::draw(RenderWindow & window, int vmodey, int vmodex, bool * isGui
 		int posx = 80;
 		if (r.ifMatchesInv(*inv)) {
 			for (Slot * s : r.getRequired()) {
-				RectangleShape slotToDraw = s->block->rectangle; // background of slot
+				RectangleShape slotToDraw = *(s->block->getRectangleShape()); // background of slot
 				
 				slotToDraw.setPosition((float)posx, (float)posy);
 				amountShow.setString(intToStr(s->amount));
@@ -56,7 +56,7 @@ void Workbench::draw(RenderWindow & window, int vmodey, int vmodex, bool * isGui
 			posx = posx + BLOCK_SIZE;
 
 			Slot * result = r.getResult();
-			RectangleShape resultSlot = result->block->rectangle; // background of slot
+			RectangleShape resultSlot = *(result->block->getRectangleShape()); // background of slot
 			results.push_back(resultSlot);
 			posx = background.getSize().x / 2 + 4*BLOCK_SIZE;
 
@@ -143,13 +143,13 @@ void Workbench::workbenchSave(std::string fileName) {
 		TiXmlElement * required = new TiXmlElement("required");
 		for (Slot *s : r.getRequired()) {
 			TiXmlElement * slot = new TiXmlElement("slot");
-			slot->SetAttribute("signature", s->block->singnature);
+			slot->SetAttribute("signature", s->block->getSingature());
 			slot->SetAttribute("amount", s->amount);
 			required->LinkEndChild(slot);
 		}
 		TiXmlElement * result = new TiXmlElement("result");
 		Slot * res = r.getResult();
-		result->SetAttribute("signature", res->block->singnature);
+		result->SetAttribute("signature", res->block->getSingature());
 		result->SetAttribute("amount", res->amount);
 
 

@@ -14,7 +14,7 @@
 	for (AbstractBlock * block : vec) {
 		TiXmlElement * element = new TiXmlElement("block");
 		if (block->interact() == doorType) {
-			if (block->singnature == doorOpenSign)
+			if (block->getSingature() == doorOpenSign)
 				element->SetAttribute("type", "DoorOpened");
 			else  element->SetAttribute("type", "DoorClosed");
 		}
@@ -22,7 +22,7 @@
 			element->SetAttribute("type", "Tree");;
 		}
 		else if (block->interact() == craftType) {
-			if (block->singnature == DEFAULT_BENCH_SIGN) element->SetAttribute("type", "Workbench");
+			if (block->getSingature() == DEFAULT_BENCH_SIGN) element->SetAttribute("type", "Workbench");
 			else element->SetAttribute("type", "Furnace");
 		}
 		else if (block->interact() == itemType) {
@@ -40,7 +40,7 @@
 			element->SetAttribute("type", "Chest");
 		}
 		else element->SetAttribute("type", block->getCollision() ? "Solid" : "Background");
-		element->SetAttribute("signature", block->singnature);
+		element->SetAttribute("signature", block->getSingature());
 		element->SetAttribute("texture", block->getFileName().c_str());
 		list->LinkEndChild(element);
 	}

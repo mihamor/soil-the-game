@@ -79,6 +79,7 @@ void Environment::addWeapon(WeaponType type) {
 	if (type == Meele)
 		weapon = new Sword(*combatAnim, p->x + p->w / 2, p->y + p->h / 4, p->dir);
 	else weapon = new Bullet(*combatAnim, p->x + p->w / 2, p->y + p->h / 4, p->dir);
+	soundSystem.play(type == Meele ? "sword_use" : "bow_use");
 
 	ContextWeapon * context = new ContextWeapon(weapon);
 
@@ -135,7 +136,7 @@ void Environment::setBlock(Vector2i a) {
 			this->chests[key] = new Chest(CHEST_SIZE);
 		}
 		if (hblock && hblock->interact() == spriticType && inRangePlayer) ls->addLight(Vector2i(posx, posy));
-		else if (hblock && hblock->type == Solid && inRangePlayer) this->ls->addPair(Vector2i(posx, posy));
+		else if (hblock && hblock->getBlockType() == Solid && inRangePlayer) this->ls->addPair(Vector2i(posx, posy));
 	}else{
 		if (bl->interact() == doorType) {
 			if (weaponInHand && !this->cursor->getStatus()) return;
@@ -204,9 +205,9 @@ void Environment::addBlock(Vector2i a) {
 	int posx = (a.x + (int)offsetX) / 32;
 	int posy = (a.y + (int)offsetY) / 32;
 	AbstractBlock * check = AbstractBlock::getBlock(*blocks, TileMap, posy, posx);
-	if (check == NULL || check->singnature == DEFAULT_BG_SINGNATURE) {
+	if (check == NULL || check->getSingature() == DEFAULT_BG_SINGNATURE) {
 		check = AbstractBlock::getBlock(*blocks, TileMapBg, posy, posx);
-		if (check == NULL || check->singnature == DEFAULT_BG_SINGNATURE) p->setHand(NULL);
+		if (check == NULL || check->getSingature() == DEFAULT_BG_SINGNATURE) p->setHand(NULL);
 		else inv->addSlot(check);
 	}
 	else inv->addSlot(check);
@@ -280,7 +281,7 @@ Environment::~Environment() {
 		auto it = blocks->begin();
 		AbstractBlock * b = *it;
 		it = blocks->erase(it);
-		delete b->rectangle.getTexture();
+		delete b->getRectangleShape()->getTexture();
 		delete b;
 		
 	}
@@ -316,9 +317,9 @@ void Environment::drawViewField(std::list<AbstractBlock*> * blocks, String * Til
 
 
 			AbstractBlock *b = AbstractBlock::getBlock(*blocks, TileMap, i, j);
-			if (b->type == Background && b->interact() == removeType) b = AbstractBlock::getBlock(*blocks, TileMapBg, i, j);
+			if (b->getBlockType() == Background && b->interact() == removeType) b = AbstractBlock::getBlock(*blocks, TileMapBg, i, j);
 			if (b != NULL)
-				rectangle = b->rectangle;
+				rectangle = *b->getRectangleShape();
 			else
 			{
 				fprintf(stderr, "Unknown block was found ");
@@ -330,7 +331,7 @@ void Environment::drawViewField(std::list<AbstractBlock*> * blocks, String * Til
 				//std::cout << posx << " " << posy << std::endl;
 				AbstractBlock *bgBlock = AbstractBlock::getBlock(*blocks, TileMapBg, i, j);
 
-				rectangle = bgBlock->rectangle;
+				rectangle = *bgBlock->getRectangleShape();
 				rectangle.setPosition(posx, posy);
 
 				SpriticBlock * sb = (SpriticBlock*)b;

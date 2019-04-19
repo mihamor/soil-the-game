@@ -30,11 +30,15 @@ class AbstractBlock
 protected:
 
 	std::string fileName;
-
-public:
 	RectangleShape rectangle;
 	char singnature;
 	BlockType type;
+
+public:
+
+	BlockType getBlockType() { return type; }
+	char getSingature() { return singnature; }
+	RectangleShape * getRectangleShape() { return &rectangle; }
 
 	AbstractBlock(Texture *t, char singnature, BlockType type);
 	AbstractBlock(std::string fileName, char singnature, BlockType type);

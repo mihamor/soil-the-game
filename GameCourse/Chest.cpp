@@ -42,7 +42,7 @@ void Chest::draw(float vmodex, float vmodey, RenderWindow & window, bool * isGui
 		if (counter > 4) { posx = 2 * BLOCK_SIZE + BLOCK_SIZE / 2; posy += 2 * BLOCK_SIZE; counter = 0; }
 
 		Slot * slot = *(it);
-		RectangleShape slotToDraw = slot->block->rectangle; // background of slot
+		RectangleShape slotToDraw = *slot->block->getRectangleShape(); // background of slot
 		slotToDraw.setPosition(posx, posy);
 
 		String ss = intToStr((*it)->amount);
@@ -74,7 +74,7 @@ void Chest::draw(float vmodex, float vmodey, RenderWindow & window, bool * isGui
 
 		if (counter > 1) { posx = backgroundChest.getPosition().x + BLOCK_SIZE / 2;  posy += 2 * BLOCK_SIZE; counter = 0; }
 
-		RectangleShape slotToDraw = (*it)->block->rectangle; // background of slot
+		RectangleShape slotToDraw = *((*it)->block->getRectangleShape()); // background of slot
 		slotToDraw.setPosition(posx, posy);
 
 		String ss = intToStr((*it)->amount);

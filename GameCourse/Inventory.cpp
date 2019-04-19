@@ -34,7 +34,7 @@ bool Inventory::isFull(AbstractBlock * pb) {
 	else {
 		for (std::list<Slot* >::iterator it = slots.begin(); it != slots.end(); it++)
 		{
-			if ((*it)->block->singnature == pb->singnature && !(*it)->isStacked())
+			if ((*it)->block->getSingature() == pb->getSingature() && !(*it)->isStacked())
 				return false;
 		}
 			
@@ -48,7 +48,7 @@ bool Inventory::addSlot(AbstractBlock * pb)
 	if (pb == NULL) return false;
 	for (std::list<Slot* >::iterator it = slots.begin(); it != slots.end(); it++)
 	{
-		if ((*it)->block->singnature == pb->singnature && !(*it)->isStacked())
+		if ((*it)->block->getSingature() == pb->getSingature() && !(*it)->isStacked())
 		{
 			(*it)->amount++;
 			added = true;
@@ -124,7 +124,7 @@ void Inventory::draw(float vmodex, float vmodey, RenderWindow &window, bool *isG
 
 		if (counter > 4) { posx = 2 * BLOCK_SIZE + BLOCK_SIZE / 2; posy += 2 * BLOCK_SIZE; counter = 0; }
 
-		RectangleShape slotToDraw = (*it)->block->rectangle; // background of slot
+		RectangleShape slotToDraw = *((*it)->block->getRectangleShape()); // background of slot
 		slotToDraw.setPosition(posx, posy);
 
 		String ss = intToStr((*it)->amount);
@@ -182,7 +182,7 @@ void Inventory::saveInventory(int slot)
 
 	for (Slot * s : this->slots) {
 		TiXmlElement * element = new TiXmlElement("slot");
-		element->SetAttribute("signature", s->block->singnature);
+		element->SetAttribute("signature", s->block->getSingature());
 		element->SetAttribute("amount", s->amount);
 		list->LinkEndChild(element);
 

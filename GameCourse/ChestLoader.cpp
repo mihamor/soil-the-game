@@ -40,7 +40,7 @@ void ChestLoader::saveChestsToXml(std::map<std::string, Chest*> dict, int slot)
 		auto chestContent = chest->getList();
 		for (auto slot : *chestContent) {
 			TiXmlElement * slotElement = new TiXmlElement("slot");
-			slotElement->SetAttribute("signature", slot->block->singnature);
+			slotElement->SetAttribute("signature", slot->block->getSingature());
 			slotElement->SetAttribute("amount", slot->amount);
 			chestElement->LinkEndChild(slotElement);
 		}

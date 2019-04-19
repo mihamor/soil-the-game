@@ -7,7 +7,7 @@
 
 using namespace sf;
 
-class Animation
+struct Animation
 {
 public:
 	std::vector<IntRect> frames, frames_flip;
